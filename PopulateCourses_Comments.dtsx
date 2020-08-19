@@ -1,0 +1,1256 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/15/2014 11:55:21 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="ODS"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{11DAA3D3-81C6-406D-AD07-9C78B49BF767}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.7462.6"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="PopulateCourses_Comments"
+  DTS:PackageType="5"
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{1651537D-FD52-49AC-B9B1-DFA18AA3E1B3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ods.ODS_Reporting]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+      DTS:ObjectName="ods.ODS_Reporting">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ods;Initial Catalog=ODS_Reporting;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ODS.ODS_Reporting1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{0B12BE56-31DF-4B04-8504-B880F1817DB5}"
+      DTS:ObjectName="ODS.ODS_Reporting1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ODS;Initial Catalog=ODS_Reporting;Integrated Security=True;Application Name=SSIS-PopulateCourses_Comments-{0B12BE56-31DF-4B04-8504-B880F1817DB5}ODS.ODS_Reporting1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ODS.ODS_Staging1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{ACE8AA01-865A-47A4-B9D6-0D60E645E883}"
+      DTS:ObjectName="ODS.ODS_Staging1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ODS;Initial Catalog=ODS_Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{FCBCDBFA-577D-44DB-8292-45527C4A148F}"
+      DTS:ObjectName="sandbox.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-PopulateCourses_Comments-{FCBCDBFA-577D-44DB-8292-45527C4A148F}sandbox.DataMart;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5BAD1F4D-42D4-4CDB-AED8-C038E395C292}"
+      DTS:ObjectName="sandbox.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart1 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B48C814D-4073-4FB0-AF05-F0D93CD721B0}"
+      DTS:ObjectName="sandbox.DataMart1 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{743CFFF8-8412-49B7-A1AA-2B52561EA4E8}"
+      DTS:ObjectName="sandbox.staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=receive.roanoke.edu;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear ODS_Staging table courseComments"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CD786443-8F3B-4634-BDC7-A1F5929CBDA4}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear ODS_Staging table courseComments"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE ODS_STAGING.DBO.courseComments" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Clear staging table DM_COURSES_COMMENTS"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E5F7030A-D38F-4898-BE84-B8F61A9B34FF}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear staging table DM_COURSES_COMMENTS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="DELETE FROM SANDBOX.STAGING.DBO.DM_COURSES_COMMENTS" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate ACR_PRINTED Comments"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EDA916BD-84B5-4C01-AB66-33B7E3C89888}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate ACR_PRINTED Comments"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="MERGE ODS_Staging.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select distinct COURSE_SECTIONS_ID, &#xA;&#x9;&#x9;&#x9;&#x9;dbo.FN_DATAMART_ACR_PRINTED_SPEC(R_ACAD_REQMTS.ACR_REQS_COURSE) as comment&#xA;&#x9;&#x9;&#x9;from ods_course_sections inner join ods_courses&#xA;&#x9;&#x9;&#x9;on ods_COURSE_SECTIONS.SEC_COURSE = ods_Courses.COURSES_ID INNER JOIN R_ACAD_REQMTS&#xA;&#x9;&#x9;&#x9;ON ODS_COURSES.COURSES_ID = R_ACAD_REQMTS.ACR_REQS_COURSE&#xA;&#x9;&#x9;&#x9;where NOT ACR_PRINTED_SPEC IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND TARGET.COMMENT1 is NULL&#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT1 = SOURCE.comment;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate Course list Set in courseComments"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A434045D-EB3F-4E2B-9364-2B2B6364E5F2}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate Course list Set in courseComments"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="MERGE ODS_Staging.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#xA;&#xA;(SELECT CourseKey FROM ODS_Staging.dbo.coursesCore) AS SOURCE&#xA;&#x9;ON TARGET.CourseKey = SOURCE.CourseKey&#xA;&#x9;WHEN NOT MATCHED THEN&#xA;&#x9;&#x9;INSERT(COURSEKEY) VALUES (SOURCE.COURSEKEY);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate SEC_COMMENTS"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{35C99A70-6929-463D-B3CF-6539792E5E92}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate SEC_COMMENTS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="&#xA;MERGE ODS_Staging.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select COURSE_SECTIONS_ID, SEC_COMMENTS&#xA;&#x9;&#x9;&#x9;from ods_course_sections inner join ods_courses&#xA;&#x9;&#x9;&#x9;on ods_COURSE_SECTIONS.SEC_COURSE = ods_Courses.COURSES_ID&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;where NOT SEC_COMMENTS IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND (NOT TARGET.COMMENT1 is NULL) AND TARGET.COMMENT2 IS NULL&#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT2 = SOURCE.SEC_COMMENTS;&#xA;&#xA;&#xA;MERGE ODS_Staging.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select COURSE_SECTIONS_ID, SEC_COMMENTS&#xA;&#x9;&#x9;&#x9;from ODS_course_sections inner join ODS_courses&#xA;&#x9;&#x9;&#x9;on ODS_COURSE_SECTIONS.SEC_COURSE = ODS_Courses.COURSES_ID&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;where  NOT SEC_COMMENTS IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND  TARGET.COMMENT1 is NULL &#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT1 = SOURCE.SEC_COMMENTS;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate SEC_PRINTED_COMMENTS"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{40D05CB1-5A79-4C96-B393-E7A4B7B23ADF}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate SEC_PRINTED_COMMENTS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="MERGE ODS_STAGING.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select COURSE_SECTIONS_ID, SEC_PRINTED_COMMENTS&#xA;&#x9;&#x9;&#x9;from ODS_course_sections inner join ODS_courses&#xA;&#x9;&#x9;&#x9;on ODS_COURSE_SECTIONS.SEC_COURSE = ODS_Courses.COURSES_ID &#xA;&#x9;&#x9;&#x9;where NOT SEC_PRINTED_COMMENTS IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND NOT TARGET.COMMENT1 is NULL AND NOT TARGET.COMMENT2 IS NULL AND TARGET.COMMENT3 is NULL&#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT3 = SOURCE.SEC_PRINTED_COMMENTS;&#xA;&#xA;&#x9;&#xA;MERGE ODS_STAGING.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select COURSE_SECTIONS_ID, SEC_PRINTED_COMMENTS&#xA;&#x9;&#x9;&#x9;from ODS_course_sections inner join ODS_courses&#xA;&#x9;&#x9;&#x9;on ODS_COURSE_SECTIONS.SEC_COURSE = ODS_Courses.COURSES_ID &#xA;&#x9;&#x9;&#x9;where  NOT SEC_PRINTED_COMMENTS IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND NOT TARGET.COMMENT1 is NULL AND TARGET.COMMENT2 IS NULL&#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT2 = SOURCE.SEC_PRINTED_COMMENTS;&#xA;&#xA;&#x9;&#xA;&#xA;&#xA;MERGE ODS_STAGING.dbo.courseComments as TARGET USING&#xA;&#x9;&#x9;&#x9;(select COURSE_SECTIONS_ID, SEC_PRINTED_COMMENTS&#xA;&#x9;&#x9;&#x9;from ODS_course_sections inner join ODS_courses&#xA;&#x9;&#x9;&#x9;on ODS_COURSE_SECTIONS.SEC_COURSE = ODS_Courses.COURSES_ID &#xA;&#x9;&#x9;&#x9;where NOT SEC_PRINTED_COMMENTS IS NULL) AS SOURCE&#xA;&#x9;ON TARGET.COURSEKEY = SOURCE.COURSE_SECTIONS_ID AND  TARGET.COMMENT1 is NULL &#xA;&#x9;WHEN MATCHED THEN&#xA;&#x9;&#x9;UPDATE SET TARGET.COMMENT1 = SOURCE.SEC_PRINTED_COMMENTS;&#x9;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\POPULATE STAGING TABLE DM_COURSES_COMMENTS"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AFA4B914-DD5C-45EC-A1D7-993F8E343955}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="POPULATE STAGING TABLE DM_COURSES_COMMENTS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:SqlStatementSource="INSERT INTO SANDBOX.STAGING.dbo.DM_COURSES_COMMENTS&#xA;SELECT CourseKey,&#xA;&#x9;&#x9;Comment1,&#xA;&#x9;&#x9; Comment2,&#xA;&#x9;&#x9; Comment3, &#xA;&#x9;&#x9;CURRENT_TIMESTAMP, getdate() as updated_at&#xA;FROM ODS_STAGING.dbo.courseComments" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Push from Reporting to Staging"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BB6C0D1C-0A60-4CBB-BCF2-711D119E4D1E}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Push from Reporting to Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="INSERT INTO ODS.ODS_Staging.dbo.courses_with_additional_fields &#xA;SELECT course_key_id, course_name, course_term, printed_text1_course, printed_text1, printed_text2_course, printed_text2, printed_text3_course, printed_text3, printed_text4_course, printed_text4, printed_text5_course, printed_text5, printed_text6_course, printed_text6, printed_text7_course, printed_text7, co_requirement_course, courses_description, SEC_PRINTED_COMMENTS&#xA;FROM ODS.ODS_Reporting.dbo.view_courses_with_additional_fields" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Staging to Sandbox Staging"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{87C0F200-0184-46A1-8287-F9318B0A26D8}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Staging to Sandbox Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{ACE8AA01-865A-47A4-B9D6-0D60E645E883}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="INSERT INTO SANDBOX.Staging.dbo.full_course_data&#xA;SELECT course_key_id, course_name, course_term, printed_text1_course, printed_text1, printed_text2_course, printed_text2, printed_text3_course, printed_text3, printed_text4_course, printed_text4, printed_text5_course, printed_text5, printed_text6_course, printed_text6, printed_text7_course, printed_text7, co_requirement_course, courses_description, SEC_PRINTED_COMMENTS&#xA;FROM ODS_STAGING.dbo.courses_with_additional_fields;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Clear Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{7d2f6fd2-be89-419e-8673-4add6b7b9715}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Clear Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task: Clear Datamart staging table DM_COURSES_COMMENTS has failed"
+          SendMailTask:MessageSource="The task: Clear Datamart staging table DM_COURSES_COMMENTS   in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task clear ODS staging table courseComments failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{D092D1CB-734C-40A9-BA4E-CF2D2748B266}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task clear ODS staging table courseComments failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task: Clear ODS_Staging CourseComments Failed"
+          SendMailTask:MessageSource="The task: clear ODS_Staging table CourseComments in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Populate ACR_Printed Comments failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{a0574dc9-a79f-40a0-ad7a-b89c78065881}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Populate ACR_Printed Comments failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task:Task Populate ACR_Printed Comments failed"
+          SendMailTask:MessageSource="The task: Populate ACR_Printed Comments failed  in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Populate course list set in courseComments failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{60488723-bbbe-4f07-867e-0d4d37a86437}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Populate course list set in courseComments failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task: Populate Course Set List ODS_Staging CourseComments Failed"
+          SendMailTask:MessageSource="The task: Populate course list set in courseComments  in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Populate Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{7050f775-7382-4052-9838-9d762da5d804}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Populate Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task: Populate Datamart staging table DM_COURSES_COMMENTS has failed"
+          SendMailTask:MessageSource="The task:  Populate Datamart staging table DM_COURSES_COMMENTS   in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Populate SEC_Comments failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{703a1511-63e6-4c19-ba39-4714db1edfd0}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Populate SEC_Comments failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="6">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task:Populate SEC_Comments failed"
+          SendMailTask:MessageSource="The task: Task Populate SEC_Comments   in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Task Populate SEC_PRINTED_COMMENTS failed"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{f71e2c0e-5ba5-4b85-89dc-f8fe32789f54}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.SendMailTask.SendMailTask, Microsoft.SqlServer.SendMailTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Task Populate SEC_PRINTED_COMMENTS failed"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="7">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{7BF3B81C-61B2-4882-9B53-B3F7B201F591}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="ODS Task:Populate SEC_PRINTED_Comments failed"
+          SendMailTask:MessageSource="The task: Task Populate SEC_PRINTED_COMMENTS   in package PopulateCourses_Comments has failed and this package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate ODS Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E8B9236D-B17D-42A3-BA64-BF9A2E97191B}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate ODS Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{ACE8AA01-865A-47A4-B9D6-0D60E645E883}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="truncate table courses_with_additional_fields;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Sandbox Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{27C3C2F0-E131-4488-916C-A269EF15DE5B}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Sandbox Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A0CAFEC-D040-4042-AC62-4197E1268721}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="DELETE FROM SANDBOX.STAGING.DBO.full_course_data;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D2876D99-4C15-491B-88D9-1D4460774992}"
+      DTS:From="Package\Clear ODS_Staging table courseComments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Populate Course list Set in courseComments" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1933673B-4B66-4B53-84F9-51DBCC1BD9DF}"
+      DTS:From="Package\Populate Course list Set in courseComments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Populate ACR_PRINTED Comments" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{A4C864B5-A922-4C71-9E38-2BF35029A01D}"
+      DTS:From="Package\Populate SEC_PRINTED_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\Task Populate SEC_PRINTED_COMMENTS failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{B66C5FB9-C376-4044-BE93-DAD6262F6C12}"
+      DTS:From="Package\Clear staging table DM_COURSES_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\Task Clear Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{24F2F890-1581-482F-9BFE-C646B9DB1FED}"
+      DTS:From="Package\POPULATE STAGING TABLE DM_COURSES_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\Task Populate Datamart staging table DM_COURSES_COMMENTS has failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{C2405A17-986B-425D-80F5-81639E75D347}"
+      DTS:From="Package\POPULATE STAGING TABLE DM_COURSES_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\Truncate Sandbox Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
+      DTS:CreationName=""
+      DTS:DTSID="{7B9C273A-D629-4D53-A24F-2DFBC1C6B382}"
+      DTS:From="Package\Truncate Sandbox Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 14"
+      DTS:To="Package\Truncate ODS Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
+      DTS:CreationName=""
+      DTS:DTSID="{89AEF6E7-79B7-4E1C-9B7E-12484188B743}"
+      DTS:From="Package\Truncate ODS Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 15"
+      DTS:To="Package\Push from Reporting to Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 16]"
+      DTS:CreationName=""
+      DTS:DTSID="{16066105-F5E8-4584-B525-31B629AB2D17}"
+      DTS:From="Package\Push from Reporting to Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 16"
+      DTS:To="Package\Staging to Sandbox Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{EB5C7080-CC93-43D1-942D-A096CC06E68C}"
+      DTS:From="Package\Populate ACR_PRINTED Comments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Populate SEC_COMMENTS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{31DD70EA-95B9-4F25-8643-09A14F57F615}"
+      DTS:From="Package\Populate SEC_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Populate SEC_PRINTED_COMMENTS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE89F196-D670-4E3F-95F7-2E9388864625}"
+      DTS:From="Package\Populate SEC_PRINTED_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Clear staging table DM_COURSES_COMMENTS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{5BE38AA0-8D95-43B6-A24A-BA61E4280995}"
+      DTS:From="Package\Clear staging table DM_COURSES_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\POPULATE STAGING TABLE DM_COURSES_COMMENTS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{741CB4BF-7193-462F-B6A7-B036635DA912}"
+      DTS:From="Package\Clear ODS_Staging table courseComments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Task clear ODS staging table courseComments failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{8704854D-7CF1-4150-818F-F2DA68CEEB70}"
+      DTS:From="Package\Populate Course list Set in courseComments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Task Populate course list set in courseComments failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{1FAC12AB-BEDF-45CE-8C63-5B968B2CABF1}"
+      DTS:From="Package\Populate ACR_PRINTED Comments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Task Populate ACR_Printed Comments failed"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{E1CE3B58-D5B2-4484-B42A-985CDE74398E}"
+      DTS:From="Package\Populate SEC_COMMENTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\Task Populate SEC_Comments failed"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="281,42"
+          Id="Package\Clear ODS_Staging table courseComments"
+          TopLeft="100,72" />
+        <NodeLayout
+          Size="300,42"
+          Id="Package\Clear staging table DM_COURSES_COMMENTS"
+          TopLeft="112,459" />
+        <NodeLayout
+          Size="247,42"
+          Id="Package\Populate ACR_PRINTED Comments"
+          TopLeft="125,220" />
+        <NodeLayout
+          Size="288,42"
+          Id="Package\Populate Course list Set in courseComments"
+          TopLeft="106,151" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Populate SEC_COMMENTS"
+          TopLeft="129,293" />
+        <NodeLayout
+          Size="254,42"
+          Id="Package\Populate SEC_PRINTED_COMMENTS"
+          TopLeft="134,368" />
+        <NodeLayout
+          Size="344,42"
+          Id="Package\POPULATE STAGING TABLE DM_COURSES_COMMENTS"
+          TopLeft="82,542" />
+        <NodeLayout
+          Size="229,42"
+          Id="Package\Push from Reporting to Staging"
+          TopLeft="576,676" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\Staging to Sandbox Staging"
+          TopLeft="907,705" />
+        <NodeLayout
+          Size="421,42"
+          Id="Package\Task Clear Datamart staging table DM_COURSES_COMMENTS has failed"
+          TopLeft="492,497" />
+        <NodeLayout
+          Size="255,42"
+          Id="Package\Task clear ODS staging table courseComments failed"
+          TopLeft="481,74" />
+        <NodeLayout
+          Size="291,42"
+          Id="Package\Task Populate ACR_Printed Comments failed"
+          TopLeft="437,249" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Task Populate course list set in courseComments failed"
+          TopLeft="454,165" />
+        <NodeLayout
+          Size="438,42"
+          Id="Package\Task Populate Datamart staging table DM_COURSES_COMMENTS has failed"
+          TopLeft="488,583" />
+        <NodeLayout
+          Size="253,42"
+          Id="Package\Task Populate SEC_Comments failed"
+          TopLeft="457,308" />
+        <NodeLayout
+          Size="308,42"
+          Id="Package\Task Populate SEC_PRINTED_COMMENTS failed"
+          TopLeft="435,398" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Truncate ODS Staging Table"
+          TopLeft="147,722" />
+        <NodeLayout
+          Size="321,42"
+          Id="Package\Truncate Sandbox Staging Table"
+          TopLeft="99,625" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="240.5,114">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="9.5,37"
+              Start="0,0"
+              End="9.5,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5"
+                    Point2="0,18.5"
+                    Point3="4,18.5" />
+                  <mssgle:LineSegment
+                    End="5.5,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.5,18.5"
+                    Point2="9.5,18.5"
+                    Point3="9.5,22.5" />
+                  <mssgle:LineSegment
+                    End="9.5,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="249.25,193">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="388,389">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="47,30"
+              Start="0,0"
+              End="39.5,30">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="19.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19.5,0"
+                    Point2="23.5,0"
+                    Point3="23.5,4" />
+                  <mssgle:LineSegment
+                    End="23.5,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.5,26"
+                    Point2="23.5,30"
+                    Point3="27.5,30" />
+                  <mssgle:LineSegment
+                    End="39.5,30" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="9.25865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="412,480">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="80,38"
+              Start="0,0"
+              End="72.5,38">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36,0"
+                    Point2="40,0"
+                    Point3="40,4" />
+                  <mssgle:LineSegment
+                    End="40,34" />
+                  <mssgle:CubicBezierSegment
+                    Point1="40,34"
+                    Point2="40,38"
+                    Point3="44,38" />
+                  <mssgle:LineSegment
+                    End="72.5,38" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="25.75865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="426,563">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="62,41"
+              Start="0,0"
+              End="54.5,41">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="27,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27,0"
+                    Point2="31,0"
+                    Point3="31,4" />
+                  <mssgle:LineSegment
+                    End="31,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31,37"
+                    Point2="31,41"
+                    Point3="35,41" />
+                  <mssgle:LineSegment
+                    End="54.5,41" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="16.75865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="256.75,584">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="256.75,667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="361,743">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="215,-46"
+              Start="0,0"
+              End="207.5,-46">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="103.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="103.5,0"
+                    Point2="107.5,0"
+                    Point3="107.5,-4" />
+                  <mssgle:LineSegment
+                    End="107.5,-42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="107.5,-42"
+                    Point2="107.5,-46"
+                    Point3="111.5,-46" />
+                  <mssgle:LineSegment
+                    End="207.5,-46" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 16]"
+          TopLeft="805,697">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="102,29"
+              Start="0,0"
+              End="94.5,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47,0"
+                    Point2="51,0"
+                    Point3="51,4" />
+                  <mssgle:LineSegment
+                    End="51,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51,25"
+                    Point2="51,29"
+                    Point3="55,29" />
+                  <mssgle:LineSegment
+                    End="94.5,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="248.5,262">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-17,31"
+              Start="0,0"
+              End="-17,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.5"
+                    Point2="0,15.5"
+                    Point3="-4,15.5" />
+                  <mssgle:LineSegment
+                    End="-13,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-13,15.5"
+                    Point2="-17,15.5"
+                    Point3="-17,19.5" />
+                  <mssgle:LineSegment
+                    End="-17,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="231.5,335">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="29.5,33"
+              Start="0,0"
+              End="29.5,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="4,16.5" />
+                  <mssgle:LineSegment
+                    End="25.5,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.5,16.5"
+                    Point2="29.5,16.5"
+                    Point3="29.5,20.5" />
+                  <mssgle:LineSegment
+                    End="29.5,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="261.5,410">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="262,501">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-8,41"
+              Start="0,0"
+              End="-8,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5"
+                    Point2="0,20.5"
+                    Point3="-4,20.5" />
+                  <mssgle:LineSegment
+                    End="-4,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,20.5"
+                    Point2="-8,20.5"
+                    Point3="-8,24.5" />
+                  <mssgle:LineSegment
+                    End="-8,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="381,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="100,0"
+              Start="0,0"
+              End="92.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="92.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="32.00865234375,5,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="394,172">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="60,14"
+              Start="0,0"
+              End="52.5,14">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26,0"
+                    Point2="30,0"
+                    Point3="30,4" />
+                  <mssgle:LineSegment
+                    End="30,10" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30,10"
+                    Point2="30,14"
+                    Point3="34,14" />
+                  <mssgle:LineSegment
+                    End="52.5,14" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="15.75865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="372,241">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="65,29"
+              Start="0,0"
+              End="57.5,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="28.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28.5,0"
+                    Point2="32.5,0"
+                    Point3="32.5,4" />
+                  <mssgle:LineSegment
+                    End="32.5,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.5,25"
+                    Point2="32.5,29"
+                    Point3="36.5,29" />
+                  <mssgle:LineSegment
+                    End="57.5,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="18.25865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="334,314">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="123,15"
+              Start="0,0"
+              End="115.5,15">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="57.5,0"
+                    Point2="61.5,0"
+                    Point3="61.5,4" />
+                  <mssgle:LineSegment
+                    End="61.5,11" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.5,11"
+                    Point2="61.5,15"
+                    Point3="65.5,15" />
+                  <mssgle:LineSegment
+                    End="115.5,15" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="47.25865234375,-13.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Changed Function on SQL to pull pre-req's from R_COURSES | X_CRS_PRINTED_TEXT_ALL&#xA;table. jsg 10/2017"
+          ParentId="Package"
+          FontInfo="{x:Null}"
+          Size="474,53"
+          Id="06f39711-218f-422d-9479-0a367f77520f"
+          TopLeft="762,240" />
+        <AnnotationLayout
+          Text="Sandbox Version"
+          ParentId="Package"
+          Size="212,43"
+          Id="4057813e-8a2f-48c2-abea-901d5c34d387"
+          TopLeft="110,17">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="14.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <AnnotationLayout
+          Text="All email notifactions on the Sandbox ver of these packages have been disabled. &#xA;We need to make sure they are active in Hermes (Live) once they are ready.&#xA;Gabrielson 11/2017"
+          ParentId="Package"
+          Size="433,67"
+          Id="8f782cdd-ec3d-4661-9eb5-0676680a7443"
+          TopLeft="809,392">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FF000000"
+              Style="Italic">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

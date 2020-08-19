@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "PopulateDatamartStaging_SANDBOX", "PopulateDatamartStaging_SANDBOX.dtproj", "{7A6940E4-24B0-4921-878D-8C3E338C6EAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A6940E4-24B0-4921-878D-8C3E338C6EAB}.Development|Default.ActiveCfg = Development
+		{7A6940E4-24B0-4921-878D-8C3E338C6EAB}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
