@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ODS</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAt9vWZ+cWvki44rkglLeodwAAAAACAAAAAAADZgAAwAAAABAAAADFw1vn0jqfcL2dG9gy0QUxAAAAAASAAACgAAAAEAAAAJWdyY3J3hAsmGthToV4bZyIAAAA6ryy3XS3VTlvAhtkqz+vYAYM7hsPOWiKiE4bicW68mvp5saCNyuBCV2hug2n13ycSRLP4CtXXITrywE6n+kcPFP/aIvlCe+1z230pqKElCyrE87R5iOnlut/TCa75Tm3B5JLhAUMwTerxDwyYjFoVA52Ptu2RCJbr/JrpCNdsI9dIyPaWEsQTRQAAABfTTejC6bCLmY3cLzDOmRlMfcomA==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyBI1jR6WeUaAJAjuQek1PAAAAAACAAAAAAADZgAAwAAAABAAAAA7kA7kx+QVL49rWA6oZq3FAAAAAASAAACgAAAAEAAAAITvlHAPfoPHMEFnai5+p6iIAAAAAmuhh93J4PWXdOjbiiQNSNIbDeAZ1wjTnt/kRN/7tSGYtKcpVasklldT+YbySJWdEQM68JQK4IUunp0n7vg6xi0K9fF4GhJ0lk3Bkn5nwcwKzCLXtArSrLKoJdPu7o9tBC9OD9lnXNn97BsO8RNA/BnnXaeztHF6c0Fz/+q3k/DTAqkbeOdROxQAAADQF8tLVHZQYsk+8rF9vzAJcpCm9Q==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -65,6 +65,7 @@
           <SSIS:Package SSIS:Name="Populate_Departments.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="ODS_to_Student_Forms.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="Summer_Mailing.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="TEST.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers />
         <SSIS:DeploymentInfo>
@@ -11071,6 +11072,23 @@
                   </SSIS:Properties>
                 </SSIS:Parameter>
               </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="TEST.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{910E653E-1CFE-4508-9BA0-8C93AB502CF2}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">TEST</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{05894C20-78D9-4138-9207-5DE38341CD5B}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
             </SSIS:PackageMetaData>
           </SSIS:PackageInfo>
         </SSIS:DeploymentInfo>
