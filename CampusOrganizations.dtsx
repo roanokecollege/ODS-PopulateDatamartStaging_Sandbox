@@ -1,0 +1,1340 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/17/2017 10:59:02 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HERMES"
+  DTS:CreatorName="ACADEMIC\WebServ"
+  DTS:DTSID="{9EAE7B79-961A-41D4-9964-6B382DEC25B8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CampusOrganizations"
+  DTS:PackageType="5"
+  DTS:VersionBuild="54"
+  DTS:VersionGUID="{C5F50BC7-5D98-4712-851D-1F1A24C2871C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:Description="FLat file to Artemis"
+      DTS:DTSID="{3886A7E2-088D-4BD1-8889-1902D8C1F186}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\fake_artemis\VC_Hold\club_hub_changes_last_week.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague Club Code"
+              DTS:DTSID="{D4DD0314-B8A9-4F66-A78B-71614956F931}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague ID"
+              DTS:DTSID="{974ED3E8-88F1-491D-BAD4-BD20CF0F0E9E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership Start Date"
+              DTS:DTSID="{58E0B5F7-B06A-49BD-A985-EEA1CC525BB1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership End Date"
+              DTS:DTSID="{E3DBC22F-8727-43A8-9995-A1BEDED4F5F7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role Start date"
+              DTS:DTSID="{41B5D1C7-A725-45D7-AE3C-C347DBDD7DAA}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role End Date"
+              DTS:DTSID="{CD8A00F6-A0D2-4363-B02C-5DC275D50F48}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role"
+              DTS:DTSID="{43AD3121-F38C-46C4-A5FE-C57B87F7C1CC}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager 1]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{6BA71172-52AB-417D-B41C-AD39C3EFF6C2}"
+      DTS:ObjectName="Flat File Connection Manager 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\fake_artemis\VC_Hold\weekly-changes-appened.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague Club Code"
+              DTS:DTSID="{670F252E-BFA6-491A-ADBA-AFB294029BA0}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague ID"
+              DTS:DTSID="{5561F717-659C-4C9F-88E8-FCC7FA0ADE79}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership Start Date"
+              DTS:DTSID="{937E76CA-5B17-4B4F-8A9D-31E86276D630}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership End Date"
+              DTS:DTSID="{E1F5FE93-8120-47F0-B82E-E13433A06EB4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role Start date"
+              DTS:DTSID="{11A8502D-340D-438E-99A4-1EA6AA018713}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role End Date"
+              DTS:DTSID="{1F24EEE5-D600-4785-9F8F-CC22577A13D2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role"
+              DTS:DTSID="{A304D1EE-B85D-461B-9BA1-8EF0CE7EDAA0}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Clubber]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7CA732DA-54C0-40C2-A27B-3BB34309A033}"
+      DTS:ObjectName="hermes.Clubber">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=StudentAffairsOperations;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-CampusOrganizations-{7CA732DA-54C0-40C2-A27B-3BB34309A033}hermes.Clubber;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Clubber1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{1062B67D-F16D-4EDB-B9A1-3D6BD971CEDD}"
+      DTS:ObjectName="hermes.Clubber1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=StudentAffairsOperations;Integrated Security=True;Application Name=SSIS-CampusOrganizations-{1062B67D-F16D-4EDB-B9A1-3D6BD971CEDD}hermes.Clubber1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{D191853B-972E-48D0-B276-498922049862}"
+      DTS:ObjectName="hermes.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-CampusOrganizations-{D191853B-972E-48D0-B276-498922049862}hermes.Staging;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{C2986D1D-47FC-4799-A788-A0C160875488}"
+      DTS:ObjectName="hermes.Staging1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-CampusOrganizations-{C2986D1D-47FC-4799-A788-A0C160875488}hermes.Staging1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{2E6AF75D-9337-499B-A65D-6F5681696870}"
+      DTS:ObjectName="hermes.StudentAffairsOperations1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=StudentAffairsOperations;Integrated Security=True;Application Name=SSIS-CampusOrganizations-{2E6AF75D-9337-499B-A65D-6F5681696870}hermes.StudentAffairsOperations1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.StudentAffairsOperations]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F6373B5A-AFF7-4ABC-8F9E-83B9F991DB77}"
+      DTS:ObjectName="sandbox.StudentAffairsOperations">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox.roanoke.edu;Initial Catalog=StudentAffairsOperations;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-CampusOrganizations-{F6373B5A-AFF7-4ABC-8F9E-83B9F991DB77}sandbox.StudentAffairsOperations;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.StudentAffairsOperations1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{C739CAE9-0117-4693-A9D9-DB2B36DAEA8E}"
+      DTS:ObjectName="sandbox.StudentAffairsOperations1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SANDBOX.roanoke.edu;Initial Catalog=StudentAffairsOperations;Integrated Security=True;Application Name=SSIS-CampusOrganizations-{C739CAE9-0117-4693-A9D9-DB2B36DAEA8E}sandbox.StudentAffairsOperations1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\active user update Hermes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{152FF959-C48A-45AF-81A3-8060A4B85BD6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="active user update Hermes"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7CA732DA-54C0-40C2-A27B-3BB34309A033}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE rosters SET active = '0' WHERE end_date &lt; GetDate();" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\From staging to Clubber org_list"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C2B9C834-8BA8-4157-B934-3312445C2D31}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="From staging to Clubber org_list"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\From staging to Clubber org_list\ADO NET Destination 1"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination 1"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."org_list"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CAMPUS_ORGS_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CAMPUS_ORGS_ID"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CAMPUS_ORGS_ID]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CAMPUS_ORGS_ID]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CMP_GROUPING]"
+                      cachedDataType="wstr"
+                      cachedLength="35"
+                      cachedName="CMP_GROUPING"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_GROUPING]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_GROUPING]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CMP_ORG_TYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CMP_ORG_TYPE"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_ORG_TYPE]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_ORG_TYPE]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CMP_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="CMP_DESC"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_DESC]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_DESC]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[modified_date]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="modified_date"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[modified_date]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[modified_date]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CMP_YEAR_APPROVED]"
+                      cachedDataType="numeric"
+                      cachedName="CMP_YEAR_APPROVED"
+                      cachedPrecision="4"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_YEAR_APPROVED]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_YEAR_APPROVED]" />
+                    <inputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[CMP_Comments]"
+                      cachedDataType="wstr"
+                      cachedLength="250"
+                      cachedName="CMP_Comments"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_Comments]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_Comments]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CAMPUS_ORGS_ID]"
+                      dataType="wstr"
+                      length="5"
+                      name="CAMPUS_ORGS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_GROUPING]"
+                      dataType="wstr"
+                      length="35"
+                      name="CMP_GROUPING" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_ORG_TYPE]"
+                      dataType="wstr"
+                      length="5"
+                      name="CMP_ORG_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="CMP_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[modified_date]"
+                      dataType="dbTimeStamp"
+                      name="modified_date" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_YEAR_APPROVED]"
+                      dataType="numeric"
+                      name="CMP_YEAR_APPROVED"
+                      precision="4" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[CMP_Comments]"
+                      dataType="wstr"
+                      length="250"
+                      name="CMP_Comments" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\From staging to Clubber org_list\ADO NET Source 1"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source 1"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."org_list_with_date_view"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\From staging to Clubber org_list\ADO NET Source 1.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.Staging1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.Staging1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CAMPUS_ORGS_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CAMPUS_ORGS_ID]"
+                      length="5"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CAMPUS_ORGS_ID]"
+                      name="CAMPUS_ORGS_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_GROUPING]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_GROUPING]"
+                      length="35"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_GROUPING]"
+                      name="CMP_GROUPING"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_ORG_TYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_ORG_TYPE]"
+                      length="5"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_ORG_TYPE]"
+                      name="CMP_ORG_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_DESC]"
+                      length="30"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_DESC]"
+                      name="CMP_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[modified_date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[modified_date]"
+                      length="30"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[modified_date]"
+                      name="modified_date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_YEAR_APPROVED]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_YEAR_APPROVED]"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_YEAR_APPROVED]"
+                      name="CMP_YEAR_APPROVED"
+                      precision="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_Comments]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_Comments]"
+                      length="250"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].Columns[CMP_Comments]"
+                      name="CMP_Comments"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CAMPUS_ORGS_ID]"
+                      dataType="wstr"
+                      length="5"
+                      name="CAMPUS_ORGS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_GROUPING]"
+                      dataType="wstr"
+                      length="35"
+                      name="CMP_GROUPING" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_ORG_TYPE]"
+                      dataType="wstr"
+                      length="5"
+                      name="CMP_ORG_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="CMP_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[modified_date]"
+                      dataType="wstr"
+                      length="30"
+                      name="modified_date" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_YEAR_APPROVED]"
+                      dataType="numeric"
+                      name="CMP_YEAR_APPROVED"
+                      precision="4" />
+                    <externalMetadataColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output].ExternalColumns[CMP_Comments]"
+                      dataType="wstr"
+                      length="250"
+                      name="CMP_Comments" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CAMPUS_ORGS_ID]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CAMPUS_ORGS_ID]"
+                      name="CAMPUS_ORGS_ID" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_GROUPING]"
+                      dataType="wstr"
+                      length="35"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_GROUPING]"
+                      name="CMP_GROUPING" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_ORG_TYPE]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_ORG_TYPE]"
+                      name="CMP_ORG_TYPE" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_DESC]"
+                      name="CMP_DESC" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[modified_date]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[modified_date]"
+                      name="modified_date" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_YEAR_APPROVED]"
+                      dataType="numeric"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_YEAR_APPROVED]"
+                      name="CMP_YEAR_APPROVED"
+                      precision="4" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_Comments]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[CMP_Comments]"
+                      name="CMP_Comments" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\From staging to Clubber org_list.Paths[ADO NET Source Output]"
+              endId="Package\From staging to Clubber org_list\ADO NET Destination 1.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\From staging to Clubber org_list\ADO NET Source 1.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merge_herps_clubs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{33ED8435-BB46-40F2-A30F-3B6D9642E320}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merge_herps_clubs"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7CA732DA-54C0-40C2-A27B-3BB34309A033}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE dbo.clubs as TARGET&#xA;USING  dbo.org_list as SOURCE&#xA;ON  SOURCE.campus_orgs_id = Target.campus_org_id&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.type = source.cmp_org_type, &#xA;&#x9;       target.name = source.CMP_desc,&#xA;&#x9;       target.campus_org_id = source.campus_orgs_id, &#xA;target.grouping = source.CMP_Grouping,&#xA; target.year_approved = source.CMP_YEAR_APPROVED, &#xA; target.comments = source.CMP_Comments&#xA;&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;&#x9;&#x9;INSERT ( name,type, display_name,campus_org_id,fkey_membership_type, active, grouping, year_approved, comments)&#xA;&#x9;&#x9;VALUES (Source.cmp_desc, source.cmp_org_type, source.cmp_desc, source.campus_orgs_id, '2', '0', source.CMP_GROUPING, source.CMP_YEAR_APPROVED, source.CMP_Comments );" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\TRUNCATE Clubber Orgs Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3E12954B-2F40-4613-B6EC-11C0E321F5B3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="TRUNCATE Clubber Orgs Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7CA732DA-54C0-40C2-A27B-3BB34309A033}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE org_list;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Weekly Data Changes"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8D0CD635-DCD7-454C-A7C2-44AD1697E277}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Weekly Data Changes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Weekly Data Changes\ADO NET Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="ADO NET Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."view_roster_changes_last_week"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Weekly Data Changes\ADO NET Source.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.Clubber1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.Clubber1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague Club Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Colleague Club Code]"
+                      length="10"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague Club Code]"
+                      name="Colleague Club Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Colleague ID]"
+                      length="10"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague ID]"
+                      name="Colleague ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Membership Start Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]"
+                      name="Club Membership Start Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership End Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Membership End Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership End Date]"
+                      name="Club Membership End Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role Start date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role Start date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role Start date]"
+                      name="Club Role Start date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role End Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role End Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role End Date]"
+                      name="Club Role End Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role]"
+                      length="4000"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role]"
+                      name="Club Role"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague Club Code" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague ID" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      name="Club Membership Start Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Membership End Date]"
+                      dataType="dbDate"
+                      name="Club Membership End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role Start date]"
+                      dataType="dbDate"
+                      name="Club Role Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role End Date]"
+                      dataType="dbDate"
+                      name="Club Role End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Club Role" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Colleague Club Code]"
+                      name="Colleague Club Code" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Colleague ID]"
+                      name="Colleague ID" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Membership Start Date]"
+                      name="Club Membership Start Date" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Membership End Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Membership End Date]"
+                      name="Club Membership End Date" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role Start date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role Start date]"
+                      name="Club Role Start date" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role End Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role End Date]"
+                      name="Club Role End Date" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Club Role]"
+                      name="Club Role" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Weekly Data Changes\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Weekly Data Changes\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Colleague Club Code]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Colleague Club Code"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague Club Code]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague Club Code]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Colleague ID]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Colleague ID"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague ID]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Colleague ID]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Membership Start Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Membership Start Date"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership Start Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Membership End Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Membership End Date"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership End Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Membership End Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role Start date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Role Start date"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role Start date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role Start date]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role End Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Role End Date"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role End Date]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role End Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="Club Role"
+                      externalMetadataColumnId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role]"
+                      lineageId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output].Columns[Club Role]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague Club Code" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague ID" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      name="Club Membership Start Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership End Date]"
+                      dataType="dbDate"
+                      name="Club Membership End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role Start date]"
+                      dataType="dbDate"
+                      name="Club Role Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role End Date]"
+                      dataType="dbDate"
+                      name="Club Role End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Club Role" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Weekly Data Changes.Paths[ADO NET Source Output]"
+              endId="Package\Weekly Data Changes\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Weekly Data Changes\ADO NET Source.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BD600464-1E11-4562-8C52-B6A28569E5E2}"
+      DTS:From="Package\TRUNCATE Clubber Orgs Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\From staging to Clubber org_list" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7E8062DF-925E-4CC1-8C0F-A253199695E5}"
+      DTS:From="Package\From staging to Clubber org_list"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\merge_herps_clubs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{35551635-D0B3-4287-8B2E-CACDFF1B19E5}"
+      DTS:From="Package\merge_herps_clubs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\active user update Hermes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{81A0A88E-A049-4B9F-803B-E7E62F9EDAE3}"
+      DTS:From="Package\active user update Hermes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Weekly Data Changes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="179,47"
+          Id="Package\active user update Hermes"
+          TopLeft="38.481132075472,398.066037735849" />
+        <NodeLayout
+          Size="250,44"
+          Id="Package\From staging to Clubber org_list"
+          TopLeft="5.5,161.235849056604" />
+        <NodeLayout
+          Size="234,44"
+          Id="Package\merge_herps_clubs"
+          TopLeft="15.103773584906,281.330188679245" />
+        <NodeLayout
+          Size="234,44"
+          Id="Package\TRUNCATE Clubber Orgs Table"
+          TopLeft="20.915094339623,41.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Weekly Data Changes"
+          TopLeft="53.7075471698111,528.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="134.207547169812,85.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.735849056604"
+              Start="0,0"
+              End="0,68.235849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68.235849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="131.301886792453,205.235849056604">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,76.094339622641"
+              Start="0,0"
+              End="0,68.594339622641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68.594339622641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="130.042452830189,325.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72.735849056604"
+              Start="0,0"
+              End="0,65.235849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.235849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="124.844339622642,445.066037735849">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,83.433962264151"
+              Start="0,0"
+              End="0,75.933962264151">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.933962264151" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\From staging to Clubber org_list">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\From staging to Clubber org_list\ADO NET Source 1"
+          TopLeft="606,56" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\From staging to Clubber org_list\ADO NET Destination 1"
+          TopLeft="681,260" />
+        <EdgeLayout
+          Id="Package\From staging to Clubber org_list.Paths[ADO NET Source Output]"
+          TopLeft="693.5,98">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85,162"
+              Start="0,0"
+              End="85,154.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,77" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,77"
+                    Point2="0,81"
+                    Point3="4,81" />
+                  <mssgle:LineSegment
+                    End="81,81" />
+                  <mssgle:CubicBezierSegment
+                    Point1="81,81"
+                    Point2="85,81"
+                    Point3="85,85" />
+                  <mssgle:LineSegment
+                    End="85,154.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\From staging to Clubber org_list\ADO NET Destination 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\From staging to Clubber org_list\ADO NET Source 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Weekly Data Changes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Weekly Data Changes\ADO NET Source"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Weekly Data Changes\Flat File Destination"
+          TopLeft="86.367924528302,268.103773584906" />
+        <EdgeLayout
+          Id="Package\Weekly Data Changes.Paths[ADO NET Source Output]"
+          TopLeft="73.3867924528302,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="80.867924528302,218.679245283019"
+              Start="0,0"
+              End="80.867924528302,211.179245283019">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,109.320754716981" />
+                  <mssgle:LineSegment
+                    End="80.867924528302,109.320754716981" />
+                  <mssgle:LineSegment
+                    End="80.867924528302,211.179245283019" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

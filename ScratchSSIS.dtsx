@@ -1,0 +1,77 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/27/2019 8:20:51 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HERMES"
+  DTS:CreatorName="ACADEMIC\it_gabrielson"
+  DTS:DTSID="{94634F4E-F5B8-445C-9259-83B96CE51FDC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ScratchSSIS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{2C89925B-095C-4E00-8F8A-99386590EDB9}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{74AF399F-7D8A-4250-8A20-08A334556661}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=hermes;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Merge p Name"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9D64E882-35C4-44B4-AEFD-A55B6516C1F4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge p Name"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{74AF399F-7D8A-4250-8A20-08A334556661}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Person as TARGET&#xA;USING  perf_name_list as SOURCE&#xA;ON  Target.RCID = source.ID &#xA;&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.PreferredName = source.X_PER_PREF_NAME;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <AnnotationLayout
+          Text="Use this SSIS for those one off things that you need to build or use. &#xD;&#xA;JSG 6-2019&#xD;&#xA;"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="388,72"
+          Id="50602049-27c1-476e-aa57-1848be8c1b0d"
+          TopLeft="482,84" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Merge p Name"
+          TopLeft="426,211" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

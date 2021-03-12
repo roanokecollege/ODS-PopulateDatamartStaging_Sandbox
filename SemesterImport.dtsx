@@ -1,0 +1,218 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/29/2012 1:53:46 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{4B806B3E-8180-45DE-BD2A-ECEFA1542E44}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="SemesterImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{1A32492A-74BC-4D51-A946-9033E4B62D08}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{93D1FCF0-150B-41C9-A86F-730236881099}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BFE2F9EF-6202-4C41-BBBB-1BBFFE2A60C4}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-SemesterImport-{BFE2F9EF-6202-4C41-BBBB-1BBFFE2A60C4}localhost.Staging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{B545A764-6B70-4214-8312-8ABFDE646FE5}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Insert or Update Datamart table Semester"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7B133493-168C-46F4-899B-C8DEE57A1210}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert or Update Datamart table Semester"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BFE2F9EF-6202-4C41-BBBB-1BBFFE2A60C4}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Semester AS Target&#xA;USING (SELECT key_SemesterId, Description, StartDate, EndDate, fkey_AcademicYear, ImportDate FROM Staging.dbo.DM_Semester) AS Source&#xA;ON (Target.key_SemesterId = Source.key_SemesterId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.Description = Source.Description, Target.StartDate = Source.StartDate, Target.EndDate = Source.EndDate,&#xA;    Target.fkey_AYId = SOURCE.fkey_AcademicYear, Target.Today = Source.ImportDate&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (key_Semesterid, description, startdate, enddate, fkey_AYId, today)&#xA;    VALUES (Source.key_Semesterid, Source.description, Source.startdate, Source.enddate, Source.fkey_AcademicYear, Source.ImportDate);&#xA;    &#xA;   " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{B543983F-25C6-4892-932A-2B63D07F177A}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{B545A764-6B70-4214-8312-8ABFDE646FE5}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:Subject="Datamart Semester Table Import"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task&#xA;&#xA;&#xA; Insert or Update DataMart table Semester &#xA;&#xA;&#xA;&#xA;located in package&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;DataMartImportV2\SemesterImport.dtsx&#xA; &#xA;&#xA;&#xA;&#xA;&#xA;has failed.&#xA;&#xA;Import of Semester data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated_at date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ABB4557C-8F6A-48F7-9173-14131357490B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated_at date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{93D1FCF0-150B-41C9-A86F-730236881099}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    Semester &#xA;SET&#xA;   Semester.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E076D529-0330-4E2C-9E54-384F3B68AA97}"
+      DTS:From="Package\Insert or Update Datamart table Semester"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Send Mail Task"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{32F3149F-5B94-45FF-8919-3624CE7EA5C1}"
+      DTS:From="Package\Insert or Update Datamart table Semester"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\updated_at date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="219,44"
+          Id="Package\Insert or Update Datamart table Semester"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Send Mail Task"
+          TopLeft="329.990566037736,23.4622641509434" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\updated_at date"
+          TopLeft="167,198" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="224.179245283019,27.4622641509434">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="105.811320754717,17.9622641509434"
+              Start="0,0"
+              End="98.311320754717,17.9622641509434">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="52.9056603773585,0" />
+                  <mssgle:LineSegment
+                    End="52.9056603773585,17.9622641509434" />
+                  <mssgle:LineSegment
+                    End="98.311320754717,17.9622641509434" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="37.6643127211085,-19.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="115,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="131,148.5"
+              Start="0,0"
+              End="131,141">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,70.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,70.25"
+                    Point2="0,74.25"
+                    Point3="4,74.25" />
+                  <mssgle:LineSegment
+                    End="127,74.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="127,74.25"
+                    Point2="131,74.25"
+                    Point3="131,78.25" />
+                  <mssgle:LineSegment
+                    End="131,141" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

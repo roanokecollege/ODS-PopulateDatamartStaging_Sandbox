@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/10/2013 4:33:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{EBA724C3-9B45-4C99-A782-FF5A2C3EE1F3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CourseResultsImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{DA1E7660-BBDE-4EFC-885A-0FA96466B7FA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2606F486-1C86-4236-9B5B-FF9DF2B986DA}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{35B1052B-0025-4191-8699-E73FAF61E96D}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-CourseResultsImport-{35B1052B-0025-4191-8699-E73FAF61E96D}localhost.Staging;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{2FE09CAE-DBE4-46C1-938A-97E09B3E7239}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Insert full course data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3657C3F6-0E5C-4433-8C5C-4E31037760E5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert full course data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2606F486-1C86-4236-9B5B-FF9DF2B986DA}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="INSERT INTO Datamart.dbo.full_course_data&#xA;SELECT course_key_id, course_name, course_term, printed_text1_course, printed_text1, printed_text2_course, printed_text2, printed_text3_course, printed_text3, printed_text4_course, printed_text4, printed_text5_course, printed_text5, printed_text6_course, printed_text6, printed_text7_course, printed_text7, co_requirement_course, courses_description, SEC_PRINTED_COMMENTS, CONVERT(varchar(255), GETDATE(), 120) as updated_at&#xA;FROM Staging.dbo.full_course_data;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Course Results Info to Datamart"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{37267F61-18C9-48FF-AAFF-87B698E58E6F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Course Results Info to Datamart"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{35B1052B-0025-4191-8699-E73FAF61E96D}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="declare @MergeDate DateTime = getdate()&#xA;&#xA;MERGE Datamart.dbo.CourseResults AS Target&#xA;USING (SELECT CourseKey, EnrollmentNumber,GradeA,[GradeA-],[GradeB+],[GradeB],[GradeB-],[GradeC+],[GradeC],[GradeC-],[GradeD+],&#xA;[GradeD],[GradeD-],[GradeF],[GradeP],[GradeW],[GradeWP],[GradeWF],[GradeDP],[GradeDF],[GradeXF],[GradeIN],[GradeSP],[GradeNG],[GradeAU],&#xA;[GPA],[GPAC],[GPAO]&#xA;FROM Staging.dbo.DM_CourseResults) as Source&#xA;ON (Target.fkey_CourseId = Source.CourseKey)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.EnrollmentNumber = Source.EnrollmentNumber, Target.GradeA = Source.GradeA, Target.[GradeA-] = Source.[GradeA-],&#xA;    Target.[GradeB+] = Source.[GradeB+],Target.[GradeB] = Source.[GradeB],Target.[GradeB-] = Source.[GradeB-],&#xA;    Target.[GradeC+] = Source.[GradeC+],Target.[GradeC] = Source.[GradeC],Target.[GradeC-] = Source.[GradeC-],&#xA;    Target.[GradeD+] = Source.[GradeD+],Target.[GradeD] = Source.[GradeD],Target.[GradeD-] = Source.[GradeD-],&#xA;    Target.[GradeF] = Source.[GradeF],Target.[GradeP] = Source.[GradeP],Target.[GradeW] = Source.[GradeW],&#xA;    Target.GradeWP = Source.GradeWP,Target.GradeWF = Source.GradeWF,Target.GradeDP = Source.GradeDP,&#xA;    Target.GradeDF = Source.GradeDF,Target.GradeXF = Source.GradeXF,Target.GradeIN = Source.GradeIN,&#xA;&#x9;Target.GradeSP = Source.GradeSP,Target.GradeNG = Source.GradeNG,Target.GradeAU = Source.GradeAU,    &#xA;&#x9;Target.GPA = Source.GPA,Target.GPAC = Source.GPAC,Target.GPAO = Source.GPAO, Target.updated_at = @MergeDate&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (fkey_CourseId, EnrollmentNumber, GradeA, [GradeA-], [GradeB+],GradeB,[GradeB-], [GradeC+],GradeC, [GradeC-], [GradeD+], GradeD,&#xA;    [GradeD-],GradeF, GradeP, GradeW, GradeWP, GradeWF,GradeDP, GradeDF, GradeXF, GradeIN, GradeSP, GradeNG, GradeAU,&#xA;    GPA, GPAC, GPAO, updated_at)&#xA;    VALUES (SOURCE.CourseKey, SOURCE.EnrollmentNumber, SOURCE.GradeA, SOURCE.[GradeA-], SOURCE.[GradeB+],SOURCE.GradeB,SOURCE.[GradeB-], SOURCE.[GradeC+],SOURCE.GradeC, SOURCE.[GradeC-], SOURCE.[GradeD+], SOURCE.GradeD,&#xA;    SOURCE.[GradeD-],SOURCE.GradeF, SOURCE.GradeP, SOURCE.GradeW, SOURCE.GradeWP, SOURCE.GradeWF,SOURCE.GradeDP, SOURCE.GradeDF, SOURCE.GradeXF, SOURCE.GradeIN, SOURCE.GradeSP, SOURCE.GradeNG, SOURCE.GradeAU,&#xA;    SOURCE.GPA, SOURCE.GPAC, SOURCE.GPAO, GetDate() );&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{C00B9237-3ED8-45F3-ADB2-3E6A768D3A81}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{2FE09CAE-DBE4-46C1-938A-97E09B3E7239}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Course Results Import Error Notification Hermes"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;Merge Course Results Info to Datamart  &#xA;&#xA;in the Package CourseResultsImport has failed.&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;This task needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Datamart full_course_data table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{61A47496-D980-4281-A7AD-B1D4680D45A4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Datamart full_course_data table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2606F486-1C86-4236-9B5B-FF9DF2B986DA}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="truncate table full_course_data;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\update date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{411AA761-69A2-4021-BC8C-14BFA83AED7D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="update date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2606F486-1C86-4236-9B5B-FF9DF2B986DA}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    CourseResults &#xA;SET&#xA;   CourseResults.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA8B6400-1781-4B67-ACDA-30D06B99055B}"
+      DTS:From="Package\Merge Course Results Info to Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\update date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{48DCDCA6-C204-4461-822A-18A84EDB03A1}"
+      DTS:From="Package\Truncate Datamart full_course_data table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert full course data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{EF6DA114-69A9-4F97-BABC-BF26FBD3F986}"
+      DTS:From="Package\Insert full course data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Send Mail Task"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{3EFE4AB1-49D2-43BB-B996-37120833197E}"
+      DTS:From="Package\update date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Truncate Datamart full_course_data table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Insert full course data"
+          TopLeft="594,280" />
+        <NodeLayout
+          Size="232,44"
+          Id="Package\Merge Course Results Info to Datamart"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="178,44"
+          Id="Package\Send Mail Task"
+          TopLeft="241.066037735849,449.254716981132" />
+        <NodeLayout
+          Size="281,42"
+          Id="Package\Truncate Datamart full_course_data table"
+          TopLeft="500,127" />
+        <NodeLayout
+          Size="137,42"
+          Id="Package\update date"
+          TopLeft="234,122" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="121.5,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="181,72.5"
+              Start="0,0"
+              End="181,65">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.25"
+                    Point2="0,36.25"
+                    Point3="4,36.25" />
+                  <mssgle:LineSegment
+                    End="177,36.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="177,36.25"
+                    Point2="181,36.25"
+                    Point3="181,40.25" />
+                  <mssgle:LineSegment
+                    End="181,65" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="640.5,169">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45.5,111"
+              Start="0,0"
+              End="45.5,103.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.5"
+                    Point2="0,55.5"
+                    Point3="4,55.5" />
+                  <mssgle:LineSegment
+                    End="41.5,55.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.5,55.5"
+                    Point2="45.5,55.5"
+                    Point3="45.5,59.5" />
+                  <mssgle:LineSegment
+                    End="45.5,103.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="686,322">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-355.933962264151,127.254716981132"
+              Start="0,0"
+              End="-355.933962264151,119.754716981132">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.627358490566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,59.627358490566"
+                    Point2="0,63.627358490566"
+                    Point3="-4,63.627358490566" />
+                  <mssgle:LineSegment
+                    End="-351.933962264151,63.627358490566" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-351.933962264151,63.627358490566"
+                    Point2="-355.933962264151,63.627358490566"
+                    Point3="-355.933962264151,67.627358490566" />
+                  <mssgle:LineSegment
+                    End="-355.933962264151,119.754716981132" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-193.208328788326,68.627358490566,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="371,145.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="129,0"
+              Start="0,0"
+              End="121.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="121.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

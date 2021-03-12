@@ -1,0 +1,1075 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/29/2018 9:32:23 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HERMES"
+  DTS:CreatorName="ACADEMIC\Webserv"
+  DTS:DTSID="{EB54B9BF-8C83-4129-AD8F-ACE87F776201}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ClubHub"
+  DTS:PackageType="5"
+  DTS:VersionBuild="52"
+  DTS:VersionGUID="{908819B8-FA89-4933-9757-E81DEC0BF60A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:Description="Creates weekly Club Hub File"
+      DTS:DTSID="{898B48CD-275A-440C-ABDC-A4A6899D2726}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x002C_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="\\artemis.roanoke.edu\VC_Hold\CLUB_HUB_CHANGES_ROSTER.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague Club Code"
+              DTS:DTSID="{E569364F-A114-4154-8083-72D455C4E9D2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Colleague ID"
+              DTS:DTSID="{77E51C3E-2330-4A92-A623-92654193FA21}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership Start Date"
+              DTS:DTSID="{F2A37794-D04C-4F10-8701-F090E4F9C44C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Membership End Date"
+              DTS:DTSID="{244435D4-1C5C-4FB7-8B14-B21631E95E32}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role Start date"
+              DTS:DTSID="{6B24D755-F27A-40D6-B8DC-ACBE9EA1256E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role End Date"
+              DTS:DTSID="{B42C5A26-7507-45EC-BC68-95C90AC34875}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="4000"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Club Role"
+              DTS:DTSID="{72DD6489-AEF8-4B4E-866B-60F792285CC8}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HERMES.StudentAffairsOperations]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A2AD833F-8B93-4C7E-BB44-A3262713FD9E}"
+      DTS:ObjectName="HERMES.StudentAffairsOperations">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=HERMES;Initial Catalog=StudentAffairsOperations;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{E025819E-E5DA-4CDC-AD75-0D9F3553C979}"
+      DTS:ObjectName="hermes.StudentAffairsOperations1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=hermes;Initial Catalog=StudentAffairsOperations;Integrated Security=True;Application Name=SSIS-ClubHub-{E025819E-E5DA-4CDC-AD75-0D9F3553C979}hermes.StudentAffairsOperations1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{D7B06072-3D2F-435E-8ADE-963177AFE7E1}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0D4343F4-1F5F-4E5C-9254-BABABD6BB34E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT COUNT(RCID) AS RCID FROM dbo.view_former_students HAVING (COUNT(RCID) &gt; 1000)</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Close former students roles"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{9938C3C4-8E7F-4775-89D8-2D7B4D890C73}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Close former students roles"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A2AD833F-8B93-4C7E-BB44-A3262713FD9E}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE StudentAffairsOperations.dbo.rosters as TARGET&#xA;USING  view_former_students as SOURCE&#xA;ON  Target.RCID = source.RCID &#xA;AND   Target.end_date is Null&#xA;&#xA;&#xA;WHEN MATCHED THEN&#xA;UPDATE SET target.active = '0', &#xA;target.end_date = GETDATE(),&#xA;target.deleted_at = GETDATE(),&#xA;target.deleted_by = '0000001';&#x9;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Email Bad"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{576f2f9b-cf80-440d-ba83-96db7e4bd69a}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Email Bad"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D7B06072-3D2F-435E-8ADE-963177AFE7E1}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Club Hub Clean Data Issues"
+          SendMailTask:MessageSource="We have an issue with the Club Hub SSIS on Hermes. Looks like the packagedidnt see more than 500 students, please check it and the rosters table on the Student Affairs Operations Database. JSG" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\if active is false we insert an end date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{9cf05b6f-2f5f-4dbf-85aa-941462058f30}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="if active is false we insert an end date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A2AD833F-8B93-4C7E-BB44-A3262713FD9E}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE Rosters&#xA;SET end_date = GETDATE()&#xA;WHERE active = 0;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Pre-Check SSIS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{38C39EDF-729D-4A9C-B7FB-F0449883BFD4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Pre-Check SSIS"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A2AD833F-8B93-4C7E-BB44-A3262713FD9E}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::Variable"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="RCID"
+            SQLTask:DtsVariableName="User::Variable" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\remove active from those former students"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{a0435a01-ef2f-4802-8b25-bef3c939d7db}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="remove active from those former students"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A2AD833F-8B93-4C7E-BB44-A3262713FD9E}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE StudentAffairsOperations.dbo.rosters as TARGET&#xA;USING  view_former_students as SOURCE&#xA;ON  Target.RCID = source.RCID &#xA;&#xA;WHEN MATCHED THEN&#xA;UPDATE SET target.active = '0'; &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task 1"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{fad07b5d-5c27-467a-aaec-16982b1a3216}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task 1"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D7B06072-3D2F-435E-8ADE-963177AFE7E1}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Club Hub Clean Up Issue"
+          SendMailTask:MessageSource="We have an issue with the Club Hub SSIS on Hermes. Looks like the package was not able to clean up former students, please check it and the rosters table on the Student Affairs Operations Database. JSG" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Weekly Changes Flat file"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{99122D2C-2DD9-47E1-8929-380087238FCF}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Weekly Changes Flat file"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Weekly Changes Flat file\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Weekly Changes Flat file\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Colleague Club Code]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Colleague Club Code"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague Club Code]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague Club Code]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Colleague ID]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Colleague ID"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague ID]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague ID]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Membership Start Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Membership Start Date"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership Start Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Membership End Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Membership End Date"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership End Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership End Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role Start date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Role Start date"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role Start date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role Start date]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role End Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Club Role End Date"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role End Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role End Date]" />
+                    <inputColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].Columns[Club Role]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="Club Role"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague Club Code" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague ID" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      name="Club Membership Start Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Membership End Date]"
+                      dataType="dbDate"
+                      name="Club Membership End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role Start date]"
+                      dataType="dbDate"
+                      name="Club Role Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role End Date]"
+                      dataType="dbDate"
+                      name="Club Role End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Club Role" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Hermes view_roster_changes_last_week"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT        [Colleague Club Code], [Colleague ID], [Club Membership Start Date], [Club Membership End Date], [Club Role Start date], [Club Role End Date], [Club Role]
+FROM            view_roster_changes_last_week</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."view_roster_changes_last_week"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.StudentAffairsOperations1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague Club Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Colleague Club Code]"
+                      length="10"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague Club Code]"
+                      name="Colleague Club Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Colleague ID]"
+                      length="10"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Colleague ID]"
+                      name="Colleague ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Membership Start Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership Start Date]"
+                      name="Club Membership Start Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership End Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Membership End Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Membership End Date]"
+                      name="Club Membership End Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role Start date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role Start date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role Start date]"
+                      name="Club Role Start date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role End Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role End Date]"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role End Date]"
+                      name="Club Role End Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role]"
+                      length="4000"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].Columns[Club Role]"
+                      name="Club Role"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague Club Code" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="Colleague ID" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      name="Club Membership Start Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Membership End Date]"
+                      dataType="dbDate"
+                      name="Club Membership End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role Start date]"
+                      dataType="dbDate"
+                      name="Club Role Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role End Date]"
+                      dataType="dbDate"
+                      name="Club Role End Date" />
+                    <externalMetadataColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output].ExternalColumns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      name="Club Role" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Colleague Club Code]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Colleague Club Code]"
+                      name="Colleague Club Code" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Colleague ID]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Colleague ID]"
+                      name="Colleague ID" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Membership Start Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Membership Start Date]"
+                      name="Club Membership Start Date" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Membership End Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Membership End Date]"
+                      name="Club Membership End Date" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role Start date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role Start date]"
+                      name="Club Role Start date" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role End Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role End Date]"
+                      name="Club Role End Date" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[Club Role]"
+                      name="Club Role" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Weekly Changes Flat file.Paths[ADO NET Source Output]"
+              endId="Package\Weekly Changes Flat file\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{96B15E0B-4086-4155-AB98-D526AFC9FDC9}"
+      DTS:From="Package\Close former students roles"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\remove active from those former students" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{48AAFFD3-0C99-48E5-A6D0-C6952C3F9AB3}"
+      DTS:From="Package\remove active from those former students"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Send Mail Task 1"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C0DA90C0-C809-4C9B-AB2E-C2BD6A1943E4}"
+      DTS:From="Package\Close former students roles"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Send Mail Task 1"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{723011BB-08A2-4BB9-AB35-17B727685483}"
+      DTS:From="Package\remove active from those former students"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\if active is false we insert an end date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{A135D3A6-8D2F-4DE0-9082-8F040276B0C0}"
+      DTS:From="Package\if active is false we insert an end date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Send Mail Task 1"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{4DD87DFF-17CB-42E7-9742-4BE350508B93}"
+      DTS:From="Package\if active is false we insert an end date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Weekly Changes Flat file" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{BD2F735A-0E9C-44F9-9D94-661A21888857}"
+      DTS:From="Package\Pre-Check SSIS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Close former students roles" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{678525E4-9DF6-4D20-BCC8-E50DF021144B}"
+      DTS:From="Package\Pre-Check SSIS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Email Bad"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="213,42"
+          Id="Package\Close former students roles"
+          TopLeft="446,155" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Email Bad"
+          TopLeft="719,74" />
+        <NodeLayout
+          Size="261,42"
+          Id="Package\if active is false we insert an end date"
+          TopLeft="445,411" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Pre-Check SSIS"
+          TopLeft="458,51" />
+        <NodeLayout
+          Size="281,42"
+          Id="Package\remove active from those former students"
+          TopLeft="452,274" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Send Mail Task 1"
+          TopLeft="815,226" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Weekly Changes Flat file"
+          TopLeft="448,537" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="518.333333333333,197">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74.1666666666666,77"
+              Start="0,0"
+              End="74.1666666666666,69.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.1444547996272" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.1444547996272"
+                    Point2="0,31.1444547996272"
+                    Point3="4,31.1444547996272" />
+                  <mssgle:LineSegment
+                    End="70.1666666666666,31.1444547996272" />
+                  <mssgle:CubicBezierSegment
+                    Point1="70.1666666666666,31.1444547996272"
+                    Point2="74.1666666666666,31.1444547996272"
+                    Point3="74.1666666666666,35.1444547996272" />
+                  <mssgle:LineSegment
+                    End="74.1666666666666,69.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="733,295">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="82,-48"
+              Start="0,0"
+              End="74.5,-48">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="37,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37,0"
+                    Point2="41,0"
+                    Point3="41,-4" />
+                  <mssgle:LineSegment
+                    End="41,-44" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41,-44"
+                    Point2="41,-48"
+                    Point3="45,-48" />
+                  <mssgle:LineSegment
+                    End="74.5,-48" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="25.75865234375,1,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="586.666666666667,197">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="310.333333333333,29"
+              Start="0,0"
+              End="310.333333333333,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.72972972972973" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.72972972972973"
+                    Point2="0,11.7297297297297"
+                    Point3="4,11.7297297297297" />
+                  <mssgle:LineSegment
+                    End="306.333333333333,11.7297297297297" />
+                  <mssgle:CubicBezierSegment
+                    Point1="306.333333333333,11.7297297297297"
+                    Point2="310.333333333333,11.7297297297297"
+                    Point3="310.333333333333,15.7297297297297" />
+                  <mssgle:LineSegment
+                    End="310.333333333333,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="139.925319010417,16.7297297297297,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="592.5,316">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-59.1666666666666,95"
+              Start="0,0"
+              End="-59.1666666666666,87.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.6527037319116" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,52.6527037319116"
+                    Point2="0,56.6527037319116"
+                    Point3="-4,56.6527037319116" />
+                  <mssgle:LineSegment
+                    End="-55.1666666666666,56.6527037319116" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-55.1666666666666,56.6527037319116"
+                    Point2="-59.1666666666666,56.6527037319116"
+                    Point3="-59.1666666666666,60.6527037319116" />
+                  <mssgle:LineSegment
+                    End="-59.1666666666666,87.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="617.666666666667,411">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="279.333333333333,-143"
+              Start="0,0"
+              End="279.333333333333,-135.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-53.7227722772277" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-53.7227722772277"
+                    Point2="0,-57.7227722772277"
+                    Point3="4,-57.7227722772277" />
+                  <mssgle:LineSegment
+                    End="275.333333333333,-57.7227722772277" />
+                  <mssgle:CubicBezierSegment
+                    Point1="275.333333333333,-57.7227722772277"
+                    Point2="279.333333333333,-57.7227722772277"
+                    Point3="279.333333333333,-61.7227722772277" />
+                  <mssgle:LineSegment
+                    End="279.333333333333,-135.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="124.425319010417,-52.7227722772277,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="575.5,453">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-27,84"
+              Start="0,0"
+              End="-27,76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38"
+                    Point2="0,42"
+                    Point3="-4,42" />
+                  <mssgle:LineSegment
+                    End="-23,42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23,42"
+                    Point2="-27,42"
+                    Point3="-27,46" />
+                  <mssgle:LineSegment
+                    End="-27,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="543,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9.5,62"
+              Start="0,0"
+              End="9.5,54.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27"
+                    Point2="0,31"
+                    Point3="4,31" />
+                  <mssgle:LineSegment
+                    End="5.5,31" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.5,31"
+                    Point2="9.5,31"
+                    Point3="9.5,35" />
+                  <mssgle:LineSegment
+                    End="9.5,54.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="617,72">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="102,23"
+              Start="0,0"
+              End="94.5,23">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="47,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="47,0"
+                    Point2="51,0"
+                    Point3="51,4" />
+                  <mssgle:LineSegment
+                    End="51,19" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51,19"
+                    Point2="51,23"
+                    Point3="55,23" />
+                  <mssgle:LineSegment
+                    End="94.5,23" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="35.75865234375,-15.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="ONLY use this portion of the Package if you need to&#xA;adjust when users active = false. This updates the&#xA;end date with current date rather than null."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="304,72"
+          Id="bda29561-9867-4a6f-8ea8-fa1808901c28"
+          TopLeft="712,397" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Weekly Changes Flat file">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Weekly Changes Flat file\Flat File Destination"
+          TopLeft="312,362" />
+        <NodeLayout
+          Size="279,42"
+          Id="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week"
+          TopLeft="318,163" />
+        <EdgeLayout
+          Id="Package\Weekly Changes Flat file.Paths[ADO NET Source Output]"
+          TopLeft="457.5,205">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-57.5,157"
+              Start="0,0"
+              End="-57.5,149.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,74.5"
+                    Point2="0,78.5"
+                    Point3="-4,78.5" />
+                  <mssgle:LineSegment
+                    End="-53.5,78.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-53.5,78.5"
+                    Point2="-57.5,78.5"
+                    Point3="-57.5,82.5" />
+                  <mssgle:LineSegment
+                    End="-57.5,149.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Weekly Changes Flat file\Hermes view_roster_changes_last_week">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

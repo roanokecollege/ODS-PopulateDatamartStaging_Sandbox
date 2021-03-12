@@ -1,0 +1,302 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/12/2013 3:52:45 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{F424583A-3DAF-4BB3-8062-6558FEDB25E2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="EmployeeAddressImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{CA525C3B-8F10-4F49-B015-689669D1D669}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{227B2448-AE44-4E6F-A9C2-178DBF41C8D4}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CE97D625-5C61-484E-94FE-E56B0B8022A5}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-EmployeeAddressImport-{CE97D625-5C61-484E-94FE-E56B0B8022A5}localhost.Staging;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{4CB22F5F-9AF0-48AE-A215-9212C72AA66B}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Merge Home Address"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B8EFB128-D206-470A-882A-BDE731F5534B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Home Address"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CE97D625-5C61-484E-94FE-E56B0B8022A5}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @KeyAddressTypeId as int&#xA;&#xA;SELECT @KeyAddressTypeId = key_AddressTypeId&#xA;FROM DataMart.dbo.AddressType&#xA;Where Description = 'Home'&#xA;&#xA;&#xA;MERGE Datamart.dbo.Address AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees) AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_AddressTypeId = @keyAddressTypeId)&#xA;WHEN MATCHED THEN&#xA;   Delete;&#xA;&#xA;MERGE Datamart.dbo.Address AS Target&#xA;USING (SELECT RCID, HomeAddress, HomeAddress2, HomeCity, &#xA;  (SELECT key_StateId FROM Datamart.dbo.States&#xA;   WHERE STateCode = HomeState) as HomeStateKey, HomeZip&#xA; FROM Staging.dbo.DM_Employees&#xA; Where HomeAddress is not NULL AND len(rtrim(HomeAddress)) &gt; 0)  AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_AddressTypeId = @keyAddressTypeId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.Address1 = Source.HomeAddress, Target.Address2 = Source.HomeAddress2, Target.City = Source.HomeCity,&#xA;  Target.fkey_stateId = Source.HomeStateKey, Target.PostalCode = Source.HomeZip&#xA;  &#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (rcid, Address1, Address2, City, fkey_StateId, PostalCode, fkey_AddressTypeId)&#xA;   &#xA;    VALUES (Source.rcid, Source.HomeAddress, Source.HomeAddress2, Source.HomeCity, &#xA;  Source.HomeStateKey, Source.HomeZip, @KeyAddressTypeId);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Home address Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{1DE2FD47-8686-4887-A882-24D57A26C2BC}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Home address Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{4CB22F5F-9AF0-48AE-A215-9212C72AA66B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Address Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Merge Home Address from Staging to Datamart &#xA;&#xA;&#xA;in package EmployeeAddressImport has failed.&#xA;&#xA;&#xA;&#xA;  This task must be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Local Address"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DF7E7C00-4F3E-4F84-A0ED-F074676F73F2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Local Address"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CE97D625-5C61-484E-94FE-E56B0B8022A5}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @KeyAddressTypeId as int&#xA;&#xA;SELECT @KeyAddressTypeId = key_AddressTypeId&#xA;FROM DataMart.dbo.AddressType&#xA;Where Description = 'Local'&#xA;&#xA;&#xA;MERGE Datamart.dbo.Address AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees) AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_AddressTypeId = @keyAddressTypeId)&#xA;WHEN MATCHED THEN&#xA;   Delete;&#xA;&#xA;&#xA;MERGE Datamart.dbo.Address AS Target&#xA;USING (SELECT RCID, isnull(Building,'') as Building, isnull(Room,'') as Room&#xA; FROM Staging.dbo.DM_Employees WHERE (Building is not null OR Room is not null)&#xA;AND (len(rtrim(building)) &gt; 0 OR len(rtrim(Room)) &gt; 0)&#xA; ) AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_AddressTypeId = @keyAddressTypeId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.Address1 = rtrim(Source.Room) + ' ' + rtrim(Source.Building)&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (rcid, Address1, fkey_AddressTypeId)&#xA;    VALUES (Source.rcid, rtrim(Source.room) + ' ' + rtrim(Source.Building), @KeyAddressTypeId);&#xA;    &#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge local address Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{76E554D9-CD57-4E2E-B30C-E2D6B9C21D63}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge local address Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{4CB22F5F-9AF0-48AE-A215-9212C72AA66B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Address Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Merge Local Address from Staging to Datamart &#xA;&#xA;&#xA;in package EmployeeAddressImport has failed.&#xA;&#xA;&#xA;&#xA;  This task must be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated at date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{84793319-3438-47E2-A9BF-6E8DBA106D10}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated at date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{227B2448-AE44-4E6F-A9C2-178DBF41C8D4}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;   Address&#xA;SET&#xA;   Address.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A62EF077-773E-40DF-AF5D-AAFF832EBD56}"
+      DTS:From="Package\Merge Home Address"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Merge Home address Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F67C3007-7B61-4342-8BD2-40D35B5D2671}"
+      DTS:From="Package\Merge Local Address"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Merge local address Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8EA52E1E-CF46-4597-847D-9D158C4644EC}"
+      DTS:From="Package\Merge Local Address"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\updated at date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="196,44"
+          Id="Package\Merge Home Address"
+          TopLeft="13.6132075471698,8.59433962264151" />
+        <NodeLayout
+          Size="177,44"
+          Id="Package\Merge Home address Error Notification"
+          TopLeft="5.5,181.38679245283" />
+        <NodeLayout
+          Size="196,44"
+          Id="Package\Merge Local Address"
+          TopLeft="311.160377358491,5.5" />
+        <NodeLayout
+          Size="177,44"
+          Id="Package\Merge local address Error Notification"
+          TopLeft="273.084905660377,162.292452830189" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\updated at date"
+          TopLeft="536,257" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="111.462264150943,52.5188679245283">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-17.622641509434,128.867924528302"
+              Start="0,0"
+              End="-17.622641509434,121.367924528302">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-17.622641509434,64.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-17.622641509434,121.367924528302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-24.052668410967,69.4150943396226,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="409.009433962264,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-47.5849056603774,112.867924528302"
+              Start="0,0"
+              End="-47.5849056603774,105.367924528302">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,56.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-47.5849056603774,56.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-47.5849056603774,105.367924528302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-39.0338004864387,61.4150943396226,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="440.493710691824,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="173.006289308176,207.5"
+              Start="0,0"
+              End="173.006289308176,200">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.0080971659919" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,80.0080971659919"
+                    Point2="0,84.0080971659919"
+                    Point3="4,84.0080971659919" />
+                  <mssgle:LineSegment
+                    End="169.006289308176,84.0080971659919" />
+                  <mssgle:CubicBezierSegment
+                    Point1="169.006289308176,84.0080971659919"
+                    Point2="173.006289308176,84.0080971659919"
+                    Point3="173.006289308176,88.0080971659919" />
+                  <mssgle:LineSegment
+                    End="173.006289308176,200" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

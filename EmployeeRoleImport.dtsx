@@ -1,0 +1,509 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/12/2013 3:39:01 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{4F2E9F02-9CBD-477B-B18D-8A1BEC9249A3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="EmployeeRoleImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{8FB25A51-7BF1-4B6F-B3DE-5436468DF1AF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F506A0F9-7CC0-4430-9513-42893455ECD5}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A09B566A-3272-4A03-9CB6-6157743E0BC2}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-EmployeeRoleImport-{A09B566A-3272-4A03-9CB6-6157743E0BC2}localhost.Staging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{4442FA66-5F87-4CD6-B4FC-99274C1E694B}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear Faculty, Staff &amp; Retiree Roles"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CF188FD9-0B85-4B09-B3AA-81E9228291F8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear Faculty, Staff &amp; Retiree Roles"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A09B566A-3272-4A03-9CB6-6157743E0BC2}"
+          SQLTask:SqlStatementSource="DELETE &#xA;FROM Datamart.dbo.PersonTypeMap&#xA;WHERE fkey_personTypeId in &#xA;&#xA;(SELECT key_personTypeId &#xA;FROM Datamart.dbo.PersonType&#xA;WHERE description in ('Faculty', 'Staff','Retiree'))" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Faculty Role"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2416766C-4194-4C54-A6C3-2A40F8CE3E41}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Faculty Role"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A09B566A-3272-4A03-9CB6-6157743E0BC2}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @keyPersonType as integer&#xA;&#xA;SELECT @keyPersonType = key_PersonTypeId&#xA;FROM DataMart.dbo.PersonType&#xA;WHERE Description = 'Faculty'&#xA;&#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees WHERE rtrim(faculty) = 'Y') AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;&#x9;UPDATE SET TARGET.Active = 1&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT (rcid, fkey_PersonTypeId, Active)&#xA;    VALUES (Source.rcid, @keyPersonType, 1);&#xA;    &#xA;    &#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees&#xA; WHERE Faculty ='N') as Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;   DELETE;&#x9;    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Faculty Role Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{6D956449-8604-47B6-BF29-637303C6E2D7}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Faculty Role Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{4442FA66-5F87-4CD6-B4FC-99274C1E694B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Role Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Import Faculty Role from Staging to Datamart &#xA;&#xA;&#xA;in package EmployeeRoleImport has failed.&#xA;&#xA;&#xA;&#xA;  This task must be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Retiree Role"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0E4B7853-EE93-4F4F-A9F9-9C20B31EBD92}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Retiree Role"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A09B566A-3272-4A03-9CB6-6157743E0BC2}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @keyPersonType as integer&#xA;&#xA;SELECT @keyPersonType = key_PersonTypeId&#xA;FROM DataMart.dbo.PersonType&#xA;WHERE Description = 'Retiree'&#xA;&#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees WHERE rtrim(Retiree) = 'Y') AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;&#x9;UPDATE SET TARGET.Active = 1&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT (rcid, fkey_PersonTypeId, Active)&#xA;    VALUES (Source.rcid, @keyPersonType, 1);&#xA;    &#xA;    &#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees&#xA; WHERE Retiree ='N') as Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;   DELETE;&#x9;    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Retiree Role Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{7F3C931B-F7E2-44D6-8671-AA9316BB48B8}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Retiree Role Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{4442FA66-5F87-4CD6-B4FC-99274C1E694B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Role Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Import Retiree Role from Staging to Datamart &#xA;&#xA;&#xA;in package EmployeeRoleImport has failed.&#xA;&#xA;&#xA;&#xA;  This task must be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Staff Role"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{47947CEE-5909-4CC9-96DA-55C151C8A8E1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Staff Role"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A09B566A-3272-4A03-9CB6-6157743E0BC2}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @keyPersonType as integer&#xA;&#xA;SELECT @keyPersonType = key_PersonTypeId&#xA;FROM DataMart.dbo.PersonType&#xA;WHERE Description = 'Staff'&#xA;&#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees WHERE rtrim(Staff) = 'Y') AS Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;&#x9;UPDATE SET TARGET.Active = 1&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT (rcid, fkey_PersonTypeId, Active)&#xA;    VALUES (Source.rcid, @keyPersonType, 1);&#xA;    &#xA;    &#xA;MERGE Datamart.dbo.PersonTypeMap AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees&#xA; WHERE Staff ='N') as Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_persontypeid = @keyPersonType)&#xA;WHEN MATCHED THEN&#xA;   DELETE;&#x9;    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Staff Role Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{BB0FE940-BA46-47DE-BBE8-4AA3B0668D1E}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Staff Role Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{4442FA66-5F87-4CD6-B4FC-99274C1E694B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Role Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Import Staff Role from Staging to Datamart &#xA;&#xA;&#xA;in package EmployeeRoleImport has failed.&#xA;&#xA;&#xA;&#xA;  This task must be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Person Type Map Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F5185328-4B5E-4A8A-90BF-C1B7154FFD01}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Person Type Map Date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F506A0F9-7CC0-4430-9513-42893455ECD5}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    PersonTypeMap&#xA;SET&#xA;   PersonTypeMap.updated_at = CONVERT(varchar(255), GETDATE(), 120)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{88C55FD0-43E4-486D-8DFE-E24463A74CFF}"
+      DTS:From="Package\Clear Faculty, Staff &amp; Retiree Roles"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import Faculty Role" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E83C3E0A-923F-4F96-A8B4-52F03EADBFCC}"
+      DTS:From="Package\Clear Faculty, Staff &amp; Retiree Roles"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Import Staff Role" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{07EE9D21-B063-41E2-8335-C294833D8DA4}"
+      DTS:From="Package\Clear Faculty, Staff &amp; Retiree Roles"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Import Retiree Role" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{9EE23235-C8AA-4CDF-89D2-EF45CD72E98E}"
+      DTS:From="Package\Import Faculty Role"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Import Faculty Role Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{4D1093A3-AFFD-46EF-9FA4-A87A3C82A7ED}"
+      DTS:From="Package\Import Staff Role"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Import Staff Role Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{BC41C8C4-7D12-4252-8361-C1004F803974}"
+      DTS:From="Package\Import Retiree Role"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Import Retiree Role Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{D56E7408-A48B-465D-91B1-2276DCCD271E}"
+      DTS:From="Package\Import Retiree Role"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Person Type Map Date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="329,44"
+          Id="Package\Clear Faculty, Staff &amp; Retiree Roles"
+          TopLeft="137.38679245283,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Import Faculty Role"
+          TopLeft="17.5377358490566,173.235849056604" />
+        <NodeLayout
+          Size="136,74"
+          Id="Package\Import Faculty Role Error Notification"
+          TopLeft="5.5,280.971698113208" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Import Retiree Role"
+          TopLeft="391.952830188679,181.235849056604" />
+        <NodeLayout
+          Size="136,74"
+          Id="Package\Import Retiree Role Error Notification"
+          TopLeft="394.896226415094,275.877358490566" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Import Staff Role"
+          TopLeft="223.235849056604,182.216981132075" />
+        <NodeLayout
+          Size="136,74"
+          Id="Package\Import Staff Role Error Notification"
+          TopLeft="214.179245283019,278.858490566038" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Person Type Map Date"
+          TopLeft="686,234" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="239.839622641509,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-154.415094339623,123.811320754717"
+              Start="0,0"
+              End="-154.415094339623,116.311320754717">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-154.415094339623,61.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-154.415094339623,116.311320754717" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="364.367924528302,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-73.245283018868,132.792452830189"
+              Start="0,0"
+              End="-73.245283018868,125.292452830189">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,99.5849056603774" />
+                  <mssgle:LineSegment
+                    End="-73.245283018868,99.5849056603774" />
+                  <mssgle:LineSegment
+                    End="-73.245283018868,125.292452830189" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="385.122641509434,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="74.7169811320755,131.811320754717"
+              Start="0,0"
+              End="74.7169811320755,124.311320754717">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.9433962264151" />
+                  <mssgle:LineSegment
+                    End="74.7169811320755,32.9433962264151" />
+                  <mssgle:LineSegment
+                    End="74.7169811320755,124.311320754717" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="85.4245283018868,217.160377358491">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.0377358490566,63.811320754717"
+              Start="0,0"
+              End="-12.0377358490566,56.311320754717">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-12.0377358490566,31.8867924528302" />
+                  <mssgle:LineSegment
+                    End="-12.0377358490566,56.311320754717" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-21.2602155807783,36.8867924528302,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="291.122641509434,226.141509433962">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9.05660377358487,52.7169811320754"
+              Start="0,0"
+              End="-9.05660377358487,45.2169811320754">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.3396226415094" />
+                  <mssgle:LineSegment
+                    End="-9.05660377358487,26.3396226415094" />
+                  <mssgle:LineSegment
+                    End="-9.05660377358487,45.2169811320754" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-19.7696495430424,31.3396226415094,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="459.839622641509,225.160377358491">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="2.94339622641508,50.7169811320754"
+              Start="0,0"
+              End="2.94339622641508,43.2169811320754">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.3584905660377" />
+                  <mssgle:LineSegment
+                    End="2.94339622641508,25.3584905660377" />
+                  <mssgle:LineSegment
+                    End="2.94339622641508,43.2169811320754" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-13.7696495430425,30.3584905660377,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="527.952830188679,203.235849056604">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="158.047169811321,51.7641509433961"
+              Start="0,0"
+              End="150.547169811321,51.7641509433961">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="75.0235849056605,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="75.0235849056605,0"
+                    Point2="79.0235849056605,0"
+                    Point3="79.0235849056605,4" />
+                  <mssgle:LineSegment
+                    End="79.0235849056605,47.7641509433961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="79.0235849056605,47.7641509433961"
+                    Point2="79.0235849056605,51.7641509433961"
+                    Point3="83.0235849056605,51.7641509433961" />
+                  <mssgle:LineSegment
+                    End="150.547169811321,51.7641509433961" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

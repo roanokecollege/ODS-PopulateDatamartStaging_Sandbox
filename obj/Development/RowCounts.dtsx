@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/23/2021 10:39:25 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\it_gabrielson"
+  DTS:DTSID="{780441CD-46FA-4C1A-92C6-A4D20AD0442B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="RowCounts"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{80FBB5E1-5B56-4BDE-86E5-3C42D00C8F51}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes.DataMart1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{862F1549-C46A-4122-A089-8894166958F8}"
+      DTS:ObjectName="Hermes.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=Hermes;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RowCounts-{862F1549-C46A-4122-A089-8894166958F8}Hermes.DataMart1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{A13373B7-A23E-44E2-8F73-D977525D28AD}"
+      DTS:ObjectName="sandbox.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RowCounts-{A13373B7-A23E-44E2-8F73-D977525D28AD}sandbox.DataMart;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{DB497CA5-96DA-4E69-91B8-C9C7803AE3B4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\row count table"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="row count table"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."row_counts"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\row count table.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[sandbox.DataMart]"
+                  connectionManagerRefId="Package.ConnectionManagers[sandbox.DataMart]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].Columns[location]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="location"
+                      externalMetadataColumnId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[location]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[location]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].Columns[tablename]"
+                      cachedDataType="wstr"
+                      cachedLength="517"
+                      cachedName="tablename"
+                      externalMetadataColumnId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[tablename]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[tablename]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].Columns[rowcount]"
+                      cachedDataType="i8"
+                      cachedName="rowcount"
+                      externalMetadataColumnId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[rowcount]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[rowcount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].Columns[datetime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="datetime"
+                      externalMetadataColumnId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[datetime]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[datetime]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[location]"
+                      dataType="wstr"
+                      length="50"
+                      name="location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[tablename]"
+                      dataType="wstr"
+                      length="650"
+                      name="tablename" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[rowcount]"
+                      dataType="wstr"
+                      length="10"
+                      name="rowcount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input].ExternalColumns[datetime]"
+                      dataType="dbTimeStamp"
+                      name="datetime" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\row count table.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\row count table.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\row count table.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\row count table.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\row count table.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\view row counts"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="view row counts"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."view_row_counts"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\view row counts.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[sandbox.DataMart]"
+                  connectionManagerRefId="Package.ConnectionManagers[sandbox.DataMart]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[location]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[location]"
+                      length="16"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[location]"
+                      name="location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[tablename]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[tablename]"
+                      length="517"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[tablename]"
+                      name="tablename"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[rowcount]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[rowcount]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[rowcount]"
+                      name="rowcount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[datetime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[datetime]"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].Columns[datetime]"
+                      name="datetime"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[location]"
+                      dataType="wstr"
+                      length="16"
+                      name="location" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[tablename]"
+                      dataType="wstr"
+                      length="517"
+                      name="tablename" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[rowcount]"
+                      dataType="i8"
+                      name="rowcount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output].ExternalColumns[datetime]"
+                      dataType="dbTimeStamp"
+                      name="datetime" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[location]"
+                      dataType="wstr"
+                      length="16"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[location]"
+                      name="location" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[tablename]"
+                      dataType="wstr"
+                      length="517"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[tablename]"
+                      name="tablename" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[rowcount]"
+                      dataType="i8"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[rowcount]"
+                      name="rowcount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[datetime]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[datetime]"
+                      name="datetime" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[ADO NET Source Output]"
+              endId="Package\Data Flow Task\row count table.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task\view row counts.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Data Flow Task"
+          TopLeft="241,121" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Data Flow Task\row count table"
+          TopLeft="450,301" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Data Flow Task\view row counts"
+          TopLeft="426,78" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[ADO NET Source Output]"
+          TopLeft="504.5,120">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,181"
+              Start="0,0"
+              End="22,173.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,86.5"
+                    Point2="0,90.5"
+                    Point3="4,90.5" />
+                  <mssgle:LineSegment
+                    End="18,90.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,90.5"
+                    Point2="22,90.5"
+                    Point3="22,94.5" />
+                  <mssgle:LineSegment
+                    End="22,173.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\row count table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\view row counts">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,2594 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/5/2013 11:06:38 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{8BE124E4-A3FC-4CCB-8BFF-DA7C5C79D5EC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CoursesImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="66"
+  DTS:VersionGUID="{8CF97709-8D1A-45A2-B165-2164222A5AA3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9C69653B-F58B-45CD-8D0F-243EBFAE48A5}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-CoursesImport-{F8034358-8286-4036-8D0D-DAEB0FC723E2}localhost.Staging;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+      DTS:ObjectName="mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C53BC671-91AB-41AE-AD3D-0FF56874C0E1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="row_count">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Apply Cross Listed Course Info"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0A5E02E1-77C4-4EE5-AB0F-E6E06654A3E5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Apply Cross Listed Course Info"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+          SQLTask:SqlStatementSource="--clear all cross-listed associations for current course set&#xA;MERGE DATAMART.dbo.Courses as Target&#xA;USING (SELECT key_CourseId FROM Datamart.dbo.Courses &#xA;&#x9;&#x9;WHERE key_CourseId in &#xA;&#x9;&#x9;&#x9;(SELECT CourseKey FROM Staging.dbo.DM_Courses)) as Source&#xA;ON Target.key_CourseId = Source.key_CourseId&#xA;When MATCHED THEN&#xA;&#x9;UPDATE set CrossListedkey = NULL;&#x9;&#x9;&#x9;&#xA;&#xA;&#xA;&#xA;--Apply current cross listed course information&#xA;DECLARE @CourseKey as bigint&#xA;DECLARE @CrossListed as bigint&#xA;DeCLARE @CrossListed2 as bigint&#xA;DECLARE @CrossListedKey as bigint&#xA;&#xA;DECLARE CourseCursor  cursor for&#xA;(SELECT CourseKey, CrossListed, CrossListed2 FROM Staging.dbo.DM_Courses&#xA;&#x9;WHERE CrossListed Is NOT NULL OR CrossListed2 is NOT NULL)&#xA;&#xA;open CourseCursor&#xA;fetch next FROM CourseCursor into @CourseKey, @CrossListed, @CrossListed2&#xA;&#xA;while @@FETCH_STATUS = 0&#xA;begin&#xA;&#x9;SELECT @CrossListedKey = (MAX(isnull(CrossListedKey,0)) + 1) From DataMart.dbo.Courses&#xA;&#x9;&#xA;&#x9;UPDATE DataMart.dbo.Courses&#xA;&#x9;SET CrossListedKey = @CrossListedKey&#xA;&#x9;WHERE key_CourseId in (@CourseKey, @CrossListed, @CrossListed2)&#xA;&#x9;&#x9;&#xA;&#x9;fetch next from CourseCursor into @CourseKey, @CrossListed, @CrossListed2&#xA;&#xA;end&#xA;close CourseCursor&#xA;Deallocate CourseCursor&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Apply Cross Listed Course Info Import Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{F6A696CF-38C4-4DC2-B31F-5C3A6EFE4C57}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Apply Cross Listed Course Info Import Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="6">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Courses Instructors Import Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Apply Cross Listed Course Info  &#xA;&#xA;in the Package CoursesImport&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;located in coursesimport.dtsx&#xA;&#xA; has failed. &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import of Courses data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Copy course_meeting_times into Datamart"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8FD184B9-F965-4049-9EE9-10D6FC61ECE2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Copy course_meeting_times into Datamart"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input].Columns[old_start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="old_start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input].Columns[old_end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="old_end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_end_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_CourseId]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[NewInsert]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="NewInsert"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_CourseId]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(fkey_CourseId)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Delete]"
+                  description="Output 3 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Delete"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]}) || [ISNULL](#{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(start_time) || ISNULL(end_time)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Update]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Update"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">(#{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_start_time]} != #{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]}) || (#{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_end_time]} != #{Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">(old_start_time != start_time) || (old_end_time != end_time)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">2</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Default]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Default"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Datamart Meetings"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[course_meeting_times_by_days]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.DataMart]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.DataMart]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_CourseId]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_day_of_week]"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_CourseId]"
+                      dataType="i8"
+                      name="fkey_CourseId" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="fkey_day_of_week" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      dataType="dbTime2"
+                      name="start_time"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      dataType="dbTime2"
+                      name="end_time"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">2</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_CourseId]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="fkey_day_of_week"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_day_of_week]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[end_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_CourseId]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="fkey_day_of_week"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_day_of_week]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[end_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[fkey_CourseId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[fkey_day_of_week]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_CourseId]"
+                      name="new_fkey_CourseId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[fkey_CourseId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[start_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[end_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_start_time]"
+                      name="old_start_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[start_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[old_end_time]"
+                      name="old_end_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input].Columns[end_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_day_of_week]"
+                      name="new_fkey_day_of_week"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input].Columns[fkey_day_of_week]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">UPDATE course_meeting_times_by_days
+SET start_time = ?, end_time = ?
+WHERE fkey_CourseId = ? AND fkey_day_of_week = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.DataMart]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.DataMart]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_CourseId]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].Columns[fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="fkey_day_of_week"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[fkey_day_of_week]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="dbTime2"
+                      name="Param_0"
+                      scale="7">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1073741889</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="dbTime2"
+                      name="Param_1"
+                      scale="7">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1073741889</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="i8"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[course_meeting_times_by_days]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.DataMart]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.DataMart]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[end_time]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[new_fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="new_fkey_CourseId"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fkey_CourseId]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_CourseId]" />
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[new_fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="new_fkey_day_of_week"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fkey_day_of_week]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output].Columns[new_fkey_day_of_week]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fkey_CourseId]"
+                      dataType="i8"
+                      name="fkey_CourseId" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="fkey_day_of_week" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      dataType="dbTime2"
+                      name="start_time"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      dataType="dbTime2"
+                      name="end_time"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input].Columns[fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="fkey_day_of_week"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[start_time]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[end_time]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[start_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output].Columns[end_time]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input].Columns[fkey_CourseId]"
+                      cachedDataType="i8"
+                      cachedName="fkey_CourseId"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input].Columns[fkey_day_of_week]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="fkey_day_of_week"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input].Columns[start_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="start_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[start_time]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input].Columns[end_time]"
+                      cachedDataType="dbTime2"
+                      cachedName="end_time"
+                      cachedScale="7"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[end_time]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[start_time]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[end_time]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy course_meeting_times into Datamart\Staging Meetings"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Staging Meetings"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[course_meeting_times_by_days]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_CourseId]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_day_of_week]"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_CourseId]"
+                      dataType="i8"
+                      name="fkey_CourseId" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="fkey_day_of_week" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      dataType="dbTime2"
+                      name="start_time"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      dataType="dbTime2"
+                      name="end_time"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_CourseId]"
+                      dataType="i8"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_CourseId]"
+                      name="fkey_CourseId" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_day_of_week]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[fkey_day_of_week]"
+                      name="fkey_day_of_week" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      name="start_time"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      dataType="dbTime2"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      name="end_time"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[Merge Join Output]"
+              endId="Package\Copy course_meeting_times into Datamart\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\Copy course_meeting_times into Datamart\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[NewInsert]"
+              endId="Package\Copy course_meeting_times into Datamart\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="NewInsert"
+              startId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[NewInsert]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[OLE DB Source Output]"
+              endId="Package\Copy course_meeting_times into Datamart\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\Copy course_meeting_times into Datamart\Datamart Meetings.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[OLE DB Source Output1]"
+              endId="Package\Copy course_meeting_times into Datamart\Sort 1.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\Copy course_meeting_times into Datamart\Staging Meetings.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[Sort Output]"
+              endId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Copy course_meeting_times into Datamart\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[Sort Output1]"
+              endId="Package\Copy course_meeting_times into Datamart\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Copy course_meeting_times into Datamart\Sort 1.Outputs[Sort Output]" />
+            <path
+              refId="Package\Copy course_meeting_times into Datamart.Paths[Update]"
+              endId="Package\Copy course_meeting_times into Datamart\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Update"
+              startId="Package\Copy course_meeting_times into Datamart\Conditional Split.Outputs[Update]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Course Comments Import Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{A724FC44-DC62-4195-BC68-1AFAF16FA899}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Course Comments Import Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Courses Instructors Import Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import Course Comments  &#xA;&#xA;in the Package CoursesImport&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;located in coursesimport.dtsx&#xA;&#xA; has failed. &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import of Courses data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Course Meeting Info Import Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{BAD7689C-1C05-4BD5-8935-C3BC16755B78}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Course Meeting Info Import Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Courses Instructors Import Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import Course Meeting Info  &#xA;&#xA;in the Package CoursesImport&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;located in coursesimport.dtsx&#xA;&#xA; has failed. &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import of Courses data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Courses Import Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{E74A4108-BC78-427F-BB54-7C25E78E1FF9}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Courses Import Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="CoursesImport Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Insert/Update into DM Courses table  &#xA;&#xA;in the Package CoursesImport&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;located in coursesimport.dtsx&#xA;&#xA; has failed. &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import of Courses data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Courses Instructor Import Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{D61B59D6-6A59-4EDF-9FEE-832E2FBFF1E7}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Courses Instructor Import Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Courses Instructors Import Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import Course Instructor Data  &#xA;&#xA;in the Package CoursesImport&#xA;&#xA;&#xA;&#xA; &#xA;&#xA;located in coursesimport.dtsx&#xA;&#xA; has failed. &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Import of Courses data into the Datamart has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Import Failure - Copy course_meeting_times to DataMart"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{6B96FA76-351A-4337-81D5-2E8C0F22F094}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Import Failure - Copy course_meeting_times to DataMart"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{CCB579A3-5CE3-4623-A4F6-2E29F4962003}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="chssmith@roanoke.edu"
+          SendMailTask:Subject="Data Task Failed: course_meeting_times import"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="The course_meeting_times import on HERMES, package CoursesImport, has failed.  Please examine the error messages and re-run the package." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Course Comments"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E105A4A0-A7AB-4817-9CBD-039C41B399C0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Course Comments"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="-- Clear current comments for a given course&#xA;MERGE Datamart.dbo.CourseComments AS Target&#xA;USING (SELECT CourseKey FROM Staging.dbo.DM_Courses) as Source&#xA;ON (Target.fkey_CourseId = Source.CourseKey)&#xA;WHEN MATCHED THEN&#xA;&#x9;DELETE;&#xA;&#x9;&#xA;-- Merge Comment1&#xA;MERGE Datamart.dbo.CourseComments as Target&#xA;Using (SELECT CourseKey, Comment1 FROM Staging.dbo.view_comments_cased WHERE Comment1 is not NULL) as Source&#xA;on (Target.fkey_CourseId = Source.CourseKey AND Target.Rank = 1)&#xA;When Not MATCHED THEN&#xA;&#x9;INSERT (fkey_CourseId, Comment, Rank) VALUES (Source.CourseKey, Source.Comment1, 1);&#xA;&#x9;&#xA;-- Merge Comment2&#xA;MERGE Datamart.dbo.CourseComments as Target&#xA;Using (SELECT CourseKey, Comment2 FROM Staging.dbo.DM_Courses_Comments WHERE Comment2 is not NULL) as Source&#xA;on (Target.fkey_CourseId = Source.CourseKey AND Target.Rank = 2)&#xA;When Not MATCHED THEN&#xA;&#x9;INSERT (fkey_CourseId, Comment, Rank) VALUES (Source.CourseKey, Source.Comment2, 2);&#x9;&#xA;&#x9;&#xA;-- Merge Comment3&#xA;MERGE Datamart.dbo.CourseComments as Target&#xA;Using (SELECT CourseKey, Comment3 FROM Staging.dbo.DM_Courses_Comments WHERE Comment3 is not NULL) as Source&#xA;on (Target.fkey_CourseId = Source.CourseKey AND Target.Rank = 3)&#xA;When Not MATCHED THEN&#xA;&#x9;INSERT (fkey_CourseId, Comment, Rank) VALUES (Source.CourseKey, Source.Comment3, 3);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Course Instructor Data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EF5D1C44-C890-4C43-A263-8233E9093D9F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Course Instructor Data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+          SQLTask:SqlStatementSource="-- Clear current instructors for a given course&#xA;MERGE Datamart.dbo.CourseInstructorMap AS Target&#xA;USING (SELECT CourseKey FROM Staging.dbo.DM_Course_Instructors) as Source&#xA;ON (Target.fkey_CourseId = Source.CourseKey)&#xA;WHEN MATCHED THEN&#xA;&#x9;DELETE;&#xA;&#x9;&#xA;-- Instructor  DATA&#x9;&#xA;MERGE Datamart.dbo.CourseInstructorMap AS Target&#xA;USING (SELECT CourseKey, InstructorRCID, TCU FROM Staging.dbo.DM_Course_Instructors Where InstructorRCID is not null) as Source&#xA;ON (Target.fkey_CourseId = Source.CourseKey AND Target.RCID = Source.InstructorRCID)&#xA;WHEN NOT MATCHED THEN&#xA;&#x9;INSERT(fkey_courseId, RCID, TCU) VALUES (Source.CourseKey, Source.InstructorRCID, Source.TCU);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import course Meeting Info"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7C43CDF3-8EC6-428D-9662-65ABDBAE773C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import course Meeting Info"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Courses AS Target&#xA;USING (SELECT CourseKey, ClassRoom, ClassTime, Block&#xA;FROM Staging.dbo.DM_Courses_Meeting) as Source&#xA;ON (Target.key_CourseId = Source.CourseKey)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET TARGET.ClassRoom = SOURCE.ClassRoom, TARGET.ClassTime = SOURCE.classTime, TARGET.Block = SOURCE.Block;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert or Update Datamart Courses Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{392B85B9-1568-4439-843C-05C7B3D876DE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert or Update Datamart Courses Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F8034358-8286-4036-8D0D-DAEB0FC723E2}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Courses AS Target&#xA;USING (SELECT CourseKey, Dept, Number, Section, Description, Credits, SemesterKey, &#xA;coursestatus, CourseDescription, InstrMethod, InstrMethod2, InstrMethod3, InstrMethod4, InstrMethod5, Instr_Load,ImportDate,prereqflag, location, course_capacity, enrolled_students, available &#xA;FROM Staging.dbo.DM_Courses) as Source&#xA;ON (Target.key_CourseId = Source.CourseKey)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.fkey_CourseCodeId = Source.Dept, Target.Number = Source.Number, Target.ClassSection = Source.Section,&#xA;    Target.Description = Source.Description, Target.Credits = Source.Credits, Target.fkey_SemesterId = Source.SemesterKey,&#xA;    &#xA;    Target.fkey_CourseStatusTypeId = Source.CourseStatus, Target.courseDescription = rtrim(Source.CourseDescription),&#xA;    Target.Today = SOURCE.ImportDate, Target.InstructionalMethod = Source.InstrMethod, Target.InstructionalMethod2 = Source.InstrMethod2,&#xA;Target.InstructionalMethod3 = Source.InstrMethod3,Target.InstructionalMethod4 = Source.InstrMethod4, Target.InstructionalMethod5 = Source.InstrMethod5,&#xA;    Target.Instr_Load = Source.Instr_Load, Target.PreReqFlag = Source.PreReqFlag, &#xA;&#xA;Target.Location = Source.location, &#xA;Target.course_capacity = Source.course_capacity,&#xA;Target.enrolled_students = Source.enrolled_students,&#xA;Target.available  = Source.available&#xA;&#xA;&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (key_CourseId, fkey_CourseCodeId, Number, ClassSection, Description, Credits, fkey_SemesterId,&#xA;&#x9;&#x9;&#x9; Fkey_CourseStatusTypeId, courseDescription,  today, InstructionalMethod, InstructionalMethod2,InstructionalMethod3, InstructionalMethod4, InstructionalMethod5, Instr_Load,PreReqFlag, Location,course_capacity, enrolled_students, available )&#xA;    VALUES (Source.Coursekey, Source.Dept, Source.Number, Source.Section, Source.Description, Source.Credits,&#xA;&#x9;&#x9;&#x9;Source.SemesterKey,  Source.CourseStatus, &#xA;&#x9;&#x9;&#x9;Source.courseDescription, Source.ImportDate,Source.InstrMethod,  Source.InstrMethod2, Source.InstrMethod3, Source.InstrMethod4,Source.InstrMethod5, Source.Instr_Load,PrereqFlag, location,Source.course_capacity, Source.enrolled_students, Source.available);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated_at date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{606479EF-B9AB-468D-9B1A-D4921F4290E7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated_at date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9C69653B-F58B-45CD-8D0F-243EBFAE48A5}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    Courses&#xA;SET&#xA;   Courses.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated_tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8acd763c-5348-46e1-9081-647df7921103}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated_tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="7">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9C69653B-F58B-45CD-8D0F-243EBFAE48A5}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    CourseInstructorMap&#xA;SET&#xA;    CourseInstructorMap.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;;&#xA;&#xA;UPDATE&#xA;    CourseComments&#xA;SET&#xA;    CourseComments.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6A42DA0F-FFDF-4268-B3E5-92E1AD256F32}"
+      DTS:From="Package\Insert or Update Datamart Courses Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import Course Instructor Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{12E108DB-CF70-4CB9-8206-A463DF375EB9}"
+      DTS:From="Package\Import Course Instructor Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Apply Cross Listed Course Info"
+      DTS:Value="2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{8C19E213-FF30-4445-8AC8-FD7E718C8F58}"
+      DTS:From="Package\Copy course_meeting_times into Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\updated_tables"
+      DTS:Value="2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{565B3532-C85F-4C9F-AAF9-A237B2A2C428}"
+      DTS:From="Package\Import course Meeting Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\Copy course_meeting_times into Datamart"
+      DTS:Value="2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{74DB3F74-F8B0-4C55-9772-2998F247B7F8}"
+      DTS:From="Package\Copy course_meeting_times into Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\Data Import Failure - Copy course_meeting_times to DataMart"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{AB5D0D73-875A-4062-89B9-1084B151435D}"
+      DTS:From="Package\Import Course Comments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Import course Meeting Info"
+      DTS:Value="2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E71D1D09-CACF-4F6D-B023-D38ADDB88D2B}"
+      DTS:From="Package\Insert or Update Datamart Courses Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\updated_at date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{E1C71519-23AA-4348-A9BF-CF9819622D30}"
+      DTS:From="Package\Insert or Update Datamart Courses Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Courses Import Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{A46998CE-328E-42E8-B76A-BA983341097A}"
+      DTS:From="Package\Import Course Instructor Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Courses Instructor Import Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{67845EC9-A995-45ED-A8F5-841CCBE8F94E}"
+      DTS:From="Package\Apply Cross Listed Course Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Apply Cross Listed Course Info Import Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{B08120F2-FB13-4A10-A6AD-2A10ECE38EA1}"
+      DTS:From="Package\Import Course Comments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Course Comments Import Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{62DA05AF-4B0B-4B6E-B928-230613EF64DC}"
+      DTS:From="Package\Import course Meeting Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Course Meeting Info Import Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{673091E0-FE0B-4D89-A321-F2638882D007}"
+      DTS:From="Package\Apply Cross Listed Course Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\Import Course Comments"
+      DTS:Value="2" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="144,72"
+          Id="Package\Apply Cross Listed Course Info"
+          TopLeft="188.216981132075,302.028301886792" />
+        <NodeLayout
+          Size="155,52"
+          Id="Package\Apply Cross Listed Course Info Import Error Notification"
+          TopLeft="142.292452830189,521.424528301887" />
+        <NodeLayout
+          Size="190,83"
+          Id="Package\Copy course_meeting_times into Datamart"
+          TopLeft="885,316" />
+        <NodeLayout
+          Size="155,52"
+          Id="Package\Course Comments Import Error Notification"
+          TopLeft="380.933962264151,514.405660377358" />
+        <NodeLayout
+          Size="155,52"
+          Id="Package\Course Meeting Info Import Error Notification"
+          TopLeft="567.61320754717,512.405660377358" />
+        <NodeLayout
+          Size="136,52"
+          Id="Package\Courses Import Error Notification"
+          TopLeft="5.5,126.367924528302" />
+        <NodeLayout
+          Size="155,52"
+          Id="Package\Courses Instructor Import Error Notification"
+          TopLeft="5.5,372.783018867925" />
+        <NodeLayout
+          Size="207,78"
+          Id="Package\Data Import Failure - Copy course_meeting_times to DataMart"
+          TopLeft="876,500" />
+        <NodeLayout
+          Size="136,63"
+          Id="Package\Import Course Comments"
+          TopLeft="374.858490566038,310.066037735849" />
+        <NodeLayout
+          Size="134,44"
+          Id="Package\Import Course Instructor Data"
+          TopLeft="195.160377358491,160.254716981132" />
+        <NodeLayout
+          Size="152,75"
+          Id="Package\Import course Meeting Info"
+          TopLeft="601.537735849057,318.028301886792" />
+        <NodeLayout
+          Size="678,44"
+          Id="Package\Insert or Update Datamart Courses Table"
+          TopLeft="71.3867924528302,5.5" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\updated_at date"
+          TopLeft="740,128" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\updated_tables"
+          TopLeft="1242,338" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="514.141509433962,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-252.11320754717,110.830188679245"
+              Start="0,0"
+              End="-252.11320754717,103.330188679245">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,83.0943396226415" />
+                  <mssgle:LineSegment
+                    End="-252.11320754717,83.0943396226415" />
+                  <mssgle:LineSegment
+                    End="-252.11320754717,103.330188679245" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="283.160377358491,204.254716981132">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-22.943396226416,97.77358490566"
+              Start="0,0"
+              End="-22.943396226416,90.27358490566">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.8016363332775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.8016363332775"
+                    Point2="0,39.8016363332775"
+                    Point3="-4,39.8016363332775" />
+                  <mssgle:LineSegment
+                    End="-18.943396226416,39.8016363332775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.943396226416,39.8016363332775"
+                    Point2="-22.943396226416,39.8016363332775"
+                    Point3="-22.943396226416,43.8016363332775" />
+                  <mssgle:LineSegment
+                    End="-22.943396226416,90.27358490566" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-36.776151238208,44.8016363332775,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="1075,358.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="167,0"
+              Start="0,0"
+              End="159.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="159.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="54.445546875,5,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="753.537735849057,356.514150943396">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="131.462264150943,0"
+              Start="0,0"
+              End="123.962264150943,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="123.962264150943,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="36.6766789504715,5,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="979.75,399">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,101"
+              Start="0,0"
+              End="0,93.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,93.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-15.24134765625,41.87548828125,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="510.858490566038,341.566037735849">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="90.679245283019,13.962264150943"
+              Start="0,0"
+              End="83.179245283019,13.962264150943">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="41.3396226415095,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.3396226415095,0"
+                    Point2="45.3396226415095,0"
+                    Point3="45.3396226415095,4" />
+                  <mssgle:LineSegment
+                    End="45.3396226415095,9.96226415094299" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.3396226415095,9.96226415094299"
+                    Point2="45.3396226415095,13.962264150943"
+                    Point3="49.3396226415095,13.962264150943" />
+                  <mssgle:LineSegment
+                    End="83.179245283019,13.962264150943" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="20.0351695165095,-17.609375,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="577.88679245283,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="241.11320754717,78.5"
+              Start="0,0"
+              End="241.11320754717,71">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.371694417238" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.371694417238"
+                    Point2="0,26.371694417238"
+                    Point3="4,26.371694417238" />
+                  <mssgle:LineSegment
+                    End="237.11320754717,26.371694417238" />
+                  <mssgle:CubicBezierSegment
+                    Point1="237.11320754717,26.371694417238"
+                    Point2="241.11320754717,26.371694417238"
+                    Point3="241.11320754717,30.371694417238" />
+                  <mssgle:LineSegment
+                    End="241.11320754717,71" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="182.066037735849,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-108.679245283019,76.9433962264151"
+              Start="0,0"
+              End="-108.679245283019,69.4433962264151">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.7924528301887" />
+                  <mssgle:LineSegment
+                    End="-108.679245283019,12.7924528301887" />
+                  <mssgle:LineSegment
+                    End="-108.679245283019,69.4433962264151" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-69.5809702977594,17.7924528301887,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="241.27358490566,204.179245283019">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-158.415094339623,168.603773584906"
+              Start="0,0"
+              End="-158.415094339623,161.103773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,84.3018867924528" />
+                  <mssgle:LineSegment
+                    End="-158.415094339623,84.3018867924528" />
+                  <mssgle:LineSegment
+                    End="-158.415094339623,161.103773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-94.4488948260613,89.3018867924528,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="260.216981132075,374.028301886792">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-40.424528301886,147.396226415095"
+              Start="0,0"
+              End="-40.424528301886,139.896226415095">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,69.6981132075475" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,69.6981132075475"
+                    Point2="0,73.6981132075475"
+                    Point3="-4,73.6981132075475" />
+                  <mssgle:LineSegment
+                    End="-36.424528301886,73.6981132075475" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-36.424528301886,73.6981132075475"
+                    Point2="-40.424528301886,73.6981132075475"
+                    Point3="-40.424528301886,77.6981132075475" />
+                  <mssgle:LineSegment
+                    End="-40.424528301886,139.896226415095" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-35.453611807193,78.6981132075475,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="442.858490566038,373.066037735849">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="15.575471698113,141.339622641509"
+              Start="0,0"
+              End="15.575471698113,133.839622641509">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.6698113207545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,66.6698113207545"
+                    Point2="0,70.6698113207545"
+                    Point3="4,70.6698113207545" />
+                  <mssgle:LineSegment
+                    End="11.575471698113,70.6698113207545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11.575471698113,70.6698113207545"
+                    Point2="15.575471698113,70.6698113207545"
+                    Point3="15.575471698113,74.6698113207545" />
+                  <mssgle:LineSegment
+                    End="15.575471698113,133.839622641509" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-7.4536118071935,75.6698113207545,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="677.537735849057,393.028301886792">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-32.424528301887,119.377358490566"
+              Start="0,0"
+              End="-32.424528301887,111.877358490566">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.688679245283" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,55.688679245283"
+                    Point2="0,59.688679245283"
+                    Point3="-4,59.688679245283" />
+                  <mssgle:LineSegment
+                    End="-28.424528301887,59.688679245283" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-28.424528301887,59.688679245283"
+                    Point2="-32.424528301887,59.688679245283"
+                    Point3="-32.424528301887,63.688679245283" />
+                  <mssgle:LineSegment
+                    End="-32.424528301887,111.877358490566" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-31.4536118071935,64.688679245283,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="332.216981132075,339.79716981132">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42.6415094339629,0"
+              Start="0,0"
+              End="35.1415094339629,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="35.1415094339629,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-7.73369840801853,5,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Copy course_meeting_times into Datamart">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="133,42"
+          Id="Package\Copy course_meeting_times into Datamart\Merge Join"
+          TopLeft="234,347" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Copy course_meeting_times into Datamart\OLE DB Command"
+          TopLeft="438,605" />
+        <NodeLayout
+          Size="99,42"
+          Id="Package\Copy course_meeting_times into Datamart\Sort"
+          TopLeft="163,244" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Copy course_meeting_times into Datamart\Staging Meetings"
+          TopLeft="324,165" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Copy course_meeting_times into Datamart\Datamart Meetings"
+          TopLeft="126,165" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Copy course_meeting_times into Datamart\Conditional Split"
+          TopLeft="223,431" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Copy course_meeting_times into Datamart\OLE DB Destination"
+          TopLeft="191,607" />
+        <NodeLayout
+          Size="108,42"
+          Id="Package\Copy course_meeting_times into Datamart\Sort 1"
+          TopLeft="355,245" />
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[Update]"
+          TopLeft="327.666666666667,473">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="196.833333333333,132"
+              Start="0,0"
+              End="196.833333333333,124.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5890410958904" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.5890410958904"
+                    Point2="0,53.5890410958904"
+                    Point3="4,53.5890410958904" />
+                  <mssgle:LineSegment
+                    End="192.833333333333,53.5890410958904" />
+                  <mssgle:CubicBezierSegment
+                    Point1="192.833333333333,53.5890410958904"
+                    Point2="196.833333333333,53.5890410958904"
+                    Point3="196.833333333333,57.5890410958904" />
+                  <mssgle:LineSegment
+                    End="196.833333333333,124.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="82.1363736979167,58.5890410958904,32.5605859375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[Sort Output1]"
+          TopLeft="409,287">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-87.6666666666667,60"
+              Start="0,0"
+              End="-87.6666666666667,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5720653789004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.5720653789004"
+                    Point2="0,35.5720653789004"
+                    Point3="-4,35.5720653789004" />
+                  <mssgle:LineSegment
+                    End="-83.6666666666667,35.5720653789004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-83.6666666666667,35.5720653789004"
+                    Point2="-87.6666666666667,35.5720653789004"
+                    Point3="-87.6666666666667,39.5720653789004" />
+                  <mssgle:LineSegment
+                    End="-87.6666666666667,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[Sort Output]"
+          TopLeft="212.5,286">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="67.1666666666667,61"
+              Start="0,0"
+              End="67.1666666666667,53.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.1649331352154" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.1649331352154"
+                    Point2="0,36.1649331352154"
+                    Point3="4,36.1649331352154" />
+                  <mssgle:LineSegment
+                    End="63.1666666666667,36.1649331352154" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63.1666666666667,36.1649331352154"
+                    Point2="67.1666666666667,36.1649331352154"
+                    Point3="67.1666666666667,40.1649331352154" />
+                  <mssgle:LineSegment
+                    End="67.1666666666667,53.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[OLE DB Source Output1]"
+          TopLeft="407.5,207">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[OLE DB Source Output]"
+          TopLeft="212.25,207">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[NewInsert]"
+          TopLeft="278.416666666667,473">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,134"
+              Start="0,0"
+              End="0,126.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,126.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-23.28638671875,58.548828125,46.5727734375,9.40234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Copy course_meeting_times into Datamart.Paths[Merge Join Output]"
+          TopLeft="301.5,389">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Copy course_meeting_times into Datamart\Staging Meetings">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Copy course_meeting_times into Datamart\Datamart Meetings">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Copy course_meeting_times into Datamart\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "DataMartImportV3", "DataMartImportV3.dtproj", "{1FC3E703-E2BC-40C9-A28D-FFE8F1CAD63F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FC3E703-E2BC-40C9-A28D-FFE8F1CAD63F}.Development|Default.ActiveCfg = Development
+		{1FC3E703-E2BC-40C9-A28D-FFE8F1CAD63F}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3F52A6F-8C42-4A96-9F57-E750CA01E231}
+	EndGlobalSection
+EndGlobal

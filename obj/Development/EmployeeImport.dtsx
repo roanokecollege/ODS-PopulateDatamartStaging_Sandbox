@@ -1,0 +1,3139 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/12/2013 2:20:40 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{E1A30751-8394-44CC-97AB-A4E312AE1B15}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="EmployeeImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="95"
+  DTS:VersionGUID="{3892EE39-E079-49CE-9A9F-4DA8B91F9EB1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EmployeeAddressImport.dtsx]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{30FF7D90-678C-4D0C-BDB6-B2C06A81A25A}"
+      DTS:ObjectName="EmployeeAddressImport.dtsx">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Projects\DataMartV3\DataMartImportV3\DataMartImportV3\EmployeeAddressImport.dtsx" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EmployeePhoneImport.dtsx]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{449F8A78-5E9B-4737-A5F9-7C503A1BC91A}"
+      DTS:ObjectName="EmployeePhoneImport.dtsx">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Projects\DataMartV3\DataMartImportV3\DataMartImportV3\EmployeePhoneImport.dtsx" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[EmployeeRoleImport.dtsx]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{B620F3AD-C35E-4D9D-9197-CB1EC0162810}"
+      DTS:ObjectName="EmployeeRoleImport.dtsx">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\Projects\DataMartV3\DataMartImportV3\DataMartImportV3\EmployeeRoleImport.dtsx" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HERMES.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+      DTS:ObjectName="HERMES.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-EmployeeImport-{C4AB7B5E-6C16-4B72-8651-902F315BBC24}HERMES.DataMart;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes.DataMart1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{FA1678EC-E4EB-48A4-B4BA-5EA48C5D0720}"
+      DTS:ObjectName="Hermes.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-EmployeeImport-{FA1678EC-E4EB-48A4-B4BA-5EA48C5D0720}Hermes.DataMart1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{A1C2E7F9-5EB3-4C1D-AFDE-F875E0D699C4}"
+      DTS:ObjectName="hermes.Staging1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LOCALHOST;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-EmployeeImport-{A1C2E7F9-5EB3-4C1D-AFDE-F875E0D699C4}hermes.Staging1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4AC1E364-BFDC-4324-989E-E11EEF542762}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-EmployeeImport-{4AC1E364-BFDC-4324-989E-E11EEF542762}localhost.Staging;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Campus email date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3fac2efe-6033-4147-8a52-5007b4764848}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Campus email date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    Email &#xA;SET&#xA;   Email.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;&#xA;UPDATE&#xA;    EmailType&#xA;SET&#xA;   EmailType.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\clean person source"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d4371cbc-8b0b-47a3-9b07-3ed5d7acb152}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="clean person source"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE person_source;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Clean Vacation Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3B7D1255-3B5A-4450-8703-0D08F762408B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clean Vacation Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE Person_Vacation_Sick_Leave;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Copy PSD to PSDBackup"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BEB79927-3C94-4F0E-823D-B20517554F6B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Copy PSD to PSDBackup"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Copy PSD to PSDBackup\People Search Directory"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="People Search Directory"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."PeopleSearchDirectory"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Hermes.DataMart1]"
+                  connectionManagerRefId="Package.ConnectionManagers[Hermes.DataMart1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[RCID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[RCID]"
+                      length="7"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[RCID]"
+                      name="RCID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[MiddleName]"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[MiddleName]"
+                      name="MiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[NickName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[NickName]"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[NickName]"
+                      name="NickName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[Type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[Type]"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[Type]"
+                      name="Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[FullName]"
+                      length="100"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[LastUpdated]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastUpdated]"
+                      name="LastUpdated"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[RCID]"
+                      dataType="wstr"
+                      length="7"
+                      name="RCID" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[NickName]"
+                      dataType="wstr"
+                      length="50"
+                      name="NickName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[Type]"
+                      dataType="wstr"
+                      length="50"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].ExternalColumns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      name="LastUpdated" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[RCID]"
+                      dataType="wstr"
+                      length="7"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[RCID]"
+                      name="RCID" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[MiddleName]"
+                      name="MiddleName" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[NickName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[NickName]"
+                      name="NickName" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[Type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[Type]"
+                      name="Type" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[LastUpdated]"
+                      name="LastUpdated" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Copy PSD to PSDBackup\People Search Directory Backup"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="People Search Directory Backup"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."PeopleSearchDirectoryBackup"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Hermes.DataMart1]"
+                  connectionManagerRefId="Package.ConnectionManagers[Hermes.DataMart1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[RCID]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="RCID"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[RCID]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[RCID]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[MiddleName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="MiddleName"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[MiddleName]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[NickName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="NickName"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[NickName]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[NickName]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[Type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Type"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[Type]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[Type]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[FullName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FullName"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[FullName]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[FullName]" />
+                    <inputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].Columns[LastUpdated]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LastUpdated"
+                      externalMetadataColumnId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[LastUpdated]"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output].Columns[LastUpdated]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[RCID]"
+                      dataType="wstr"
+                      length="7"
+                      name="RCID" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[NickName]"
+                      dataType="wstr"
+                      length="50"
+                      name="NickName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[Type]"
+                      dataType="wstr"
+                      length="50"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="100"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input].ExternalColumns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      name="LastUpdated" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Copy PSD to PSDBackup.Paths[ADO NET Source Output]"
+              endId="Package\Copy PSD to PSDBackup\People Search Directory Backup.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Copy PSD to PSDBackup\People Search Directory.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Dept Info date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5660d431-b3c9-4baf-b512-9b2dad3b4f6c}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Dept Info date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="10">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;  PersonEmployee_Department_Map&#xA;SET&#xA;   PersonEmployee_Department_Map.updated_at = GetDate();&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Campus Email"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6B90CAF0-1F70-42CD-AB35-E6FD262A1946}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Campus Email"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4AC1E364-BFDC-4324-989E-E11EEF542762}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @keyEmailType as integer&#xA;&#xA;SELECT @keyEmailType = key_emailTypeid&#xA;FROM DataMart.dbo.EmailType&#xA;WHERE Description = 'Campus'&#xA;&#xA;&#xA;MERGE Datamart.dbo.Email AS Target&#xA;USING (SELECT RCID&#xA; FROM Staging.dbo.DM_Employees) as Source&#xA;ON (Target.rcid = Source.rcid and Target.fkey_EmailTypeId = @keyEmailType)&#xA;WHEN MATCHED THEN&#xA;   DELETE;&#x9;  &#xA;&#xA;MERGE Datamart.dbo.Email AS Target&#xA;USING (SELECT RCID, Email&#xA; FROM Staging.dbo.DM_Employees WHERE len(rtrim(email)) &gt; 0) AS Source&#xA;ON (Target.rcid = Source.rcid and fkey_EmailTypeId = @keyEmailType)&#xA;WHEN MATCHED THEN&#xA;&#x9;UPDATE SET TARGET.EmailAddress = Source.Email&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT (rcid, EmailAddress, fkey_EmailTypeId)&#xA;    VALUES (Source.rcid, Source.Email, @keyEmailType);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Campus Email Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{14BF4527-05C4-4E06-8561-ADF44FCBB239}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Campus Email Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="8">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA;Import Campus Email &#xA;&#xA;&#xA;in package EmployeeImport has failed.&#xA;&#xA;&#xA;&#xA;Import of Employee Data to the table Datamart.dbo.Email has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Department Info"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A9802856-BF0F-4DE7-926C-C295C9C8DAC5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Department Info"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="9">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4AC1E364-BFDC-4324-989E-E11EEF542762}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="truncate table Datamart.dbo.PersonEmployee_department_map&#xA;&#xA;MERGE Datamart.dbo.PersonEmployee_Department_Map AS Target&#xA;USING (SELECT RCID, &#xA;&#x9;(SELECT key_DepartmentId FROM Datamart.dbo.Department &#xA;&#x9;  WHERE rtrim(name) like rtrim(department)) as DeptKey, DeptChair&#xA; FROM Staging.dbo.DM_Employees WHERE len(rtrim(department)) &gt; 0 AND Not (Department is null)) AS Source&#xA;ON (Target.rcid = Source.rcid)&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (rcid, fkey_DepartmentId,Rank,Chair)&#xA;    VALUES (Source.rcid, Source.DeptKey, 1, Source.DeptChair);&#xA;    &#xA;&#xA;MERGE    Datamart.dbo.personemployee_department_map as target&#xA;using (select rcid, (SELECT key_DepartmentId FROM Datamart.dbo.Department &#xA;&#x9;  WHERE rtrim(name) like rtrim(AdditionalDepartment)) as DeptKey&#xA;&#x9; From Staging.dbo.DM_Employees WHERE len(rtrim(AdditionalDepartment)) &gt; 0 AND NOT (AdditionalDepartment is null)AND NOT (AdditionalDepartment = 'other')) as source&#xA;ON ((Target.rcid = Source.rcid) AND (target.fkey_departmentid = Source.deptkey))&#xA;WHEN Not Matched By Target THEN&#xA;&#x9; INSERT (rcid, fkey_DepartmentId,Rank)&#xA;&#x9; VALUES (Source.rcid, Source.DeptKey, 2);&#xA;&#xA;&#xA;MERGE  Datamart.dbo.personemployee_department_map as target&#xA;using (select rcid, (SELECT key_DepartmentId FROM Datamart.dbo.Department &#xA;&#x9;  WHERE rtrim(name) like rtrim(Sec1Dept)) as DeptKey&#xA;&#x9; From Staging.dbo.DM_Employees WHERE len(rtrim(Sec1Dept)) &gt; 0 AND NOT (Sec1Dept is null)) as source&#xA;ON ((Target.rcid = Source.rcid) AND (target.fkey_departmentid = Source.deptkey))&#xA;WHEN Not Matched By Target THEN&#xA;&#x9; INSERT (rcid, fkey_DepartmentId,Rank,secretary)&#xA;&#x9; VALUES (Source.rcid, Source.DeptKey, 1, 'Y')&#xA;WHEN Matched THEN&#xA;&#x9;UPDATE set secretary= 'Y';&#xA;&#x9;&#xA;MERGE  Datamart.dbo.personemployee_department_map as target&#xA;using (select rcid, (SELECT key_DepartmentId FROM Datamart.dbo.Department &#xA;&#x9;  WHERE rtrim(name) like rtrim(Sec2Dept)) as DeptKey&#xA;&#x9; From Staging.dbo.DM_Employees WHERE len(rtrim(Sec2Dept)) &gt; 0 AND NOT (Sec2Dept is null)) as source&#xA;ON ((Target.rcid = Source.rcid) AND (target.fkey_departmentid = Source.deptkey))&#xA;WHEN Not Matched By Target THEN&#xA;&#x9; INSERT (rcid, fkey_DepartmentId,Rank,secretary)&#xA;&#x9; VALUES (Source.rcid, Source.DeptKey, 2, 'Y')&#xA;WHEN Matched THEN&#xA;&#x9;UPDATE set secretary= 'Y';&#x9;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Department Information Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{8B4D77D3-540C-4506-9B2C-E529B18CC9E9}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Department Information Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="9">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA;Import Department Information &#xA;&#xA;&#xA;in package EmployeeImport has failed.&#xA;&#xA;&#xA;&#xA;Import of Employee Data to the table Datamart.dbo.PersonEmployee_Department_Map has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Employee Address Data"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{3BDA62F2-67D7-48AE-B888-599560A25377}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Employee Address Data"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <Connection>{30FF7D90-678C-4D0C-BDB6-B2C06A81A25A}</Connection>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Employee Phone Data"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{EA7F4AD5-D53E-4FC5-9CF0-CDDFDE5A9DE9}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Employee Phone Data"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <Connection>{449F8A78-5E9B-4737-A5F9-7C503A1BC91A}</Connection>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Employee Role Data"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{EF981CA1-BA2A-4F5F-ADC7-5550A627C5D2}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Employee Role Data"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <Connection>{B620F3AD-C35E-4D9D-9197-CB1EC0162810}</Connection>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert employee end date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9C8BDF7C-CD53-4825-B7C7-9E19E7D10DB8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert employee end date"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE       PersonEmployee&#xA;SET                PersonEmployee.employee_end_date = employment_end_date.employment_end_date&#xA;FROM            PersonEmployee LEFT OUTER JOIN&#xA;                         employment_end_date ON PersonEmployee.RCID = employment_end_date.rcid&#xA;WHERE        (PersonEmployee.RCID = PersonEmployee.RCID)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert employement date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{70867823-32A6-4539-B2CB-C26C0F6E3B4C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert employement date"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="INSERT INTO datamart.dbo.employment_end_date&#xA;SELECT     TOP (100) PERCENT rcid, employment_end_date&#xA;FROM         staging.dbo.employment_end_date;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Into Person Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5ADAF27C-A6B9-4311-819A-DA814AB3A529}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Into Person Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4AC1E364-BFDC-4324-989E-E11EEF542762}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Person AS Target&#xA;USING (SELECT RCID, First, Last, Middle, FullName, NickName, Preferred_Name, &#xA;Prefix, ImportDate, username, building,gender, BuildingID  FROM Staging.dbo.DM_Employees) AS Source&#xA;ON (Target.rcid = Source.rcid)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET Target.firstname = Source.first, Target.lastname = Source.last, Target.middlename = Source.middle, Target.fullname = Source.fullname,&#xA;&#x9;&#x9;Target.today = Source.ImportDate, Target.nickname = Source.nickname, Target.preferredName = Source.preferred_name, Target.prefix = Source.prefix, Target.username = Source.username, Target.building = Source.building, Target.gender=Source.gender, Target.BuildingID = Source.BuildingID&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (rcid, firstname, middlename, lastname, fullname, today, nickname, preferredname, prefix, username, building,gender, buildingID)&#xA;    VALUES (Source.rcid, Source.first, Source.middle, Source.last, Source.fullname, Source.ImportDate, Source.nickname, Source.preferred_name, Source.prefix, Source.username, Source.building, Source.gender, Source.BuildingID);&#xA;    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge into Person Table Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{438A654C-F346-469A-969B-83A3167E9D6A}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge into Person Table Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:Merge into Person Table &#xA;&#xA;&#xA;in package EmployeeImport has failed.&#xA;  Import of Employee data has stopped - this entire package needs to be re-executed." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge to PersonEmployee"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{191A7B79-FF93-4099-8B09-6C472E4561A4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge to PersonEmployee"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4AC1E364-BFDC-4324-989E-E11EEF542762}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonEmployee AS Target&#xA;USING (SELECT RCID, Title, Title2, Title3, Spouse, SpouseNickname, ExcludeDirectory, ExcludeAddress, ExcludePhone, ExcludeSpouse, ExcludePhoto, status, EmployeeClass, Supervisor FROM Staging.dbo.DM_Employees) AS Source&#xA;ON (Target.rcid = Source.rcid)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET &#xA;Target.title = Source.title, &#xA;Target.title2 = Source.title2, &#xA;Target.title3 = Source.title3,&#xA;Target.Spouse = Source.Spouse,&#xA;Target.Spousenickname = Source.SpouseNickname, &#xA;Target.Status = Source.Status,&#xA;Target.ExcludedDirectory = Source.ExcludeDirectory,&#xA;Target.ExcludedAddress = Source.ExcludeAddress,&#xA;Target.ExcludedPhone = Source.ExcludePhone, &#xA;Target.ExcludedSpouse = Source.ExcludeSpouse,&#xA;Target.ExcludedPhoto = Source.ExcludePhoto,&#xA;Target.today = getdate(),&#xA;Target.EmployeeClass = Source.EmployeeClass,&#xA;Target.Supervisor = Source.Supervisor&#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;    INSERT (rcid, Title, Title2, Title3, Spouse, Spousenickname, Status, &#xA;&#x9;&#x9;ExcludedDirectory, ExcludedAddress, ExcludedPhone, ExcludedSpouse, ExcludedPhoto, today, EmployeeClass, Supervisor)&#xA;&#x9;&#x9;&#x9;&#xA;    VALUES (Source.rcid, Source.Title, Source.Title2, Source.Title3, Source.Spouse, Source.SpouseNickname, &#xA;    Source.Status, Source.ExcludeDirectory, Source.ExcludeAddress, Source.ExcludePhone,Source.ExcludeSpouse, Source.ExcludePhoto, getdate(), Source.EmployeeClass, Source.Supervisor);&#xA;    --OUTPUT $action, Inserted.*, Deleted.*; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge to PersonEmployee Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{9EBF871B-464B-4C12-BCF2-3E7FCC8837D4}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge to PersonEmployee Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Import Error Hermes"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA; Merge to PersonEmployee  &#xA;&#xA;&#xA;in package EmployeeImport has failed.&#xA;&#xA;&#xA;&#xA;Import of Employee Data to the table Datamart.dbo.PersonEmployee has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\person employee date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B2DABEFA-A01B-4F36-A191-088C2A99CD84}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="person employee date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="6">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    PersonEmployee &#xA;SET&#xA;   PersonEmployee.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\populate person source"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{CEF25083-E867-4694-8809-EA0F0F22CF0A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="populate person source"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\populate person source\live"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="live"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."person_source"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\populate person source\live.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Hermes.DataMart1]"
+                  connectionManagerRefId="Package.ConnectionManagers[Hermes.DataMart1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\populate person source\live.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].Columns[rcid]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="rcid"
+                      externalMetadataColumnId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[rcid]"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[rcid]" />
+                    <inputColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].Columns[position]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="position"
+                      externalMetadataColumnId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[position]"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[position]" />
+                    <inputColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].Columns[source_id]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="source_id"
+                      externalMetadataColumnId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[source_id]"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_id]" />
+                    <inputColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].Columns[source_description]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="source_description"
+                      externalMetadataColumnId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[source_description]"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_description]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      name="rcid" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[position]"
+                      dataType="wstr"
+                      length="50"
+                      name="position" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[source_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="source_id" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\live.Inputs[ADO NET Destination Input].ExternalColumns[source_description]"
+                      dataType="wstr"
+                      length="100"
+                      name="source_description" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\populate person source\live.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\populate person source\live.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\populate person source\live.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\populate person source\live.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\populate person source\live.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\populate person source\live.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\populate person source\staging"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="staging"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."person_source"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\populate person source\staging.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.Staging1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.Staging1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\populate person source\staging.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[rcid]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      length="7"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[rcid]"
+                      name="rcid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[position]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[position]"
+                      length="50"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[position]"
+                      name="position"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[source_id]"
+                      length="50"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_id]"
+                      name="source_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[source_description]"
+                      length="100"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Output].Columns[source_description]"
+                      name="source_description"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      name="rcid" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[position]"
+                      dataType="wstr"
+                      length="50"
+                      name="position" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[source_id]"
+                      dataType="wstr"
+                      length="50"
+                      name="source_id" />
+                    <externalMetadataColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Output].ExternalColumns[source_description]"
+                      dataType="wstr"
+                      length="100"
+                      name="source_description" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      name="rcid" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[position]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[position]"
+                      name="position" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[source_id]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[source_id]"
+                      name="source_id" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[source_description]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[source_description]"
+                      name="source_description" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\populate person source\staging.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\populate person source.Paths[ADO NET Source Output]"
+              endId="Package\populate person source\live.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\populate person source\staging.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate Vacations Data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C6A19778-3787-46AC-ABEE-1F8E8A99BEA4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate Vacations Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Populate Vacations Data\ADO NET Destination 1"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination 1"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Person_Vacation_Sick_Leave"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populate Vacations Data\ADO NET Destination 1.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Hermes.DataMart1]"
+                  connectionManagerRefId="Package.ConnectionManagers[Hermes.DataMart1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[PLA_HRP_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PLA_HRP_ID"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[PLA_HRP_ID]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_HRP_ID]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[startdate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="startdate"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[startdate]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[startdate]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[rcid]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="rcid"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[RCID]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[rcid]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[PLA_ACCRUAL_HOURS]"
+                      cachedDataType="numeric"
+                      cachedName="PLA_ACCRUAL_HOURS"
+                      cachedPrecision="10"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[accural_hrs]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_HOURS]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[PLA_ACCRUAL_LIMIT]"
+                      cachedDataType="numeric"
+                      cachedName="PLA_ACCRUAL_LIMIT"
+                      cachedPrecision="9"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[accural_limit]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_LIMIT]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[PERLV_BALANCE]"
+                      cachedDataType="numeric"
+                      cachedName="PERLV_BALANCE"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[balance]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PERLV_BALANCE]" />
+                    <inputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].Columns[LEAVE_PLAN_TYPE_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LEAVE_PLAN_TYPE_DESC"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[type]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_PLAN_TYPE_DESC]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[RCID]"
+                      dataType="wstr"
+                      length="50"
+                      name="RCID" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[type]"
+                      dataType="wstr"
+                      length="50"
+                      name="type" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[accural_hrs]"
+                      dataType="wstr"
+                      length="50"
+                      name="accural_hrs" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[accural_limit]"
+                      dataType="wstr"
+                      length="50"
+                      name="accural_limit" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[balance]"
+                      dataType="wstr"
+                      length="50"
+                      name="balance" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[startdate]"
+                      dataType="dbTimeStamp"
+                      name="startdate" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input].ExternalColumns[PLA_HRP_ID]"
+                      dataType="wstr"
+                      length="50"
+                      name="PLA_HRP_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Populate Vacations Data\ADO NET Destination 1.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Destination 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Populate Vacations Data\ADO NET Source 2"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source 2"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."view_person_vac_sick_leave"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Populate Vacations Data\ADO NET Source 2.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.Staging1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.Staging1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PERLEAVE_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PERLEAVE_ID]"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PERLEAVE_ID]"
+                      name="PERLEAVE_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_HOURS]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_ACCRUAL_HOURS]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_HOURS]"
+                      name="PLA_ACCRUAL_HOURS"
+                      precision="10"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_LIMIT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_ACCRUAL_LIMIT]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_ACCRUAL_LIMIT]"
+                      name="PLA_ACCRUAL_LIMIT"
+                      precision="9"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_END_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_END_DATE]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_END_DATE]"
+                      name="PLA_END_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_CODE_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_CODE_DESC]"
+                      length="30"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_CODE_DESC]"
+                      name="LEAVE_CODE_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_PLAN_TYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_PLAN_TYPE]"
+                      length="30"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_PLAN_TYPE]"
+                      name="LEAVE_PLAN_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_PLAN_TYPE_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_PLAN_TYPE_DESC]"
+                      length="50"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[LEAVE_PLAN_TYPE_DESC]"
+                      name="LEAVE_PLAN_TYPE_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_HRP_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_HRP_ID]"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_HRP_ID]"
+                      name="PLA_HRP_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_LPN_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_LPN_ID]"
+                      length="4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_LPN_ID]"
+                      name="PLA_LPN_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_MOVR_ACCRUAL_HOURS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_MOVR_ACCRUAL_HOURS]"
+                      length="3"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_MOVR_ACCRUAL_HOURS]"
+                      name="PLA_MOVR_ACCRUAL_HOURS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      length="3"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      name="PLA_MOVR_ACCRUAL_LIMIT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_PERLEAVE_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_PERLEAVE_ID]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PLA_PERLEAVE_ID]"
+                      name="PLA_PERLEAVE_ID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[startdate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[startdate]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[startdate]"
+                      name="startdate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PERLV_BALANCE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PERLV_BALANCE]"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[PERLV_BALANCE]"
+                      name="PERLV_BALANCE"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[rcid]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].Columns[rcid]"
+                      name="rcid"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PERLEAVE_ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="PERLEAVE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_ACCRUAL_HOURS]"
+                      dataType="numeric"
+                      name="PLA_ACCRUAL_HOURS"
+                      precision="10"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_ACCRUAL_LIMIT]"
+                      dataType="numeric"
+                      name="PLA_ACCRUAL_LIMIT"
+                      precision="9"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_END_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PLA_END_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_CODE_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="LEAVE_CODE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_PLAN_TYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="LEAVE_PLAN_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[LEAVE_PLAN_TYPE_DESC]"
+                      dataType="wstr"
+                      length="50"
+                      name="LEAVE_PLAN_TYPE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_HRP_ID]"
+                      dataType="wstr"
+                      length="10"
+                      name="PLA_HRP_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_LPN_ID]"
+                      dataType="wstr"
+                      length="4"
+                      name="PLA_LPN_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_MOVR_ACCRUAL_HOURS]"
+                      dataType="wstr"
+                      length="3"
+                      name="PLA_MOVR_ACCRUAL_HOURS" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      dataType="wstr"
+                      length="3"
+                      name="PLA_MOVR_ACCRUAL_LIMIT" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PLA_PERLEAVE_ID]"
+                      dataType="numeric"
+                      name="PLA_PERLEAVE_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[startdate]"
+                      dataType="dbTimeStamp"
+                      name="startdate" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[PERLV_BALANCE]"
+                      dataType="numeric"
+                      name="PERLV_BALANCE"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      dataType="wstr"
+                      length="10"
+                      name="rcid" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PERLEAVE_ID]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PERLEAVE_ID]"
+                      name="PERLEAVE_ID" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_ACCRUAL_HOURS]"
+                      dataType="numeric"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_ACCRUAL_HOURS]"
+                      name="PLA_ACCRUAL_HOURS"
+                      precision="10"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_ACCRUAL_LIMIT]"
+                      dataType="numeric"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_ACCRUAL_LIMIT]"
+                      name="PLA_ACCRUAL_LIMIT"
+                      precision="9"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_END_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_END_DATE]"
+                      name="PLA_END_DATE" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_CODE_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_CODE_DESC]"
+                      name="LEAVE_CODE_DESC" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_PLAN_TYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_PLAN_TYPE]"
+                      name="LEAVE_PLAN_TYPE" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_PLAN_TYPE_DESC]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[LEAVE_PLAN_TYPE_DESC]"
+                      name="LEAVE_PLAN_TYPE_DESC" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_HRP_ID]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_HRP_ID]"
+                      name="PLA_HRP_ID" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_LPN_ID]"
+                      dataType="wstr"
+                      length="4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_LPN_ID]"
+                      name="PLA_LPN_ID" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_MOVR_ACCRUAL_HOURS]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_MOVR_ACCRUAL_HOURS]"
+                      name="PLA_MOVR_ACCRUAL_HOURS" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_MOVR_ACCRUAL_LIMIT]"
+                      name="PLA_MOVR_ACCRUAL_LIMIT" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_PERLEAVE_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PLA_PERLEAVE_ID]"
+                      name="PLA_PERLEAVE_ID"
+                      precision="10" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[startdate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[startdate]"
+                      name="startdate" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PERLV_BALANCE]"
+                      dataType="numeric"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[PERLV_BALANCE]"
+                      name="PERLV_BALANCE"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      name="rcid" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Populate Vacations Data.Paths[ADO NET Source Output]"
+              endId="Package\Populate Vacations Data\ADO NET Destination 1.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Populate Vacations Data\ADO NET Source 2.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate Vacations Information Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{ecd2984c-1563-47c8-aaf5-cc55a8403516}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate Vacations Information Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="7">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{A19D188A-AE89-413B-BFC3-E17692CA9D90}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Employee Vacation Notification Sucess"
+          SendMailTask:MessageSource="Hermes Import Vacation Data in Datamart table has an error, please look in hermes EmployeeImport.dtsx package under vacation section." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Trucnate PeopleSearchDirectoryBackup"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{375F860C-D1B3-4ED3-BA9D-8770818EE0B9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Trucnate PeopleSearchDirectoryBackup"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="Truncate Table PeopleSearchDirectoryBackup;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate employee end date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D507E8CF-64A6-4F5A-9C4D-E01AB54084B6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate employee end date"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="truncate table employment_end_date;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Vacation and Person Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{88587f06-b4c3-4bf9-8aed-ba0f480921ab}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Vacation and Person Date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C4AB7B5E-6C16-4B72-8651-902F315BBC24}"
+          SQLTask:SqlStatementSource="UPDATE&#xA; Person_Vacation_Sick_Leave&#xA;SET&#xA;   Person_Vacation_Sick_Leave.updated_at = CONVERT(varchar(255), GETDATE(), 120);&#xA;&#xA;UPDATE&#xA; Person&#xA;SET&#xA;   Person.updated_at = CONVERT(varchar(255), GETDATE(), 120);&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{475AF4EA-3B90-4E70-A767-C0E96D5C31CA}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Merge to PersonEmployee" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{AC0EFE0E-2D20-4839-AEFA-2B2195080DC7}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Import Campus Email" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{E54AB9CE-6E34-482F-B047-F13C2FC90368}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\Clean Vacation Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{469CAAF6-7888-4F4E-BD2A-E3ECE594E049}"
+      DTS:From="Package\Clean Vacation Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\Populate Vacations Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{B486278B-3D0D-45F9-A264-162670DB5390}"
+      DTS:From="Package\Populate Vacations Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\Populate Vacations Information Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{D224DF51-D1CE-4D99-9681-6D9C9584440A}"
+      DTS:From="Package\Merge to PersonEmployee"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\person employee date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
+      DTS:CreationName=""
+      DTS:DTSID="{2A8173FF-E9D0-4D7D-8D4B-7F1B20FCEB56}"
+      DTS:From="Package\Import Campus Email"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 14"
+      DTS:To="Package\Campus email date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
+      DTS:CreationName=""
+      DTS:DTSID="{849FFD10-DF47-4C2D-8E51-6C0872DB7333}"
+      DTS:From="Package\Import Department Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 15"
+      DTS:To="Package\Dept Info date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 16]"
+      DTS:CreationName=""
+      DTS:DTSID="{94487B75-E46B-4CA8-BA69-2EE79A9327B5}"
+      DTS:From="Package\Populate Vacations Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 16"
+      DTS:To="Package\Vacation and Person Date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 17]"
+      DTS:CreationName=""
+      DTS:DTSID="{6A2F2B10-3AFD-4F9E-9317-590AC8ECCA7E}"
+      DTS:From="Package\Vacation and Person Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 17"
+      DTS:To="Package\Trucnate PeopleSearchDirectoryBackup" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 18]"
+      DTS:CreationName=""
+      DTS:DTSID="{B1900EF5-F9B7-48C5-A565-EB8B8EA74252}"
+      DTS:From="Package\Trucnate PeopleSearchDirectoryBackup"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 18"
+      DTS:To="Package\Copy PSD to PSDBackup" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 19]"
+      DTS:CreationName=""
+      DTS:DTSID="{08C43430-1031-4968-BFCE-7E3F8A34BBA0}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 19"
+      DTS:To="Package\truncate employee end date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{93FDDF10-5FE6-4C51-A6FE-77BEBB105ABD}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Import Department Info" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 20]"
+      DTS:CreationName=""
+      DTS:DTSID="{16A2F433-3ABE-4544-B61E-18BD6BF0F35E}"
+      DTS:From="Package\truncate employee end date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 20"
+      DTS:To="Package\insert employement date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 21]"
+      DTS:CreationName=""
+      DTS:DTSID="{8F44D5C4-DE56-46D9-8B61-20ED5251E857}"
+      DTS:From="Package\insert employement date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 21"
+      DTS:To="Package\insert employee end date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 22]"
+      DTS:CreationName=""
+      DTS:DTSID="{26405764-D7E9-40C0-8677-2483CCA16CE8}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 22"
+      DTS:To="Package\clean person source" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 23]"
+      DTS:CreationName=""
+      DTS:DTSID="{A795A97D-2C4A-46CF-87FF-97BE821862E6}"
+      DTS:From="Package\clean person source"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 23"
+      DTS:To="Package\populate person source" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{4AB707DA-FD77-4DEE-BFD9-8BAE9A99C96C}"
+      DTS:From="Package\Merge to PersonEmployee"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Merge to PersonEmployee Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{0BBC54E8-EDEC-4595-A38E-69450E4383A8}"
+      DTS:From="Package\Import Campus Email"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Import Campus Email Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{BE3DF9BA-9820-4A78-B8DC-568A396EC4FF}"
+      DTS:From="Package\Import Department Info"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Import Department Information Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{64FB32B4-E9C6-43CC-859E-66798F8674E1}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Import Employee Phone Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{6D202ABE-276F-4EC7-9A32-238C64D1098F}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Import Employee Role Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{65359DC3-BA8F-4413-AE55-6A8126BA002E}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Import Employee Address Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{CEAA1373-33F6-47F3-9438-983CF9954236}"
+      DTS:From="Package\Merge Into Person Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\Merge into Person Table Error Notification"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="174,42"
+          Id="Package\Campus email date"
+          TopLeft="150,647" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\clean person source"
+          TopLeft="1107.5,156" />
+        <NodeLayout
+          Size="135,56"
+          Id="Package\Clean Vacation Table"
+          TopLeft="946.216981132075,238.330188679245" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Copy PSD to PSDBackup"
+          TopLeft="967,740" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\Dept Info date"
+          TopLeft="299,560" />
+        <NodeLayout
+          Size="154,44"
+          Id="Package\Import Campus Email"
+          TopLeft="188.349056603774,225.424528301887" />
+        <NodeLayout
+          Size="152,46"
+          Id="Package\Import Campus Email Error Notification"
+          TopLeft="184.27358490566,365.990566037736" />
+        <NodeLayout
+          Size="181,44"
+          Id="Package\Import Department Info"
+          TopLeft="321.122641509434,287.311320754717" />
+        <NodeLayout
+          Size="152,58"
+          Id="Package\Import Department Information Error Notification"
+          TopLeft="337.047169811321,448.877358490566" />
+        <NodeLayout
+          Size="136,85"
+          Id="Package\Import Employee Address Data"
+          TopLeft="695.594339622642,250.405660377359" />
+        <NodeLayout
+          Size="146,58"
+          Id="Package\Import Employee Phone Data"
+          TopLeft="514.877358490566,332.443396226415" />
+        <NodeLayout
+          Size="154,55"
+          Id="Package\Import Employee Role Data"
+          TopLeft="625.745283018868,440.160377358491" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\insert employee end date"
+          TopLeft="468,754" />
+        <NodeLayout
+          Size="199,42"
+          Id="Package\insert employement date"
+          TopLeft="485,656" />
+        <NodeLayout
+          Size="801,42"
+          Id="Package\Merge Into Person Table"
+          TopLeft="130.443396226415,120.594339622641" />
+        <NodeLayout
+          Size="152,58"
+          Id="Package\Merge into Person Table Error Notification"
+          TopLeft="514.707547169811,5.5" />
+        <NodeLayout
+          Size="164,44"
+          Id="Package\Merge to PersonEmployee"
+          TopLeft="23.5377358490566,284.330188679245" />
+        <NodeLayout
+          Size="165,68"
+          Id="Package\Merge to PersonEmployee Error Notification"
+          TopLeft="7.5,493.028301886792" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\person employee date"
+          TopLeft="20,589" />
+        <NodeLayout
+          Size="194,42"
+          Id="Package\populate person source"
+          TopLeft="1150,256" />
+        <NodeLayout
+          Size="136,57"
+          Id="Package\Populate Vacations Data"
+          TopLeft="939.235849056604,401.047169811321" />
+        <NodeLayout
+          Size="157,78"
+          Id="Package\Populate Vacations Information Notification"
+          TopLeft="1000.5,537.877358490566" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Trucnate PeopleSearchDirectoryBackup"
+          TopLeft="769,665" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\truncate employee end date"
+          TopLeft="473,555" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\Vacation and Person Date"
+          TopLeft="809,569" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="233.568396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-128.030660377358,121.735849056604"
+              Start="0,0"
+              End="-128.030660377358,114.235849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.9272959721266" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.9272959721266"
+                    Point2="0,24.9272959721266"
+                    Point3="-4,24.9272959721266" />
+                  <mssgle:LineSegment
+                    End="-124.030660377358,24.9272959721266" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-124.030660377358,24.9272959721266"
+                    Point2="-128.030660377358,24.9272959721266"
+                    Point3="-128.030660377358,28.9272959721266" />
+                  <mssgle:LineSegment
+                    End="-128.030660377358,114.235849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="332.693396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-67.344339622641,62.8301886792455"
+              Start="0,0"
+              End="-67.344339622641,55.3301886792455">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.082381850481" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.082381850481"
+                    Point2="0,21.082381850481"
+                    Point3="-4,21.082381850481" />
+                  <mssgle:LineSegment
+                    End="-63.344339622641,21.082381850481" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-63.344339622641,21.082381850481"
+                    Point2="-67.344339622641,21.082381850481"
+                    Point3="-67.344339622641,25.082381850481" />
+                  <mssgle:LineSegment
+                    End="-67.344339622641,55.3301886792455" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="828.318396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="185.39858490566,75.7358490566035"
+              Start="0,0"
+              End="185.39858490566,68.2358490566035">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.508085249863" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.508085249863"
+                    Point2="0,15.508085249863"
+                    Point3="4,15.508085249863" />
+                  <mssgle:LineSegment
+                    End="181.39858490566,15.508085249863" />
+                  <mssgle:CubicBezierSegment
+                    Point1="181.39858490566,15.508085249863"
+                    Point2="185.39858490566,15.508085249863"
+                    Point3="185.39858490566,19.508085249863" />
+                  <mssgle:LineSegment
+                    End="185.39858490566,68.2358490566035" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="1010.47641509434,294.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106.716981132076"
+              Start="0,0"
+              End="0,99.216981132076">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,99.216981132076" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="1028.56918238994,458.047169811321">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.4308176100626,79.8301886792451"
+              Start="0,0"
+              End="50.4308176100626,72.3301886792451">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.4890302764369" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.4890302764369"
+                    Point2="0,32.4890302764369"
+                    Point3="4,32.4890302764369" />
+                  <mssgle:LineSegment
+                    End="46.4308176100626,32.4890302764369" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.4308176100626,32.4890302764369"
+                    Point2="50.4308176100626,32.4890302764369"
+                    Point3="50.4308176100626,36.4890302764369" />
+                  <mssgle:LineSegment
+                    End="50.4308176100626,72.3301886792451" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="9.9740611487813,37.4890302764369,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="131.537735849057,328.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-17.5377358490566,260.669811320755"
+              Start="0,0"
+              End="-17.5377358490566,253.169811320755">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,101.779053869292" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,101.779053869292"
+                    Point2="0,105.779053869292"
+                    Point3="-4,105.779053869292" />
+                  <mssgle:LineSegment
+                    End="-13.5377358490566,105.779053869292" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-13.5377358490566,105.779053869292"
+                    Point2="-17.5377358490566,105.779053869292"
+                    Point3="-17.5377358490566,109.779053869292" />
+                  <mssgle:LineSegment
+                    End="-17.5377358490566,253.169811320755" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="239.00786163522,269.424528301887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,377.575471698113"
+              Start="0,0"
+              End="0,370.075471698113">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,370.075471698113" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="382.789308176101,331.311320754717">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9.78930817610069,228.688679245283"
+              Start="0,0"
+              End="-9.78930817610069,221.188679245283">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.6777780073984" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,88.6777780073984"
+                    Point2="0,92.6777780073984"
+                    Point3="-4,92.6777780073984" />
+                  <mssgle:LineSegment
+                    End="-5.78930817610069,92.6777780073984" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5.78930817610069,92.6777780073984"
+                    Point2="-9.78930817610069,92.6777780073984"
+                    Point3="-9.78930817610069,96.6777780073984" />
+                  <mssgle:LineSegment
+                    End="-9.78930817610069,221.188679245283" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 16]"
+          TopLeft="985.902515723271,458.047169811321">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-102.902515723271,110.952830188679"
+              Start="0,0"
+              End="-102.902515723271,103.452830188679">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.1552215884159" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41.1552215884159"
+                    Point2="0,45.1552215884159"
+                    Point3="-4,45.1552215884159" />
+                  <mssgle:LineSegment
+                    End="-98.9025157232707,45.1552215884159" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-98.9025157232707,45.1552215884159"
+                    Point2="-102.902515723271,45.1552215884159"
+                    Point3="-102.902515723271,49.1552215884159" />
+                  <mssgle:LineSegment
+                    End="-102.902515723271,103.452830188679" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 17]"
+          TopLeft="883,611">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-29,54"
+              Start="0,0"
+              End="-29,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23"
+                    Point2="0,27"
+                    Point3="-4,27" />
+                  <mssgle:LineSegment
+                    End="-25,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-25,27"
+                    Point2="-29,27"
+                    Point3="-29,31" />
+                  <mssgle:LineSegment
+                    End="-29,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 18]"
+          TopLeft="854,707">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="215.5,33"
+              Start="0,0"
+              End="215.5,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="4,16.5" />
+                  <mssgle:LineSegment
+                    End="211.5,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="211.5,16.5"
+                    Point2="215.5,16.5"
+                    Point3="215.5,20.5" />
+                  <mssgle:LineSegment
+                    End="215.5,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 19]"
+          TopLeft="486.887840670859,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93.6121593291406,392.405660377359"
+              Start="0,0"
+              End="93.6121593291406,384.905660377359">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,180.783465466505" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,180.783465466505"
+                    Point2="0,184.783465466505"
+                    Point3="4,184.783465466505" />
+                  <mssgle:LineSegment
+                    End="89.6121593291406,184.783465466505" />
+                  <mssgle:CubicBezierSegment
+                    Point1="89.6121593291406,184.783465466505"
+                    Point2="93.6121593291406,184.783465466505"
+                    Point3="93.6121593291406,188.783465466505" />
+                  <mssgle:LineSegment
+                    End="93.6121593291406,384.905660377359" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="431.818396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-20.195754716981,124.716981132075"
+              Start="0,0"
+              End="-20.195754716981,117.216981132075">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5516725751441" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.5516725751441"
+                    Point2="0,53.5516725751441"
+                    Point3="-4,53.5516725751441" />
+                  <mssgle:LineSegment
+                    End="-16.195754716981,53.5516725751441" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16.195754716981,53.5516725751441"
+                    Point2="-20.195754716981,53.5516725751441"
+                    Point3="-20.195754716981,57.5516725751441" />
+                  <mssgle:LineSegment
+                    End="-20.195754716981,117.216981132075" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 20]"
+          TopLeft="582.5,597">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59"
+              Start="0,0"
+              End="0,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 21]"
+          TopLeft="584.5,698">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.5,56"
+              Start="0,0"
+              End="-16.5,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="-4,28" />
+                  <mssgle:LineSegment
+                    End="-12.5,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.5,28"
+                    Point2="-16.5,28"
+                    Point3="-16.5,32" />
+                  <mssgle:LineSegment
+                    End="-16.5,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 22]"
+          TopLeft="931.443396226415,141.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="176.056603773585,35.405660377359"
+              Start="0,0"
+              End="168.556603773585,35.405660377359">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="84.0283018867925,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="84.0283018867925,0"
+                    Point2="88.0283018867925,0"
+                    Point3="88.0283018867925,4" />
+                  <mssgle:LineSegment
+                    End="88.0283018867925,31.405660377359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="88.0283018867925,31.405660377359"
+                    Point2="88.0283018867925,35.405660377359"
+                    Point3="92.0283018867925,35.405660377359" />
+                  <mssgle:LineSegment
+                    End="168.556603773585,35.405660377359" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 23]"
+          TopLeft="1196.5,198">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.5,58"
+              Start="0,0"
+              End="50.5,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="4,29" />
+                  <mssgle:LineSegment
+                    End="46.5,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.5,29"
+                    Point2="50.5,29"
+                    Point3="50.5,33" />
+                  <mssgle:LineSegment
+                    End="50.5,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="79.5377358490566,328.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.4622641509434,164.698113207547"
+              Start="0,0"
+              End="10.4622641509434,157.198113207547">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.8340169537872" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,62.8340169537872"
+                    Point2="0,66.8340169537872"
+                    Point3="4,66.8340169537872" />
+                  <mssgle:LineSegment
+                    End="6.4622641509434,66.8340169537872" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.4622641509434,66.8340169537872"
+                    Point2="10.4622641509434,66.8340169537872"
+                    Point3="10.4622641509434,70.8340169537872" />
+                  <mssgle:LineSegment
+                    End="10.4622641509434,157.198113207547" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-10.0102155807783,71.8340169537872,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="262.811320754717,269.424528301887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96.566037735849"
+              Start="0,0"
+              End="0,89.066037735849">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,89.066037735849" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-15.24134765625,39.6585071491745,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="412.334905660378,331.311320754717">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,117.566037735849"
+              Start="0,0"
+              End="0,110.066037735849">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,110.066037735849" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-15.24134765625,50.1585071491745,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="530.943396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56.9339622641511,169.849056603774"
+              Start="0,0"
+              End="56.9339622641511,162.349056603774">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.9245283018868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,80.9245283018868"
+                    Point2="0,84.9245283018868"
+                    Point3="4,84.9245283018868" />
+                  <mssgle:LineSegment
+                    End="52.9339622641511,84.9245283018868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="52.9339622641511,84.9245283018868"
+                    Point2="56.9339622641511,84.9245283018868"
+                    Point3="56.9339622641511,88.9245283018868" />
+                  <mssgle:LineSegment
+                    End="56.9339622641511,162.349056603774" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="630.068396226415,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.676886792453,277.56603773585"
+              Start="0,0"
+              End="72.676886792453,270.06603773585">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,115.182852534485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,115.182852534485"
+                    Point2="0,119.182852534485"
+                    Point3="4,119.182852534485" />
+                  <mssgle:LineSegment
+                    End="68.676886792453,119.182852534485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="68.676886792453,119.182852534485"
+                    Point2="72.676886792453,119.182852534485"
+                    Point3="72.676886792453,123.182852534485" />
+                  <mssgle:LineSegment
+                    End="72.676886792453,270.06603773585" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="751.221174004193,162.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.3731656184492,87.811320754718"
+              Start="0,0"
+              End="12.3731656184492,80.311320754718">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.2514995243763" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.2514995243763"
+                    Point2="0,27.2514995243763"
+                    Point3="4,27.2514995243763" />
+                  <mssgle:LineSegment
+                    End="8.37316561844921,27.2514995243763" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.37316561844921,27.2514995243763"
+                    Point2="12.3731656184492,27.2514995243763"
+                    Point3="12.3731656184492,31.2514995243763" />
+                  <mssgle:LineSegment
+                    End="12.3731656184492,80.311320754718" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="530.943396226415,120.594339622641">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.7641509433961,-57.0943396226415"
+              Start="0,0"
+              End="59.7641509433961,-49.5943396226415">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-24.5471698113207" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-24.5471698113207"
+                    Point2="0,-28.5471698113207"
+                    Point3="4,-28.5471698113207" />
+                  <mssgle:LineSegment
+                    End="55.7641509433961,-28.5471698113207" />
+                  <mssgle:CubicBezierSegment
+                    Point1="55.7641509433961,-28.5471698113207"
+                    Point2="59.7641509433961,-28.5471698113207"
+                    Point3="59.7641509433961,-32.5471698113207" />
+                  <mssgle:LineSegment
+                    End="59.7641509433961,-49.5943396226415" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="14.6407278154481,-23.5471698113207,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Department table in Datamart is manually updated to create the &#xA;fkey_dept ID for PersoneEmployee_Department_Map."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="372,56"
+          Id="6d0e6e00-7208-4ba3-bf3d-80df8bffb933"
+          TopLeft="812,47" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Copy PSD to PSDBackup">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="238,42"
+          Id="Package\Copy PSD to PSDBackup\People Search Directory Backup"
+          TopLeft="591,317" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\Copy PSD to PSDBackup\People Search Directory"
+          TopLeft="425,161" />
+        <EdgeLayout
+          Id="Package\Copy PSD to PSDBackup.Paths[ADO NET Source Output]"
+          TopLeft="524,203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="186,114"
+              Start="0,0"
+              End="186,106.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53"
+                    Point2="0,57"
+                    Point3="4,57" />
+                  <mssgle:LineSegment
+                    End="182,57" />
+                  <mssgle:CubicBezierSegment
+                    Point1="182,57"
+                    Point2="186,57"
+                    Point3="186,61" />
+                  <mssgle:LineSegment
+                    End="186,106.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Copy PSD to PSDBackup\People Search Directory">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Copy PSD to PSDBackup\People Search Directory Backup">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\populate person source">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="96,42"
+          Id="Package\populate person source\live"
+          TopLeft="265,304" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\populate person source\staging"
+          TopLeft="220,128" />
+        <EdgeLayout
+          Id="Package\populate person source.Paths[ADO NET Source Output]"
+          TopLeft="277.5,170">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35.5,134"
+              Start="0,0"
+              End="35.5,126.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,63"
+                    Point2="0,67"
+                    Point3="4,67" />
+                  <mssgle:LineSegment
+                    End="31.5,67" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.5,67"
+                    Point2="35.5,67"
+                    Point3="35.5,71" />
+                  <mssgle:LineSegment
+                    End="35.5,126.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\populate person source\live">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\populate person source\staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Populate Vacations Data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Populate Vacations Data\ADO NET Source 2"
+          TopLeft="404,84" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Populate Vacations Data\ADO NET Destination 1"
+          TopLeft="429,220" />
+        <EdgeLayout
+          Id="Package\Populate Vacations Data.Paths[ADO NET Source Output]"
+          TopLeft="491.5,126">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35,94"
+              Start="0,0"
+              End="35,86.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43"
+                    Point2="0,47"
+                    Point3="4,47" />
+                  <mssgle:LineSegment
+                    End="31,47" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31,47"
+                    Point2="35,47"
+                    Point3="35,51" />
+                  <mssgle:LineSegment
+                    End="35,86.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populate Vacations Data\ADO NET Destination 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Populate Vacations Data\ADO NET Source 2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

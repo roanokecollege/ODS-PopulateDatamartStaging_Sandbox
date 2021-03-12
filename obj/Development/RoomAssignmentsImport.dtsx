@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/3/2013 12:14:10 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{4093FDAB-4A4C-4F68-BF48-DB61F03ECC1A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="RoomAssignmentsImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="23"
+  DTS:VersionGUID="{7D1B554E-F896-42D0-ABBB-517AE2F7DBE0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1AFA289B-3648-4415-940F-8DF1CFE27813}"
+      DTS:ObjectName="hermes.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3CC84737-2FB3-4FE6-B9F8-689A1CDF1421}"
+      DTS:ObjectName="hermes.Staging1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{646E7665-A180-420C-A8A0-D8495581827B}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Merge Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{AF068E61-4BF0-4D36-9077-E4441D6F0578}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Merge Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{646E7665-A180-420C-A8A0-D8495581827B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Room Assignments Import Hermes Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task&#xA;&#xA;Move Room Assignment Data from Staging to Datamart&#xA;&#xA;&#xA;&#xA; located in package RoomAssignmentsImport.dtsx &#xA;&#xA;&#xA;&#xA;&#xA;has failed.&#xA;&#xA;&#xA;&#xA;Import of Room Assignment data into the Datamart has stopped.  &#xA;&#xA;Population from subsequent files will continue. Hermes" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move Room Assignment Data from Staging to DataMart"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B9E24B91-A1C3-4480-A161-B2D919792115}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move Room Assignment Data from Staging to DataMart"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3CC84737-2FB3-4FE6-B9F8-689A1CDF1421}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonStudent_Room_Assignments AS Target&#xA;&#x9;&#x9;&#x9;USING (SELECT RCID, RoomAssignmentId, Term, BuildingCode, BuildingName,RoomNumber, RoomType,&#xA;&#x9;&#x9;&#x9;FYFreshman, IMportDate&#xA;&#x9;&#x9;&#x9; FROM Staging.dbo.DM_Room_Assignments) AS Source&#xA;&#x9;&#x9;&#x9;ON (Target.RoomAssignmentId =SOURCE.RoomAssignmentId)&#xA;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;WHEN NOT MATCHED THEN&#xA;&#x9;&#x9;&#x9;&#x9;INSERT (RCID, RoomAssignmentId, Term, BuildingCode, BuildingName,RoomNumber, RoomType,FYFreshman, ImportDate, updated_at)&#xA;&#x9;&#x9;&#x9;&#x9;VALUES (SOURCE.RCID, SOURCE.RoomAssignmentId, SOURCE.Term, SOURCE.BuildingCode,SOURCE.BuildingName,&#xA;&#x9;&#x9;&#x9;&#x9;        SOURCE.RoomNumber,SOURCE.RoomType,SOURCE.FYFreshman,SOURCE.ImportDate, GetDate());&#xA;&#x9;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table Error Notification"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{B58B5715-1252-4B49-9B74-E5057CB25A70}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table Error Notification"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{646E7665-A180-420C-A8A0-D8495581827B}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="datamart@roanoke.edu"
+          SendMailTask:CC="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Room Assignments Import Hermes Error"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Task:&#xA;&#xA;Truncate Table PersonStudent_RoomAssignments in Datamart&#xA;&#xA;&#xA; in package RoomAssignmentsImport located has failed.&#xA;&#xA;&#xA;&#xA;Import of Room Assignment information has stopped." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table PersonStudent_RoomAssignments"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Clear existing data and overwrite - only interested in current state"
+      DTS:DTSID="{96351F37-8D84-4240-9633-E9C7BBD711A8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table PersonStudent_RoomAssignments"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3CC84737-2FB3-4FE6-B9F8-689A1CDF1421}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE DATAMART.dbo.PersonStudent_Room_Assignments" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated_at date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AC976DFC-6353-4481-83FE-295B43CB674E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated_at date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1AFA289B-3648-4415-940F-8DF1CFE27813}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="UPDATE&#xA;  PersonStudent_Room_Assignments&#xA;SET&#xA;   PersonStudent_Room_Assignments.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{45B9C30F-D097-4434-BBCC-399CAF1AE5D3}"
+      DTS:From="Package\Truncate Table PersonStudent_RoomAssignments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Move Room Assignment Data from Staging to DataMart" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D856E8F5-773D-4EA3-8335-5E781B011C68}"
+      DTS:From="Package\Truncate Table PersonStudent_RoomAssignments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Truncate Table Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{97A6FDA0-6638-4364-8B44-0CD741556C08}"
+      DTS:From="Package\Move Room Assignment Data from Staging to DataMart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Data Merge Error Notification"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{29E1D1C3-4A96-401A-8461-54816D7A28AA}"
+      DTS:From="Package\Move Room Assignment Data from Staging to DataMart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\updated_at date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="269,44"
+          Id="Package\Data Merge Error Notification"
+          TopLeft="404.103773584906,399.27358490566" />
+        <NodeLayout
+          Size="397,44"
+          Id="Package\Move Room Assignment Data from Staging to DataMart"
+          TopLeft="35.3490566037736,250.518867924528" />
+        <NodeLayout
+          Size="263,50"
+          Id="Package\Truncate Table Error Notification"
+          TopLeft="274.971698113208,94.7452830188679" />
+        <NodeLayout
+          Size="327,44"
+          Id="Package\Truncate Table PersonStudent_RoomAssignments"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\updated_at date"
+          TopLeft="72,488" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="169.235849056604,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.7924528301887,201.094339622641"
+              Start="0,0"
+              End="64.7924528301887,193.594339622641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,100.528301886792" />
+                  <mssgle:LineSegment
+                    End="64.7924528301887,100.528301886792" />
+                  <mssgle:LineSegment
+                    End="64.7924528301887,193.594339622641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="231.5,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="174.754716981132,45.3207547169811"
+              Start="0,0"
+              End="174.754716981132,37.8207547169811">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.9811320754717" />
+                  <mssgle:LineSegment
+                    End="174.754716981132,20.9811320754717" />
+                  <mssgle:LineSegment
+                    End="174.754716981132,37.8207547169811" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="72.136010834316,25.9811320754717,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="298.682389937107,294.518867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="239.921383647799,104.754716981132"
+              Start="0,0"
+              End="239.921383647799,97.254716981132">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.154181143436" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.154181143436"
+                    Point2="0,42.154181143436"
+                    Point3="4,42.154181143436" />
+                  <mssgle:LineSegment
+                    End="235.921383647799,42.154181143436" />
+                  <mssgle:CubicBezierSegment
+                    Point1="235.921383647799,42.154181143436"
+                    Point2="239.921383647799,42.154181143436"
+                    Point3="239.921383647799,46.154181143436" />
+                  <mssgle:LineSegment
+                    End="239.921383647799,97.254716981132" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="104.71934416765,47.154181143436,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="169.01572327044,294.518867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-18.0157232704402,193.481132075472"
+              Start="0,0"
+              End="-18.0157232704402,185.981132075472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.8584384970038" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,73.8584384970038"
+                    Point2="0,77.8584384970038"
+                    Point3="-4,77.8584384970038" />
+                  <mssgle:LineSegment
+                    End="-14.0157232704402,77.8584384970038" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-14.0157232704402,77.8584384970038"
+                    Point2="-18.0157232704402,77.8584384970038"
+                    Point3="-18.0157232704402,81.8584384970038" />
+                  <mssgle:LineSegment
+                    End="-18.0157232704402,185.981132075472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

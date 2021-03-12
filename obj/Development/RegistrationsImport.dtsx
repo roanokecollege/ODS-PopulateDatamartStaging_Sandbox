@@ -1,0 +1,1230 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/3/2013 11:51:48 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SANDBOX"
+  DTS:CreatorName="ACADEMIC\webserv"
+  DTS:DTSID="{F9713004-79CC-4BA8-BE4B-DE3677F350C6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3026.27"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="RegistrationsImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="234"
+  DTS:VersionGUID="{1FE98784-5AEF-44FE-A2D9-E5A7B60AD237}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{9D25FE6D-A2DC-4424-BCD4-8F7AFF62CFB2}"
+      DTS:ObjectName="Hermes">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{9D25FE6D-A2DC-4424-BCD4-8F7AFF62CFB2}Hermes;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HERMES.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+      DTS:ObjectName="HERMES.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-RegistrationsImport-{1DF8055B-E73E-4BFE-A875-A6B613549443}HERMES.DataMart;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.DataMart1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{1E6A3C9A-81A0-4282-9060-CB9C5F812A2F}"
+      DTS:ObjectName="hermes.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{1E6A3C9A-81A0-4282-9060-CB9C5F812A2F}hermes.DataMart1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes.DataMart1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{69ED5509-A597-4C75-9380-C0FEA1C07DEA}"
+      DTS:ObjectName="Hermes.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{69ED5509-A597-4C75-9380-C0FEA1C07DEA}Hermes.DataMart1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{B733C776-1D53-4C0A-8AB1-B8EDCF827C98}"
+      DTS:ObjectName="hermes.Staging1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{B733C776-1D53-4C0A-8AB1-B8EDCF827C98}hermes.Staging1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[hermes.Staging1 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1E00CF08-D0DB-409C-B043-63F22D66D0EB}"
+      DTS:ObjectName="hermes.Staging1 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes.timeclock]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{13A14CBB-D052-4094-B69E-2C5BEF703BA2}"
+      DTS:ObjectName="Hermes.timeclock">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=timeclock;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-RegistrationsImport-{13A14CBB-D052-4094-B69E-2C5BEF703BA2}Hermes.timeclock;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Hermes.timeclock1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{82BF4836-1667-4E4B-B30E-7C6AB957C50B}"
+      DTS:ObjectName="Hermes.timeclock1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=timeclock;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{82BF4836-1667-4E4B-B30E-7C6AB957C50B}Hermes.timeclock1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+      DTS:ObjectName="localhost.Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-RegistrationsImport-{0DD495F8-FC93-4113-A79D-971CD88F0BCF}localhost.Staging;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Mail Server]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{F0EA4EC2-CF55-45EE-951B-E0E0D283E1FD}"
+      DTS:ObjectName="Mail Server">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=199.111.154.146;UseWindowsAuthentication=True;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PostgreSQL35W]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{EABF1D2A-06E7-4169-9A80-E6CC63ADD210}"
+      DTS:ObjectName="PostgreSQL35W">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=PSQL32;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PostgreSQL35W 1]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{DE3D67CD-D15A-4C90-8F02-F882D317F233}"
+      DTS:ObjectName="PostgreSQL35W 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=PSQL32;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{14469DA3-172E-43CA-ABCB-C210949E3E9B}"
+      DTS:ObjectName="sandbox.DataMart">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-RegistrationsImport-{14469DA3-172E-43CA-ABCB-C210949E3E9B}sandbox.DataMart;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sandbox.DataMart1]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{11E6ABA5-8E29-45BF-A6F6-F5D231D3A6BB}"
+      DTS:ObjectName="sandbox.DataMart1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=sandbox;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{11E6ABA5-8E29-45BF-A6F6-F5D231D3A6BB}sandbox.DataMart1;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{84849B2B-D45A-4F08-812F-0E095F47721B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="&#xA;&#xA;INSERT INTO DataMart.dbo.DegreeMajors&#xA;&#xA;SELECT &#xA;&#x9;DegreeMajorCode, DegreeMajorDescription&#xA;&#xA;FROM STAGING.dbo.view_R_Majors&#xA;  &#xA;;&#xA;&#xA;INSERT INTO DataMart.dbo.Student_Terms&#xA;&#xA;SELECT &#xA;&#x9;ID,RCID,FirstTerm,LastTerm&#xA;&#xA;FROM STAGING.dbo.DM_Student_Terms&#xA;  &#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merge personstudent with est grad date and living on campus"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E4CB3AF4-D288-4ABD-89A5-DC6CFBCF6A13}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merge personstudent with est grad date and living on campus"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1E00CF08-D0DB-409C-B043-63F22D66D0EB}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonStudent as TARGET&#xA;USING (SELECT rcid, est_grad_date, live_campus&#xA; FROM Staging.dbo.dm_est_graddate_living_on_campus) AS Source &#xA;ON (Target.rcid = Source.rcid)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.est_grad_date = source.est_grad_date,&#xA;         target.living_on_campus = source.live_campus &#xA;         &#xA;  ;        &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merge person_source"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2AB9A9B7-0494-4A66-9D75-4A85AC8DCD57}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merge person_source"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.person_source as TARGET&#xA;USING (SELECT rcid, position, source_id, source_description FROM staging.dbo.person_source) AS Source &#xA;ON (target.rcid = Source.rcid) and (target.position = Source.position)&#xA;WHEN MATCHED THEN&#xA;UPDATE SET  &#xA;target.source_id = source.source_id,&#xA;target.source_description = source.source_description&#xA;&#xA;&#x9;&#x9; &#x9;       &#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;INSERT (rcid, position, source_id, source_description)&#xA;VALUES (source.rcid, source.position, source.source_id, source.source_description);&#x9; &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Merge Registration Info into Datamart"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3A983F02-88AB-4F39-B7BC-1BC7AE381B25}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Merge Registration Info into Datamart"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Registrations as TARGET&#xA;USING (SELECT key_RegId, fkey_courseid, rcid, fkey_RegStatus,letter_grade, grade_value, course_credit, mid_term_grade, pass_fail_audit, updated_at&#xA; FROM Staging.dbo.DM_Registrations) AS Source &#xA;ON (Target.key_Regid = Source.key_RegId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.fkey_courseid = source.fkey_courseid,&#xA;       &#x9;&#x9;target.rcid = source.rcid, &#xA;                &#x9;target.fkey_regstatus = source.fkey_regstatus,&#xA;&#x9;&#x9;target.letter_grade = source.letter_grade, &#xA;&#x9;&#x9;target.grade_value = source.grade_value, &#xA;&#x9;&#x9;target.course_credit = source.course_credit, &#xA;&#x9;&#x9;target.mid_term_grade = source.mid_term_grade, &#xA;&#x9;&#x9;target.pass_fail_audit = source.pass_fail_audit,&#xA;&#x9;&#x9;target.updated_at = source.updated_at&#xA;&#x9;&#x9;&#xA;     WHEN NOT MATCHED BY TARGET THEN&#xA;&#x9;&#x9;INSERT ( key_RegId, fkey_courseid, rcid, fkey_RegStatus,letter_grade, grade_value, course_credit, mid_term_grade, pass_fail_audit, updated_at)&#xA;&#x9;&#x9;VALUES (source.key_RegId,source.fkey_courseid, source.rcid, source.fkey_RegStatus,source.letter_grade, source.grade_value, source.course_credit, source.mid_term_grade, source.pass_fail_audit, source.updated_at);&#x9;       &#xA;&#xA;&#x9; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merge Registrations_by_courseV_with_ADV"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7FDFC3E3-13D6-4908-83DC-64B15205AECB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:ForceExecutionResult="2"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merge Registrations_by_courseV_with_ADV"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Registrations_by_courseV_with_ADV as TARGET&#xA;USING (SELECT ID, RCID,FirstName,LastName,FullName,RegStatus,Class,fkey_CourseCodeId,Number,ClassSection,fkey_semesterId,key_CourseId,instructor,instructorId,City,State,Email,CourseStatusCode,key_RegId,AcadProgram,ExcludedDirectory,Description,Credits,semester_description,semester_start_date,semester_end_date FROM Datamart.dbo.view_registrations_by_courseV_with_ADV) AS Source &#xA;ON ( target.ID = Source.ID)&#xA;WHEN MATCHED THEN&#xA;UPDATE SET  &#xA;target.firstname = source.firstname,&#xA;target.lastname = source.lastname,&#xA;target.fullname = source.fullname,&#xA;target.RegStatus = source.RegStatus,&#xA;target.Class = source.Class,&#xA;target.fkey_CourseCodeId = source.fkey_CourseCodeId,&#xA;target.Number = source.Number,&#xA;target.ClassSection = source.ClassSection,&#xA;target.fkey_semesterId = source.fkey_SemesterId,&#xA;target.key_CourseId = source.key_CourseId,&#xA;target.instructor = source.instructor,&#xA;target.instructorid = source.instructorid,&#xA;target.city = source.city,&#xA;target.state = source.state,&#xA;target.email = source.email,&#xA;target.CourseStatusCode = source.CourseStatusCode,&#xA;target.AcadProgram = source.AcadProgram,&#xA;target.ExcludedDirectory = source.ExcludedDirectory,&#xA;target.Description = source.Description,&#xA;target.credits = source.credits,&#xA;target.semester_description = source.semester_description,&#xA;target.semester_start_date = source.semester_start_date,&#xA;target.semester_end_date = source.semester_end_date&#xA;&#xA;&#xA;&#x9;&#x9; &#x9;       &#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;INSERT (ID, RCID,FirstName,LastName,FullName,RegStatus,Class,fkey_CourseCodeId,Number,ClassSection,fkey_semesterId,key_CourseId,instructor,instructorId,City,State,Email,CourseStatusCode,key_RegId,AcadProgram,ExcludedDirectory,Description,Credits,semester_description,semester_start_date,semester_end_date )&#xA;VALUES (source.ID,source.RCID,source.FirstName,source.LastName,source.FullName,source.RegStatus,source.Class,source.fkey_CourseCodeId,source.Number,source.ClassSection,source.fkey_semesterId,source.key_CourseId,source.instructor,source.instructorId,source.City,source.State,source.Email,source.CourseStatusCode,source.key_RegId,source.AcadProgram,source.ExcludedDirectory,source.Description,source.Credits,source.semester_description,source.semester_start_date,source.semester_end_date);&#x9; &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merges cum_gpa into person student table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{335B6113-8547-49B0-9992-5A2157E53055}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merges cum_gpa into person student table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonStudent as TARGET&#xA;USING (SELECT rcid, cum_gpa&#xA; FROM Staging.dbo.cum_gpa) AS Source &#xA;ON (Target.rcid = Source.rcid)&#xA;&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.cum_gpa = source.cum_gpa&#xA;&#xA;      &#xA;&#xA;  ;        &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task 1"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{9DE3C1B3-42EB-4F04-B065-E76CEB3E334B}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task 1"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{F0EA4EC2-CF55-45EE-951B-E0E0D283E1FD}"
+          SendMailTask:From="noreply@roanoke.edu"
+          SendMailTask:To="gabrielson@roanoke.edu"
+          SendMailTask:Subject="Registration Import Issue"
+          SendMailTask:MessageSource="There is an issue on Hermes SSIS RegistrationImports, go and check please. " xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\student term details"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0195A4ED-BAD5-4AED-9160-F00BC2ED3B5B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="student term details"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\student term details\ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."student_term_details"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\student term details\ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.DataMart1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.DataMart1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[rcid]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="rcid"
+                      externalMetadataColumnId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[rcid]"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[rcid]" />
+                    <inputColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[term]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="term"
+                      externalMetadataColumnId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term]"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term]" />
+                    <inputColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[gpa]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="gpa"
+                      externalMetadataColumnId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term_gpa]"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[gpa]" />
+                    <inputColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[term_notes]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="term_notes"
+                      externalMetadataColumnId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term_status]"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term_notes]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      name="rcid" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term]"
+                      dataType="wstr"
+                      length="50"
+                      name="term" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term_gpa]"
+                      dataType="wstr"
+                      length="50"
+                      name="term_gpa" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[term_status]"
+                      dataType="wstr"
+                      length="100"
+                      name="term_status" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\student term details\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\student term details\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\student term details\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\student term details\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\student term details\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\student term details\term_gpa"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="term_gpa"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."term_gpa"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\student term details\term_gpa.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[hermes.Staging1]"
+                  connectionManagerRefId="Package.ConnectionManagers[hermes.Staging1]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[rcid]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      length="7"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[rcid]"
+                      name="rcid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[term]"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term]"
+                      name="term"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[gpa]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[gpa]"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[gpa]"
+                      name="gpa"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term_notes]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[term_notes]"
+                      length="100"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[term_notes]"
+                      name="term_notes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[mid_term_gpa]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[mid_term_gpa]"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].Columns[mid_term_gpa]"
+                      name="mid_term_gpa"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      name="rcid" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[term]"
+                      dataType="wstr"
+                      length="50"
+                      name="term" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[gpa]"
+                      dataType="wstr"
+                      length="50"
+                      name="gpa" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[term_notes]"
+                      dataType="wstr"
+                      length="100"
+                      name="term_notes" />
+                    <externalMetadataColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Output].ExternalColumns[mid_term_gpa]"
+                      dataType="wstr"
+                      length="50"
+                      name="mid_term_gpa" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      dataType="wstr"
+                      length="7"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[rcid]"
+                      name="rcid" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[term]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[term]"
+                      name="term" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[gpa]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[gpa]"
+                      name="gpa" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[term_notes]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[term_notes]"
+                      name="term_notes" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[mid_term_gpa]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[mid_term_gpa]"
+                      name="mid_term_gpa" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\student term details\term_gpa.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\student term details.Paths[ADO NET Source Output]"
+              endId="Package\student term details\ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\student term details\term_gpa.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\trunacte table student_term_details"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4B17811C-274F-43D9-BB49-129F2236CC39}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="trunacte table student_term_details"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:SqlStatementSource="truncate table student_term_details; &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5B3D6AE6-F5C1-4801-BB18-22B1F2B1DDDA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="DELETE FROM DataMart.DBO.DegreeMajors;&#xA;DELETE FROM DataMart.DBO.Student_Terms;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\updated_at date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9AF4DF62-F5C7-43D5-ABBE-B7A88E8B59BD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="updated_at date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1DF8055B-E73E-4BFE-A875-A6B613549443}"
+          SQLTask:SqlStatementSource="UPDATE&#xA;    Registrations&#xA;SET&#xA;   Registrations.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{96C02D2F-9631-46F0-8226-6CBB4AFA5432}"
+      DTS:From="Package\merges cum_gpa into person student table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\merge Registrations_by_courseV_with_ADV" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{4DF8AC31-C1BF-4499-B557-66BA2D269178}"
+      DTS:From="Package\Merge Registration Info into Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\merge personstudent with est grad date and living on campus" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 20]"
+      DTS:CreationName=""
+      DTS:DTSID="{73C149AC-2235-44FE-8467-658B02E879C6}"
+      DTS:From="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 20"
+      DTS:To="Package\updated_at date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 21]"
+      DTS:CreationName=""
+      DTS:DTSID="{6747594E-8274-4D05-A972-0217787B9236}"
+      DTS:From="Package\merge person_source"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 21"
+      DTS:To="Package\Merge Registration Info into Datamart" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 22]"
+      DTS:CreationName=""
+      DTS:DTSID="{833D6819-E721-42F5-A8FE-6E65E5AEF5DC}"
+      DTS:From="Package\merge personstudent with est grad date and living on campus"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 22"
+      DTS:To="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 23]"
+      DTS:CreationName=""
+      DTS:DTSID="{A55039C2-3232-4323-A8A7-42BFF3FD533C}"
+      DTS:From="Package\updated_at date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 23"
+      DTS:To="Package\trunacte table student_term_details" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 24]"
+      DTS:CreationName=""
+      DTS:DTSID="{F42D97E4-6ADB-44FE-93DB-0FFA9253F021}"
+      DTS:From="Package\trunacte table student_term_details"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 24"
+      DTS:To="Package\student term details" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 25]"
+      DTS:CreationName=""
+      DTS:DTSID="{20CB2150-05DB-4D0A-90A6-71462D760D16}"
+      DTS:From="Package\student term details"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 25"
+      DTS:To="Package\merges cum_gpa into person student table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{43C36B96-05B8-4A2A-BDDD-C4C8E05CE003}"
+      DTS:From="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{B2301896-295D-4CAE-9735-F0925BF134F8}"
+      DTS:From="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Send Mail Task 1"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="453,67"
+          Id="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
+          TopLeft="300.122641509434,465" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\merge person_source"
+          TopLeft="210,87" />
+        <NodeLayout
+          Size="378,42"
+          Id="Package\merge personstudent with est grad date and living on campus"
+          TopLeft="66,277" />
+        <NodeLayout
+          Size="262,42"
+          Id="Package\Merge Registration Info into Datamart"
+          TopLeft="162,179.650943396226" />
+        <NodeLayout
+          Size="296,42"
+          Id="Package\merge Registrations_by_courseV_with_ADV"
+          TopLeft="861,433" />
+        <NodeLayout
+          Size="287,42"
+          Id="Package\merges cum_gpa into person student table"
+          TopLeft="857,313" />
+        <NodeLayout
+          Size="166,44"
+          Id="Package\Send Mail Task 1"
+          TopLeft="65.74528301887,525.320754716981" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\student term details"
+          TopLeft="923,227" />
+        <NodeLayout
+          Size="251,42"
+          Id="Package\trunacte table student_term_details"
+          TopLeft="867,130" />
+        <NodeLayout
+          Size="455,42"
+          Id="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
+          TopLeft="29.537735849057,365.018867924528" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\updated_at date"
+          TopLeft="594,65.650943396226" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="1000.5,355">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.5,78"
+              Start="0,0"
+              End="8.5,70.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35"
+                    Point2="0,39"
+                    Point3="4,39" />
+                  <mssgle:LineSegment
+                    End="4.5,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.5,39"
+                    Point2="8.5,39"
+                    Point3="8.5,43" />
+                  <mssgle:LineSegment
+                    End="8.5,70.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="293,221.650943396226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-38,55.349056603774"
+              Start="0,0"
+              End="-38,47.849056603774">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.674528301887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.674528301887"
+                    Point2="0,27.674528301887"
+                    Point3="-4,27.674528301887" />
+                  <mssgle:LineSegment
+                    End="-34,27.674528301887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34,27.674528301887"
+                    Point2="-38,27.674528301887"
+                    Point3="-38,31.674528301887" />
+                  <mssgle:LineSegment
+                    End="-38,47.849056603774" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 20]"
+          TopLeft="600.789308176101,465">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.2106918238993,-357.349056603774"
+              Start="0,0"
+              End="72.2106918238993,-349.849056603774">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-139.694253293379" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-139.694253293379"
+                    Point2="0,-143.694253293379"
+                    Point3="4,-143.694253293379" />
+                  <mssgle:LineSegment
+                    End="68.2106918238993,-143.694253293379" />
+                  <mssgle:CubicBezierSegment
+                    Point1="68.2106918238993,-143.694253293379"
+                    Point2="72.2106918238993,-143.694253293379"
+                    Point3="72.2106918238993,-147.694253293379" />
+                  <mssgle:LineSegment
+                    End="72.2106918238993,-349.849056603774" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 21]"
+          TopLeft="303,129">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10,50.650943396226"
+              Start="0,0"
+              End="-10,43.150943396226">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.325471698113" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.325471698113"
+                    Point2="0,25.325471698113"
+                    Point3="-4,25.325471698113" />
+                  <mssgle:LineSegment
+                    End="-6,25.325471698113" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6,25.325471698113"
+                    Point2="-10,25.325471698113"
+                    Point3="-10,29.325471698113" />
+                  <mssgle:LineSegment
+                    End="-10,43.150943396226" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 22]"
+          TopLeft="255,319">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-72.462264150943,46.018867924528"
+              Start="0,0"
+              End="-72.462264150943,38.518867924528">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5145662360844" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5145662360844"
+                    Point2="0,27.5145662360844"
+                    Point3="-4,27.5145662360844" />
+                  <mssgle:LineSegment
+                    End="-68.462264150943,27.5145662360844" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-68.462264150943,27.5145662360844"
+                    Point2="-72.462264150943,27.5145662360844"
+                    Point3="-72.462264150943,31.5145662360844" />
+                  <mssgle:LineSegment
+                    End="-72.462264150943,38.518867924528" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 23]"
+          TopLeft="752,86.650943396226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="115,64.349056603774"
+              Start="0,0"
+              End="107.5,64.349056603774">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="53.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.5,0"
+                    Point2="57.5,0"
+                    Point3="57.5,4" />
+                  <mssgle:LineSegment
+                    End="57.5,60.349056603774" />
+                  <mssgle:CubicBezierSegment
+                    Point1="57.5,60.349056603774"
+                    Point2="57.5,64.349056603774"
+                    Point3="61.5,64.349056603774" />
+                  <mssgle:LineSegment
+                    End="107.5,64.349056603774" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 24]"
+          TopLeft="992.5,172">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18,55"
+              Start="0,0"
+              End="18,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="14,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14,27.5"
+                    Point2="18,27.5"
+                    Point3="18,31.5" />
+                  <mssgle:LineSegment
+                    End="18,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 25]"
+          TopLeft="1010.5,269">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10,44"
+              Start="0,0"
+              End="-10,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18"
+                    Point2="0,22"
+                    Point3="-4,22" />
+                  <mssgle:LineSegment
+                    End="-6,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6,22"
+                    Point2="-10,22"
+                    Point3="-10,26" />
+                  <mssgle:LineSegment
+                    End="-10,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="257.037735849057,407.018867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="195.41823899371,57.981132075472"
+              Start="0,0"
+              End="195.41823899371,50.481132075472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.6662377873147" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.6662377873147"
+                    Point2="0,34.6662377873147"
+                    Point3="4,34.6662377873147" />
+                  <mssgle:LineSegment
+                    End="191.41823899371,34.6662377873147" />
+                  <mssgle:CubicBezierSegment
+                    Point1="191.41823899371,34.6662377873147"
+                    Point2="195.41823899371,34.6662377873147"
+                    Point3="195.41823899371,38.6662377873147" />
+                  <mssgle:LineSegment
+                    End="195.41823899371,50.481132075472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="300.122641509434,498.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-68.3773584905641,48.820754716981"
+              Start="0,0"
+              End="-60.8773584905641,48.820754716981">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-30.188679245282,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30.188679245282,0"
+                    Point2="-34.188679245282,0"
+                    Point3="-34.188679245282,4" />
+                  <mssgle:LineSegment
+                    End="-34.188679245282,44.820754716981" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34.188679245282,44.820754716981"
+                    Point2="-34.188679245282,48.820754716981"
+                    Point3="-38.188679245282,48.820754716981" />
+                  <mssgle:LineSegment
+                    End="-60.8773584905641,48.820754716981" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-49.430026901532,-15.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\student term details">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186,42"
+          Id="Package\student term details\ADO NET Destination"
+          TopLeft="346,281" />
+        <NodeLayout
+          Size="125,42"
+          Id="Package\student term details\term_gpa"
+          TopLeft="348,139" />
+        <EdgeLayout
+          Id="Package\student term details.Paths[ADO NET Source Output]"
+          TopLeft="410.5,181">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.5,100"
+              Start="0,0"
+              End="28.5,92.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46"
+                    Point2="0,50"
+                    Point3="4,50" />
+                  <mssgle:LineSegment
+                    End="24.5,50" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.5,50"
+                    Point2="28.5,50"
+                    Point3="28.5,54" />
+                  <mssgle:LineSegment
+                    End="28.5,92.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="in sandbox this is GPAData SSIS just for reference&#xA;"
+          ParentId="Package\student term details"
+          FontInfo="{assembly:Null}"
+          Size="290,56"
+          Id="e11e105f-895f-4791-a21d-ed86f9d38da5"
+          TopLeft="689,139" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\student term details\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\student term details\term_gpa">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
