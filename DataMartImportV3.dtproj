@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">HERMES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAU70ywSBGW0qQQvhuj0z9KgAAAAACAAAAAAADZgAAwAAAABAAAADTRy9J0kQa7bYFWCfqJ6zbAAAAAASAAACgAAAAEAAAACgN2eZp2BQ0sp0LLW59GkiIAAAAw98apJ2Yv7Y9IFivTg7onExwLw73evJMtFGUObroWOqoKbxzGWzLs267ubzDszK/l7gASagExMWOjoCIZH88MG1a145ZV8BR/bsNhE+7STuAY/RWjDZ9a5l5xCMlImMhS3+A4+InZiNcfZoXb+qK3nwkftFqBacjMxljbyn8tNZ/IcaJdRiN6xQAAADNM+YZHS8VNQSEhD/YQMjLX+Y5ew==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAU70ywSBGW0qQQvhuj0z9KgAAAAACAAAAAAADZgAAwAAAABAAAADSQHRX6kf4e4INrO1lpNXyAAAAAASAAACgAAAAEAAAAEgTclYGpbVRERfTn0jzO6SIAAAAGL4tznLVIv1OSeHEyg0hoen+D8ITPLBWZP2h5xorBp4zHhMpozDKzCQ2dVQ13cjD/lbCvGh9v4QJIve1R4i3Fds5P8NC6mSK7IJ1dF/m4gHIAbqOsGGit4fyQbnQ7y8ou1MPxssjfksmhvf9vQTR50OLopx9IUFMbDIeNElTWcWLADy9SJgi8hQAAABTYZakRRSyjYBnR7/J1qA/e5oKnQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -8003,10 +8003,10 @@
                 <SSIS:Property SSIS:Name="Name">Care_Cases</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">30</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">35</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{CD657CDC-7564-42DC-9A0B-C3ECF7253DD1}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{36EDB67A-81E7-4D77-8059-91646753449D}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -8069,7 +8069,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">E:\all_cases.csv</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">\\artemis.roanoke.edu\VC_HOLD\all_cases.csv</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>

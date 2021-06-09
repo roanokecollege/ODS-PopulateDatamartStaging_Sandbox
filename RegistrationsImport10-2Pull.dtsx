@@ -5,31 +5,31 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="SANDBOX"
   DTS:CreatorName="ACADEMIC\webserv"
-  DTS:DTSID="{F9713004-79CC-4BA8-BE4B-DE3677F350C6}"
+  DTS:DTSID="{EBEEF448-D38F-4B74-8F2D-6B9A4DC486E4}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="14.0.3026.27"
   DTS:LocaleID="1033"
-  DTS:ObjectName="RegistrationsImport"
+  DTS:ObjectName="RegistrationsImport10-2Pull"
   DTS:PackageType="5"
-  DTS:VersionBuild="270"
-  DTS:VersionGUID="{59B29731-5C93-4DC1-91CC-A4BCE9312E50}">
+  DTS:VersionBuild="267"
+  DTS:VersionGUID="{035ABAE0-EE1D-489A-809B-B7AE2B75074A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Hermes]"
       DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{9D25FE6D-A2DC-4424-BCD4-8F7AFF62CFB2}"
+      DTS:DTSID="{93872D3B-33EA-4EE9-9A8F-EC5D18F05F9C}"
       DTS:ObjectName="Hermes">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{9D25FE6D-A2DC-4424-BCD4-8F7AFF62CFB2}Hermes;" />
+          DTS:ConnectionString="Data Source=localhost;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{93872D3B-33EA-4EE9-9A8F-EC5D18F05F9C}Hermes;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.DataMart]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{F6795A88-127A-4CC5-A405-64E4D4845B9E}"
+      DTS:DTSID="{14225D4D-CDF7-4395-B4F5-4EB295CDF522}"
       DTS:ObjectName="LocalHost.DataMart">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -39,37 +39,37 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.DataMart1]"
       DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{04083AA1-7DD9-4CB4-B4BB-79645C74F93B}"
+      DTS:DTSID="{C61F3FF7-589F-4344-A6E6-B536F48CB36C}"
       DTS:ObjectName="LocalHost.DataMart1">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=.;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{04083AA1-7DD9-4CB4-B4BB-79645C74F93B}LocalHost.DataMart1;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DataMart;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{C61F3FF7-589F-4344-A6E6-B536F48CB36C}LocalHost.DataMart1;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[localhost.Staging]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+      DTS:DTSID="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
       DTS:ObjectName="localhost.Staging">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-RegistrationsImport-{0DD495F8-FC93-4113-A79D-971CD88F0BCF}localhost.Staging;" />
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-RegistrationsImport-{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}localhost.Staging;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.Staging]"
       DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-      DTS:DTSID="{1EA7A323-EFF5-4715-ACF0-D97C52770F0A}"
+      DTS:DTSID="{76F21727-67EB-455F-A1AE-B5D07D70A259}"
       DTS:ObjectName="LocalHost.Staging">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=.;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{1EA7A323-EFF5-4715-ACF0-D97C52770F0A}LocalHost.Staging;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=Staging;Integrated Security=True;Application Name=SSIS-RegistrationsImport-{76F21727-67EB-455F-A1AE-B5D07D70A259}LocalHost.Staging;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Mail Server]"
       DTS:CreationName="SMTP"
-      DTS:DTSID="{F0EA4EC2-CF55-45EE-951B-E0E0D283E1FD}"
+      DTS:DTSID="{50503830-A33E-46B3-87C4-D71D36F52044}"
       DTS:ObjectName="Mail Server">
       <DTS:ObjectData>
         <SmtpConnectionManager
@@ -83,7 +83,7 @@
       DTS:refId="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{84849B2B-D45A-4F08-812F-0E095F47721B}"
+      DTS:DTSID="{D2F948C0-B51F-4D4B-BE53-787543D5511D}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
@@ -92,7 +92,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:BypassPrepare="False"
           SQLTask:SqlStatementSource="&#xA;&#xA;INSERT INTO DataMart.dbo.DegreeMajors&#xA;&#xA;SELECT &#xA;&#x9;DegreeMajorCode, DegreeMajorDescription&#xA;&#xA;FROM STAGING.dbo.view_R_Majors&#xA;  &#xA;;&#xA;&#xA;INSERT INTO DataMart.dbo.Student_Terms&#xA;&#xA;SELECT &#xA;&#x9;ID,RCID,FirstTerm,LastTerm&#xA;&#xA;FROM STAGING.dbo.DM_Student_Terms&#xA;  &#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
@@ -101,7 +101,7 @@
       DTS:refId="Package\merge personstudent with est grad date and living on campus"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{E4CB3AF4-D288-4ABD-89A5-DC6CFBCF6A13}"
+      DTS:DTSID="{EA63E1EF-E26C-41A5-A9BB-31CEC2290847}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="merge personstudent with est grad date and living on campus"
@@ -109,7 +109,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonStudent as TARGET&#xA;USING (SELECT rcid, est_grad_date, live_campus&#xA; FROM Staging.dbo.dm_est_graddate_living_on_campus) AS Source &#xA;ON (Target.rcid = Source.rcid)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.est_grad_date = source.est_grad_date,&#xA;         target.living_on_campus = source.live_campus &#xA;         &#xA;  ;        &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -117,7 +117,7 @@
       DTS:refId="Package\merge person_source"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{2AB9A9B7-0494-4A66-9D75-4A85AC8DCD57}"
+      DTS:DTSID="{0CCC22DD-6A32-4FF5-B814-F8D92946C5DB}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="merge person_source"
@@ -125,7 +125,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:BypassPrepare="False"
           SQLTask:SqlStatementSource="MERGE Datamart.dbo.person_source as TARGET&#xA;USING (SELECT rcid, position, source_id, source_description FROM staging.dbo.person_source) AS Source &#xA;ON (target.rcid = Source.rcid) and (target.position = Source.position)&#xA;WHEN MATCHED THEN&#xA;UPDATE SET  &#xA;target.source_id = source.source_id,&#xA;target.source_description = source.source_description&#xA;&#xA;&#x9;&#x9; &#x9;       &#xA;WHEN NOT MATCHED BY TARGET THEN&#xA;INSERT (rcid, position, source_id, source_description)&#xA;VALUES (source.rcid, source.position, source.source_id, source.source_description);&#x9; &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
@@ -134,7 +134,7 @@
       DTS:refId="Package\Merge Registration Info into Datamart"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{3A983F02-88AB-4F39-B7BC-1BC7AE381B25}"
+      DTS:DTSID="{04EE91F7-4A35-4B79-933F-E4B51D51EEE4}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Merge Registration Info into Datamart"
@@ -142,24 +142,24 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:BypassPrepare="False"
-          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Registrations as TARGET&#xA;USING (SELECT        TOP (100) PERCENT dbo.DM_Registrations.key_RegId, dbo.DM_Registrations.fkey_courseId, dbo.DM_Registrations.RCID, dbo.DM_Registrations.fkey_RegStatus, dbo.DM_Registrations.letter_grade, &#xA;                         dbo.DM_Registrations.grade_value, dbo.DM_Registrations.course_credit, dbo.DM_Registrations.mid_term_grade, dbo.DM_Registrations.pass_fail_audit, dbo.DM_Courses.Semesterkey, &#xA;                         dbo.DM_Registrations.updated_at&#xA;FROM            dbo.DM_Semester INNER JOIN&#xA;                         dbo.DM_Courses ON dbo.DM_Semester.key_SemesterId = dbo.DM_Courses.Semesterkey RIGHT OUTER JOIN&#xA;                         dbo.DM_Registrations ON dbo.DM_Courses.CourseKey = dbo.DM_Registrations.fkey_courseId&#xA;WHERE        (dbo.DM_Registrations.fkey_RegStatus = 'n') AND (dbo.DM_Courses.CourseStatus = 'a') OR&#xA;                         (dbo.DM_Registrations.fkey_RegStatus = 'a')) AS Source &#xA;ON (Target.key_Regid = Source.key_RegId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.fkey_courseid = source.fkey_courseid,&#xA;       &#x9;&#x9;target.rcid = source.rcid, &#xA;                &#x9;target.fkey_regstatus = source.fkey_regstatus,&#xA;&#x9;&#x9;target.letter_grade = source.letter_grade, &#xA;&#x9;&#x9;target.grade_value = source.grade_value, &#xA;&#x9;&#x9;target.course_credit = source.course_credit, &#xA;&#x9;&#x9;target.mid_term_grade = source.mid_term_grade, &#xA;&#x9;&#x9;target.pass_fail_audit = source.pass_fail_audit,&#xA;&#x9;&#x9;target.fkey_semesterId = source.Semesterkey,&#xA;target.updated_at = source.updated_at&#xA;&#x9;&#x9;&#xA;     WHEN NOT MATCHED BY TARGET THEN&#xA;&#x9;&#x9;INSERT ( key_RegId, fkey_courseid, rcid, fkey_RegStatus,letter_grade, grade_value, course_credit, mid_term_grade, pass_fail_audit,fkey_semesterId, updated_at)&#xA;&#x9;&#x9;VALUES (source.key_RegId,source.fkey_courseid, source.rcid, source.fkey_RegStatus,source.letter_grade, source.grade_value, source.course_credit, source.mid_term_grade, source.pass_fail_audit,source.Semesterkey, source.updated_at);&#x9;       &#xA;&#xA;&#x9; &#x9;       " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="MERGE Datamart.dbo.Registrations as TARGET&#xA;USING (SELECT        TOP (100) PERCENT dbo.DM_Registrations.key_RegId, dbo.DM_Registrations.fkey_courseId, dbo.DM_Registrations.RCID, dbo.DM_Registrations.fkey_RegStatus, dbo.DM_Registrations.letter_grade, &#xA;                         dbo.DM_Registrations.grade_value, dbo.DM_Registrations.course_credit, dbo.DM_Registrations.mid_term_grade, dbo.DM_Registrations.pass_fail_audit, dbo.DM_Courses.Semesterkey, &#xA;                         dbo.DM_Registrations.updated_at&#xA;FROM            dbo.DM_Semester INNER JOIN&#xA;                         dbo.DM_Courses ON dbo.DM_Semester.key_SemesterId = dbo.DM_Courses.Semesterkey RIGHT OUTER JOIN&#xA;                         dbo.DM_Registrations ON dbo.DM_Courses.CourseKey = dbo.DM_Registrations.fkey_courseId&#xA;WHERE        (dbo.DM_Registrations.fkey_RegStatus = 'n') AND (dbo.DM_Courses.CourseStatus = 'a') AND (dbo.DM_Semester.StartDate &gt;= GETDATE()) OR&#xA;                         (dbo.DM_Registrations.fkey_RegStatus = 'a')) AS Source &#xA;ON (Target.key_Regid = Source.key_RegId)&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.fkey_courseid = source.fkey_courseid,&#xA;       &#x9;&#x9;target.rcid = source.rcid, &#xA;                &#x9;target.fkey_regstatus = source.fkey_regstatus,&#xA;&#x9;&#x9;target.letter_grade = source.letter_grade, &#xA;&#x9;&#x9;target.grade_value = source.grade_value, &#xA;&#x9;&#x9;target.course_credit = source.course_credit, &#xA;&#x9;&#x9;target.mid_term_grade = source.mid_term_grade, &#xA;&#x9;&#x9;target.pass_fail_audit = source.pass_fail_audit,&#xA;&#x9;&#x9;target.fkey_semesterId = source.Semesterkey,&#xA;target.updated_at = source.updated_at&#xA;&#x9;&#x9;&#xA;     WHEN NOT MATCHED BY TARGET THEN&#xA;&#x9;&#x9;INSERT ( key_RegId, fkey_courseid, rcid, fkey_RegStatus,letter_grade, grade_value, course_credit, mid_term_grade, pass_fail_audit,fkey_semesterId, updated_at)&#xA;&#x9;&#x9;VALUES (source.key_RegId,source.fkey_courseid, source.rcid, source.fkey_RegStatus,source.letter_grade, source.grade_value, source.course_credit, source.mid_term_grade, source.pass_fail_audit,source.Semesterkey, source.updated_at);&#x9;       &#xA;&#xA;&#x9; &#x9;       " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\merge Registrations_by_courseV_with_ADV"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{10F1126F-59E1-45AC-A1AD-1D6025F0C897}"
+      DTS:DTSID="{2E70A328-B5F1-40F4-9B83-651E66E78CB9}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="merge Registrations_by_courseV_with_ADV"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:SqlStatementSource="MERGE Datamart.dbo.Registrations_by_courseV_with_ADV AS TARGET USING(SELECT        ID, RCID, FirstName, LastName, FullName, RegStatus, Class, fkey_CourseCodeId, Number, ClassSection, fkey_semesterId, &#xA;                                                                                                                                                                                                    key_CourseId, instructor, instructorId, City, State, Email, CourseStatusCode, key_RegId, AcadProgram, ExcludedDirectory, &#xA;                                                                                                                                                                                                    Description, Credits, semester_description, semester_start_date, semester_end_date&#xA;                                                                                                                                                                           FROM            Datamart.dbo.view_registrations_by_courseV_with_ADV) AS Source ON (target.ID = Source.ID) WHEN MATCHED THEN&#xA;    UPDATE       &#xA;     SET                 target.firstname = source.firstname, target.lastname = source.lastname, target.fullname = source.fullname, target.RegStatus = source.RegStatus, target.Class = source.Class, &#xA;                              target.fkey_CourseCodeId = source.fkey_CourseCodeId, target.Number = source.Number, target.ClassSection = source.ClassSection, target.fkey_semesterId = source.fkey_SemesterId, &#xA;                              target.key_CourseId = source.key_CourseId, target.instructor = source.instructor, target.instructorid = source.instructorid, target.city = source.city, target.state = source.state, target.email = source.email, &#xA;                              target.CourseStatusCode = source.CourseStatusCode, target.AcadProgram = source.AcadProgram, target.ExcludedDirectory = source.ExcludedDirectory, target.Description = source.Description, &#xA;                              target.credits = source.credits, target.semester_description = source.semester_description, target.semester_start_date = source.semester_start_date, &#xA;                              target.semester_end_date = source.semester_end_date WHEN NOT MATCHED BY TARGET THEN INSERT (ID, RCID, FirstName, LastName, FullName, RegStatus, Class, fkey_CourseCodeId, Number, &#xA;                              ClassSection, fkey_semesterId, key_CourseId, instructor, instructorId, City, State, Email, CourseStatusCode, key_RegId, AcadProgram, ExcludedDirectory, Description, Credits, semester_description, &#xA;                              semester_start_date, semester_end_date)&#xA;     VALUES        (source.ID, source.RCID, source.FirstName, source.LastName, source.FullName, source.RegStatus, source.Class, source.fkey_CourseCodeId, source.Number, source.ClassSection, source.fkey_semesterId, &#xA;                              source.key_CourseId, source.instructor, source.instructorId, source.City, source.State, source.Email, source.CourseStatusCode, source.key_RegId, source.AcadProgram, source.ExcludedDirectory, &#xA;                              source.Description, source.Credits, source.semester_description, source.semester_start_date, source.semester_end_date);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -167,15 +167,15 @@
       DTS:refId="Package\merges cum_gpa into person student table"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{335B6113-8547-49B0-9992-5A2157E53055}"
+      DTS:DTSID="{798DF125-202D-4A97-A6E5-D8356AA6C914}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="merges cum_gpa into person student table"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{F6795A88-127A-4CC5-A405-64E4D4845B9E}"
+          SQLTask:Connection="{14225D4D-CDF7-4395-B4F5-4EB295CDF522}"
           SQLTask:SqlStatementSource="MERGE Datamart.dbo.PersonStudent as TARGET&#xA;USING (SELECT rcid, cum_gpa&#xA; FROM Staging.dbo.cum_gpa) AS Source &#xA;ON (Target.rcid = Source.rcid)&#xA;&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET target.cum_gpa = source.cum_gpa&#xA;&#xA;      &#xA;&#xA;  ;        &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -183,16 +183,16 @@
       DTS:refId="Package\Send Mail Task 1"
       DTS:CreationName="Microsoft.SendMailTask"
       DTS:Description="Send Mail Task"
-      DTS:DTSID="{9DE3C1B3-42EB-4F04-B065-E76CEB3E334B}"
+      DTS:DTSID="{352A6122-78B8-4285-8993-9B6ECC4C9C33}"
       DTS:ExecutableType="Microsoft.SendMailTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Send Mail Task 1"
       DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server 2008; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SendMailTask:SendMailTaskData
-          SendMailTask:SMTPServer="{F0EA4EC2-CF55-45EE-951B-E0E0D283E1FD}"
+          SendMailTask:SMTPServer="{50503830-A33E-46B3-87C4-D71D36F52044}"
           SendMailTask:From="noreply@roanoke.edu"
           SendMailTask:To="gabrielson@roanoke.edu"
           SendMailTask:Subject="Registration Import Issue"
@@ -203,7 +203,7 @@
       DTS:refId="Package\student term details"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{0195A4ED-BAD5-4AED-9160-F00BC2ED3B5B}"
+      DTS:DTSID="{78839F36-7B74-4DA2-A980-735DBA96EB46}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="student term details"
@@ -539,15 +539,15 @@
       DTS:refId="Package\trunacte table student_term_details"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{4B17811C-274F-43D9-BB49-129F2236CC39}"
+      DTS:DTSID="{2489919E-D856-45C5-AF39-9898253932CA}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="trunacte table student_term_details"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{F6795A88-127A-4CC5-A405-64E4D4845B9E}"
+          SQLTask:Connection="{14225D4D-CDF7-4395-B4F5-4EB295CDF522}"
           SQLTask:SqlStatementSource="truncate table student_term_details; &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -555,7 +555,7 @@
       DTS:refId="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{5B3D6AE6-F5C1-4801-BB18-22B1F2B1DDDA}"
+      DTS:DTSID="{E618C103-4C27-4933-AC53-AA2CD82C7457}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
@@ -564,7 +564,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0DD495F8-FC93-4113-A79D-971CD88F0BCF}"
+          SQLTask:Connection="{C20C1EAD-DFB2-40A6-9C38-B31B1E8C541F}"
           SQLTask:BypassPrepare="False"
           SQLTask:SqlStatementSource="DELETE FROM DataMart.DBO.DegreeMajors;&#xA;DELETE FROM DataMart.DBO.Student_Terms;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
@@ -573,7 +573,7 @@
       DTS:refId="Package\update exisiting registrations"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{8565C028-9744-46EA-BBF8-AC32241C71B1}"
+      DTS:DTSID="{9F3F5662-0553-4DBD-BD99-7600FDFBCD67}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="update exisiting registrations"
@@ -581,7 +581,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{F6795A88-127A-4CC5-A405-64E4D4845B9E}"
+          SQLTask:Connection="{14225D4D-CDF7-4395-B4F5-4EB295CDF522}"
           SQLTask:SqlStatementSource="UPDATE&#xA;    Registrations &#xA;SET&#xA;   Registrations.fkey_semesterid = C.fkey_semesterId &#xA;FROM &#xA;   Registrations R&#xA;INNER JOIN&#xA;Courses C&#xA;ON&#xA;R.fkey_courseId = C.key_CourseId;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -589,16 +589,16 @@
       DTS:refId="Package\updated_at date"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{9AF4DF62-F5C7-43D5-ABBE-B7A88E8B59BD}"
+      DTS:DTSID="{45F304A4-0DB7-4313-B16E-A5267CD20796}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="updated_at date"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{F6795A88-127A-4CC5-A405-64E4D4845B9E}"
+          SQLTask:Connection="{14225D4D-CDF7-4395-B4F5-4EB295CDF522}"
           SQLTask:SqlStatementSource="UPDATE&#xA;    Registrations&#xA;SET&#xA;   Registrations.updated_at = CONVERT(varchar(255), GETDATE(), 120)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -607,7 +607,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{8A488021-0B87-4270-B0B8-0C745657D54F}"
+      DTS:DTSID="{1B3F9B41-1E26-46A5-82DD-F4EE52A54749}"
       DTS:From="Package\merges cum_gpa into person student table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -615,7 +615,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{8082CCF3-3BE2-43F7-ABDC-B52CDC4D696D}"
+      DTS:DTSID="{EFC9BE90-A57B-4058-8FF2-75527DBB8C3E}"
       DTS:From="Package\Merge Registration Info into Datamart"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -623,7 +623,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{78A908E7-66CC-47FE-AD8D-F850D01C5BB0}"
+      DTS:DTSID="{5C2DB8C2-5F8B-45A7-A00C-915F78159CC8}"
       DTS:From="Package\update exisiting registrations"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
@@ -631,7 +631,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 20]"
       DTS:CreationName=""
-      DTS:DTSID="{73C149AC-2235-44FE-8467-658B02E879C6}"
+      DTS:DTSID="{F7FA556F-D6EA-4607-9A17-0981839BB9D5}"
       DTS:From="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 20"
@@ -639,7 +639,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 21]"
       DTS:CreationName=""
-      DTS:DTSID="{6747594E-8274-4D05-A972-0217787B9236}"
+      DTS:DTSID="{4A740ED3-B8A2-4202-89BD-63995EFF2102}"
       DTS:From="Package\merge person_source"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 21"
@@ -647,7 +647,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 22]"
       DTS:CreationName=""
-      DTS:DTSID="{833D6819-E721-42F5-A8FE-6E65E5AEF5DC}"
+      DTS:DTSID="{14B72FC9-AA57-464E-80EC-E421F8D63085}"
       DTS:From="Package\merge personstudent with est grad date and living on campus"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 22"
@@ -655,7 +655,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 23]"
       DTS:CreationName=""
-      DTS:DTSID="{A55039C2-3232-4323-A8A7-42BFF3FD533C}"
+      DTS:DTSID="{1AFFD520-B0FC-47C0-A1C9-7F7870CDF5DF}"
       DTS:From="Package\updated_at date"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 23"
@@ -663,7 +663,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 24]"
       DTS:CreationName=""
-      DTS:DTSID="{F42D97E4-6ADB-44FE-93DB-0FFA9253F021}"
+      DTS:DTSID="{968E12E5-77D9-43BD-884C-25EC8F76CE5B}"
       DTS:From="Package\trunacte table student_term_details"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 24"
@@ -671,7 +671,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 25]"
       DTS:CreationName=""
-      DTS:DTSID="{20CB2150-05DB-4D0A-90A6-71462D760D16}"
+      DTS:DTSID="{88809D71-19C6-4BB7-9A7D-B9DC1F101779}"
       DTS:From="Package\student term details"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 25"
@@ -679,7 +679,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
       DTS:CreationName=""
-      DTS:DTSID="{43C36B96-05B8-4A2A-BDDD-C4C8E05CE003}"
+      DTS:DTSID="{236FA59D-1834-486A-9899-37F2263B2BF1}"
       DTS:From="Package\Truncate DataMart Tables Student_Terms DegreeMajors and Parent_Access"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 5"
@@ -687,7 +687,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
       DTS:CreationName=""
-      DTS:DTSID="{B2301896-295D-4CAE-9735-F0925BF134F8}"
+      DTS:DTSID="{1FFEA257-F0BC-4645-80E5-60E46112884E}"
       DTS:From="Package\Load R-Majors, DegreeMajors and Parent_access tables in Datamart"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 8"
@@ -1088,21 +1088,28 @@
           FontInfo="{assembly:Null}"
           Size="103,72"
           Id="c54180aa-2050-4056-a9bc-13373c344491"
-          TopLeft="399,172" />
+          TopLeft="417,172" />
         <AnnotationLayout
-          Text="removed and &#xA;replaced the ADV&#xA;ESQLT to prevent it&#xA;from giving error&#xA;jsg 6/21"
+          Text="Changed code to&#xA;include active courses&#xA;and semester &gt;= start date&#xA;jsg 6/21"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="212,88"
+          Id="678e4428-47e1-4d13-ad44-a863e745e0a1"
+          TopLeft="424,80" />
+        <AnnotationLayout
+          Text="removed and &#xA;replacec the ADV&#xA;ESQLT to prevent it&#xA;from giving error&#xA;jsg 6/21"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="131,104"
           Id="e8099bbf-867d-40d2-add9-7f37555444c5"
-          TopLeft="1164,409" />
+          TopLeft="1169,397" />
         <AnnotationLayout
-          Text="added active courses&#xA;jsg 6/21"
+          Text="Special Registrations Pull for 10am and 2pm&#xA;jsg 6/21"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="140,56"
-          Id="49197e74-f9f3-41bd-bbea-df02a3fd6802"
-          TopLeft="420,99" />
+          Size="262,56"
+          Id="aed18aa1-7c64-4ad7-9ded-88754d26450b"
+          TopLeft="658,35" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
